@@ -33,7 +33,6 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-
 class ThreeDTest  : public Component,
                     private OpenGLRenderer,
                     public ButtonListener
@@ -59,8 +58,8 @@ public:
 		glClearDepth(1.0);
 		glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		
+
+
 
 		glEnableClientState(GL_COLOR_ARRAY);
 		glColor3f(1.f, 0.f, 0.f);

@@ -32,17 +32,21 @@ public:
 	
       setSize (500, 600);
 	  TStringLst * s = TStringLst::getDemoTypeList()["ThreeDTest"];
+	  
 	  if (s)
 	  {
 		  addAndMakeVisible(currentDemo = s->createComponent());
 	  }
-		
-		//addAndMakeVisible(nc);
 
 
-		//addAndMakeVisible(nc1);
-		//TStringLst::getDemoTypeList().
-  
+	  s = TStringLst::getDemoTypeList()["ThreeDTest2"];
+
+	  if (s)
+	  {
+		  addAndMakeVisible(currentDemo = s->createComponent());
+	  }
+	
+	  resized();
     }
 
     ~MainContentComponent()
@@ -64,9 +68,35 @@ public:
         // This is called when the MainContentComponent is resized.
         // If you add any child components, this is where you should
         // update their positions.
-		auto r = getLocalBounds();
-		if (currentDemo != nullptr)
-			currentDemo->setBounds(r);
+		//auto r = getLocalBounds();
+		//if (currentDemo != nullptr)
+		//	currentDemo->setBounds(r);
+
+
+		FlexBox masterbox;
+		masterbox.flexDirection = FlexBox::Direction::row;// column;// : FlexBox::Direction::row;
+		masterbox.alignItems = FlexBox::AlignItems::stretch;
+		masterbox.alignContent = FlexBox::AlignContent::stretch;
+		masterbox.flexWrap = FlexBox::Wrap::noWrap;
+		masterbox.justifyContent = FlexBox::JustifyContent::center;
+		
+
+
+		int num = getNumChildComponents();
+		for (auto i = 0; i < num; i++)
+		{
+			auto c = getChildComponent(i);
+			if (c)
+			{
+				masterbox.items.add(FlexItem(1, 1).withFlex(1) );
+				auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
+				flexitem.associatedComponent = c;
+			}
+
+		}
+		Rectangle<float> r = getLocalBounds().toFloat();
+		r.reduce(10.0f, 10.0f);
+		masterbox.performLayout(r);
     }
 
 

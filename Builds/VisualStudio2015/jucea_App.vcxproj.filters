@@ -44,8 +44,8 @@
     <ClCompile Include="..\..\Source\Main.cpp" />
     <ClCompile Include="..\..\Source\gl.cpp" />
     <ClCompile Include="..\..\Source\ThreeDTest.cpp" />
-    <ClCompile Include="flextest.cpp" />
-    <ClCompile Include="HashStr.cpp" />
+    <ClCompile Include="..\..\Source\flextest.cpp" />
+    <ClCompile Include="..\..\Source\HashStr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc" />
@@ -58,8 +58,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\gl.h" />
     <ClInclude Include="..\..\Source\ThreeDTest.h" />
-    <ClInclude Include="flextest.h" />
-    <ClInclude Include="HashStr.h" />
     <ClInclude Include="..\..\Source\ComponentList.h" />
+    <ClInclude Include="..\..\Source\flextest.h" />
+    <ClInclude Include="..\..\Source\HashStr.h" />
   </ItemGroup>
 </Project>

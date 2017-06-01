@@ -131,7 +131,9 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\flextest.cpp" />
     <ClCompile Include="..\..\Source\gl.cpp" />
+    <ClCompile Include="..\..\Source\HashStr.cpp" />
     <ClCompile Include="..\..\Source\MainComponent.cpp" />
     <ClCompile Include="..\..\Source\Main.cpp" />
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_basics.cpp" />
@@ -148,15 +150,13 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp" />
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp" />
     <ClCompile Include="..\..\Source\ThreeDTest.cpp" />
-    <ClCompile Include="flextest.cpp" />
-    <ClCompile Include="HashStr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\ComponentList.h" />
+    <ClInclude Include="..\..\Source\flextest.h" />
     <ClInclude Include="..\..\Source\gl.h" />
+    <ClInclude Include="..\..\Source\HashStr.h" />
     <ClInclude Include="..\..\Source\ThreeDTest.h" />
-    <ClInclude Include="flextest.h" />
-    <ClInclude Include="HashStr.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc" />
