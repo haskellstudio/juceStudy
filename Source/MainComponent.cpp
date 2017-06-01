@@ -22,7 +22,7 @@ class MainContentComponent   : public Component
 {
 public:
 
-	ScopedPointer<Component> currentDemo;
+	//ScopedPointer<Component> currentDemo;
 
 	
     //==============================================================================
@@ -35,7 +35,7 @@ public:
 	  
 	  if (s)
 	  {
-		  addAndMakeVisible(currentDemo = s->createComponent());
+		  addAndMakeVisible( s->createComponent());
 	  }
 
 
@@ -43,7 +43,7 @@ public:
 
 	  if (s)
 	  {
-		  addAndMakeVisible(currentDemo = s->createComponent());
+		  addAndMakeVisible( s->createComponent());
 	  }
 	
 	  resized();
@@ -51,7 +51,7 @@ public:
 
     ~MainContentComponent()
     {
-		currentDemo = nullptr;
+		//currentDemo = nullptr;
     }
 
  
@@ -77,7 +77,7 @@ public:
 		masterbox.flexDirection = FlexBox::Direction::row;// column;// : FlexBox::Direction::row;
 		masterbox.alignItems = FlexBox::AlignItems::stretch;
 		masterbox.alignContent = FlexBox::AlignContent::stretch;
-		masterbox.flexWrap = FlexBox::Wrap::noWrap;
+		masterbox.flexWrap = FlexBox::Wrap::wrap;
 		masterbox.justifyContent = FlexBox::JustifyContent::center;
 		
 
@@ -88,7 +88,7 @@ public:
 			auto c = getChildComponent(i);
 			if (c)
 			{
-				masterbox.items.add(FlexItem(1, 1).withFlex(1) );
+				masterbox.items.add(FlexItem(1, 1).withFlex(1).withMargin(10));
 				auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
 				flexitem.associatedComponent = c;
 			}
