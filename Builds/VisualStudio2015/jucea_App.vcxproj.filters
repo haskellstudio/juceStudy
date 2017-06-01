@@ -42,7 +42,10 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp" />
     <ClCompile Include="..\..\Source\Main.cpp" />
-    <ClCompile Include="..\..\Source\NewComponent.cpp" />
+    <ClCompile Include="..\..\Source\gl.cpp" />
+    <ClCompile Include="..\..\Source\ThreeDTest.cpp" />
+    <ClCompile Include="flextest.cpp" />
+    <ClCompile Include="HashStr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc" />
@@ -53,13 +56,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
-      <Filter>Module</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
-      <Filter>Module</Filter>
-    </ClInclude>
+    <ClInclude Include="..\..\Source\gl.h" />
+    <ClInclude Include="..\..\Source\ThreeDTest.h" />
+    <ClInclude Include="flextest.h" />
+    <ClInclude Include="HashStr.h" />
     <ClInclude Include="..\..\Source\ComponentList.h" />
-    <ClInclude Include="..\..\Source\NewComponent.h" />
   </ItemGroup>
 </Project>

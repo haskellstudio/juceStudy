@@ -31,21 +31,23 @@ public:
 		//setOpaque(true);
 	
       setSize (500, 600);
-		addAndMakeVisible(currentDemo = TStringLst::getDemoTypeList()[0]->createComponent());
+	  TStringLst * s = TStringLst::getDemoTypeList()["ThreeDTest"];
+	  if (s)
+	  {
+		  addAndMakeVisible(currentDemo = s->createComponent());
+	  }
+		
 		//addAndMakeVisible(nc);
 
 
 		//addAndMakeVisible(nc1);
 		//TStringLst::getDemoTypeList().
   
-	
-	
-
     }
 
     ~MainContentComponent()
     {
-       
+		currentDemo = nullptr;
     }
 
  

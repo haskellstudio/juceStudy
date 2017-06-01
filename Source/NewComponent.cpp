@@ -131,7 +131,7 @@ void NewComponent::sliderValueChanged (Slider* sliderThatWasMoved)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-static ComponentList<NewComponent> lbs(String("NewComponent"));
+//static ComponentList<NewComponent> lbs(String("NewComponent"));
 //[/MiscUserCode]
 
 
