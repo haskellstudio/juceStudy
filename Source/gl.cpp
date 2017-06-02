@@ -75,8 +75,8 @@ void sampleUI::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
-	OpenGLContext * context = OpenGLContext::getCurrentContext();
-    g.fillAll (Colours::aliceblue);
+
+    g.fillAll (Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
 	if (isCodeChange)
@@ -102,7 +102,7 @@ void sampleUI::paint (Graphics& g)
 
 			//color->set(vec4(1.0, 1.0, 0.0, 1.0));
 			color->set(1.0f, 1.0f, 0.0f, 1.0f);
-			
+
 			//color = createUniform(shader->getProgram(g.getInternalContext())->context, *(shader->getProgram(g.getInternalContext())), "color");
 			//color = createUniform(openGLContext, *( shader->getProgram(g.getInternalContext())), "color");
 
@@ -129,7 +129,7 @@ void sampleUI::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    label->setBounds (24, 40, 288, 48);
+    label->setBounds (24, 24, 288, 48);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -156,7 +156,7 @@ BEGIN_JUCER_METADATA
                  overlayOpacity="0.330" fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ffffffff"/>
   <LABEL name="new label" id="8cc6714263cdda56" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="24 40 288 48" bkgCol="ffa81414" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="24 24 288 48" bkgCol="ffa81414" edTextCol="ff000000"
          edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          kerning="0" bold="0" italic="0" justification="33"/>

@@ -132,8 +132,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\flextest.cpp" />
-    <ClCompile Include="..\..\Source\gl.cpp" />
     <ClCompile Include="..\..\Source\HashStr.cpp" />
+    <ClCompile Include="..\..\Source\NewComponent.cpp" />
+    <ClCompile Include="..\..\Source\Sprite.cpp" />
+    <ClCompile Include="..\..\Source\ThreeDTest.cpp" />
+    <ClCompile Include="..\..\Source\gl.cpp" />
     <ClCompile Include="..\..\Source\MainComponent.cpp" />
     <ClCompile Include="..\..\Source\Main.cpp" />
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_basics.cpp" />
@@ -149,13 +152,14 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp" />
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp" />
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp" />
-    <ClCompile Include="..\..\Source\ThreeDTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\ComponentList.h" />
     <ClInclude Include="..\..\Source\flextest.h" />
     <ClInclude Include="..\..\Source\gl.h" />
     <ClInclude Include="..\..\Source\HashStr.h" />
+    <ClInclude Include="..\..\Source\NewComponent.h" />
+    <ClInclude Include="..\..\Source\Sprite.h" />
     <ClInclude Include="..\..\Source\ThreeDTest.h" />
   </ItemGroup>
   <ItemGroup>

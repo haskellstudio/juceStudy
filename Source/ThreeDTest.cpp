@@ -40,10 +40,12 @@ ThreeDTest::ThreeDTest ()
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (300, 400);
+    setSize (600, 400);
 
 
     //[Constructor] You can add your own custom stuff here..
+	owner = nullptr;
+	//addKeyListener(this);
 
 	openGLContext.setRenderer(this);
 	openGLContext.setComponentPaintingEnabled(false);
@@ -51,9 +53,13 @@ ThreeDTest::ThreeDTest ()
 
 
 
-//	openGLContext.setContinuousRepainting(true);
+	openGLContext.setContinuousRepainting(true);  // true  fps may be high.
+
+	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+
 	//glClearDepth(1.0);
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	//glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
     //[/Constructor]
@@ -89,7 +95,7 @@ void ThreeDTest::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    textButton->setBounds (proportionOfWidth (0.3149f), proportionOfHeight (0.1859f), 150, 24);
+    textButton->setBounds (proportionOfWidth (0.3142f), proportionOfHeight (0.1863f), 150, 24);
     //[UserResized] Add your own custom resize handling here..
 	DBG("width is " + String(getWidth()));
     //[/UserResized]
@@ -108,6 +114,56 @@ void ThreeDTest::buttonClicked (Button* buttonThatWasClicked)
 
     //[UserbuttonClicked_Post]
     //[/UserbuttonClicked_Post]
+}
+
+void ThreeDTest::mouseMove (const MouseEvent& e)
+{
+    //[UserCode_mouseMove] -- Add your code here...
+	//if (owner == nullptr)
+	//{
+	//	owner = getParentComponent();
+	//}
+
+	//if (owner)
+	//{
+	//	auto pos = e.getEventRelativeTo(owner).position.toInt();
+	//	DBG("mouseMove x: " + String(pos.getX()) + " y: " + String(pos.getY()));
+	//}
+	//DBG("mouseMove x: " + String(e.getPosition().getX()) + " y: " + String(e.getPosition().getY()));
+    //[/UserCode_mouseMove]
+}
+
+bool ThreeDTest::keyPressed (const KeyPress& key)
+{
+    //[UserCode_keyPressed] -- Add your code here...
+	DBG("ThreeDTest keyPressed");
+	//DBG(key.getKeyCode());
+
+	if (key == KeyPress::upKey)
+		DBG("upKey");
+
+	if (key == KeyPress::leftKey)   
+		DBG("leftKey");
+
+
+	if (key == KeyPress::downKey ) 
+		DBG("downKey");
+
+	if (key == KeyPress::rightKey)
+		DBG("rightKey");
+		
+	if (key == KeyPress::pageUpKey)      
+		DBG("pageUpKey");
+
+	if (key == KeyPress::pageDownKey)        
+		DBG("pageDownKey");
+	if (key == KeyPress::homeKey)   
+		DBG("homeKey");
+	if (key == KeyPress::endKey)  
+		DBG("endKey");
+
+    return false;  // Return true if your handler uses this key event, or false to allow it to be passed-on.
+    //[/UserCode_keyPressed]
 }
 
 
@@ -132,9 +188,13 @@ BEGIN_JUCER_METADATA
                  parentClasses="public Component, private OpenGLRenderer" constructorParams=""
                  variableInitialisers="" snapPixels="8" snapActive="1" snapShown="1"
                  overlayOpacity="0.330" fixedSize="0" initialWidth="600" initialHeight="400">
+  <METHODS>
+    <METHOD name="keyPressed (const KeyPress&amp; key)"/>
+    <METHOD name="mouseMove (const MouseEvent&amp; e)"/>
+  </METHODS>
   <BACKGROUND backgroundColour="ffffffff"/>
   <TEXTBUTTON name="new button" id="3d7ed1a37e136823" memberName="textButton"
-              virtualName="" explicitFocusOrder="0" pos="31.491% 18.585% 150 24"
+              virtualName="" explicitFocusOrder="0" pos="31.415% 18.625% 150 24"
               buttonText="new button" connectedEdges="0" needsCallback="1"
               radioGroupId="0"/>
 </JUCER_COMPONENT>

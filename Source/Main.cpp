@@ -61,18 +61,46 @@ public:
     class MainWindow    : public DocumentWindow
     {
     public:
+		Component * c ;
         MainWindow (String name)  : DocumentWindow (name,
                                                     Desktop::getInstance().getDefaultLookAndFeel()
                                                                           .findColour (ResizableWindow::backgroundColourId),
                                                     DocumentWindow::allButtons)
         {
             setUsingNativeTitleBar (true);
-            setContentOwned (createMainContentComponent(), true);
+            setContentOwned (c = createMainContentComponent(), true);
             setResizable (true, true);
 
             centreWithSize (getWidth(), getHeight());
             setVisible (true);
+
+
+		//	setWantsKeyboardFocus(true);
+		//	focusGained(FocusChangeType::focusChangedByMouseClick);
+
+		//	c->setFocusContainer(true);
+		//	c->focusGained(FocusChangeType::focusChangedByMouseClick);
+			c->toFront(true);
         }
+		bool keyPressed(const KeyPress& key) override
+		{
+			//[UserCode_keyPressed] -- Add your code here...
+		//	DBG("MainWindow keyPressed");
+
+			//Component *c;
+			//int num = getNumChildComponents();
+			//for (auto i = 0; i < num; i++)
+			//{
+			//	auto c = getChildComponent(i);
+			//	if (c)
+			//	{
+			//		if(c->setRepaintsOnMouseActivity)
+			//	}
+			//}
+
+
+			return false;
+		}
 
         void closeButtonPressed() override
         {

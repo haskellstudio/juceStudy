@@ -6,6 +6,8 @@
               jucerVersion="5.0.1">
   <MAINGROUP id="znxk6f" name="jucea">
     <GROUP id="{81AC715B-817C-8B96-6478-78D50C1EB5CD}" name="Source">
+      <FILE id="VGkEiU" name="ThreeDTest.cpp" compile="1" resource="0" file="Source/ThreeDTest.cpp"/>
+      <FILE id="FcBSRO" name="ThreeDTest.h" compile="0" resource="0" file="Source/ThreeDTest.h"/>
       <FILE id="Kg7eQe" name="gl.cpp" compile="1" resource="0" file="Source/gl.cpp"/>
       <FILE id="QD4raw" name="gl.h" compile="0" resource="0" file="Source/gl.h"/>
       <FILE id="QrcJdT" name="MainComponent.cpp" compile="1" resource="0"

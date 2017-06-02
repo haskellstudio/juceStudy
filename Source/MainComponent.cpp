@@ -23,8 +23,14 @@ class MainContentComponent   : public Component
 public:
 
 	//ScopedPointer<Component> currentDemo;
+	bool keyPressed(const KeyPress& key) override
+	{
+		//[UserCode_keyPressed] -- Add your code here...
 
-	
+		DBG("MainContentComponent keyPressed");
+		return false;
+	}
+	Component * c;
     //==============================================================================
     MainContentComponent()
     {
@@ -43,9 +49,13 @@ public:
 
 	  if (s)
 	  {
-		  addAndMakeVisible( s->createComponent());
+		 c = s->createComponent();
+		
+		  addAndMakeVisible(c);
+		
 	  }
-	
+	  //c->setFocusContainer(true);
+	 // this->focusGained(FocusChangeType::focusChangedByMouseClick);
 	  resized();
     }
 
@@ -58,7 +68,7 @@ public:
 
     void paint (Graphics& g) override
     {
-
+	//	
         // You can add your component specific drawing code here!
         // This will draw over the top of the openGL background.
     }
@@ -72,7 +82,7 @@ public:
 		//if (currentDemo != nullptr)
 		//	currentDemo->setBounds(r);
 
-
+	
 		FlexBox masterbox;
 		masterbox.flexDirection = FlexBox::Direction::row;// column;// : FlexBox::Direction::row;
 		masterbox.alignItems = FlexBox::AlignItems::stretch;
@@ -92,7 +102,6 @@ public:
 				auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
 				flexitem.associatedComponent = c;
 			}
-
 		}
 		Rectangle<float> r = getLocalBounds().toFloat();
 		r.reduce(10.0f, 10.0f);

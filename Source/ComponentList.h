@@ -32,12 +32,8 @@ class ComponentList : TStringLst
 	{
 	}
 
-	Component* createComponent()
+	virtual Component* createComponent()
 	{
 		return new TComponent();
 	}
-
-
-
-
 };

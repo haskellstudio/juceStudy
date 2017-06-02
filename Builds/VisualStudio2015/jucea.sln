@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jucea", "jucea", "{9414DB63
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{75D256D5-93C4-044F-1A9A-33CB23C57392}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\Source\ThreeDTest.cpp = ..\..\Source\ThreeDTest.cpp
+		..\..\Source\ThreeDTest.h = ..\..\Source\ThreeDTest.h
 		..\..\Source\gl.cpp = ..\..\Source\gl.cpp
 		..\..\Source\gl.h = ..\..\Source\gl.h
 		..\..\Source\MainComponent.cpp = ..\..\Source\MainComponent.cpp

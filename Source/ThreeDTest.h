@@ -28,9 +28,6 @@
 //==============================================================================
 /**
                                                                     //[Comments]
-    An auto-generated component, created by the Projucer.
-
-    Describe your class and how it works here!
                                                                     //[/Comments]
 */
 class ThreeDTest  : public Component,
@@ -55,21 +52,32 @@ public:
 		jassert(OpenGLHelpers::isContextActive());
 
 		const float desktopScale = (float)openGLContext.getRenderingScale();
+
 		glClearDepth(1.0);
-		glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
 
 
 		glEnableClientState(GL_COLOR_ARRAY);
-		glColor3f(1.f, 0.f, 0.f);
-
-		glBegin(GL_QUADS);
-		glVertex2f(-0.5f, -1.0f);
-		glVertex2f(1.0f, -1.0f);
-		glVertex2f(1.0f, 1.0f);
-		glVertex2f(-1.0f, 1.0f);
+		glColor3f(0.f, 1.f, 0.f);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(-1, -1);
+		glVertex2f(0, -1);
+		glVertex2f(0, 0);
 		glEnd();
+
+	//	glEnableClientState(GL_COLOR_ARRAY);
+		//glColor3f(1.f, 0.f, 0.f);
+
+		//glBegin(GL_QUADS);
+		//glVertex2f(-0.5f, -1.0f);
+		//glVertex2f(1.0f, -1.0f);
+		//glVertex2f(1.0f, 1.0f);
+		//glVertex2f(-1.0f, 1.0f);
+		//glEnd();
 
 	}
 
@@ -78,11 +86,17 @@ public:
 
 	}
 
+
+
+
+
     //[/UserMethods]
 
     void paint (Graphics& g) override;
     void resized() override;
     void buttonClicked (Button* buttonThatWasClicked) override;
+    void mouseMove (const MouseEvent& e) override;
+    bool keyPressed (const KeyPress& key) override;
 
 
 
@@ -90,6 +104,9 @@ private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 
 	OpenGLContext openGLContext;
+
+	Component * owner;
+
     //[/UserVariables]
 
     //==============================================================================

@@ -46,6 +46,10 @@
     <ClCompile Include="..\..\Source\ThreeDTest.cpp" />
     <ClCompile Include="..\..\Source\flextest.cpp" />
     <ClCompile Include="..\..\Source\HashStr.cpp" />
+    <ClCompile Include="..\..\Source\NewComponent.cpp" />
+    <ClCompile Include="..\..\Source\Sprite.cpp">
+      <Filter>sprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc" />
@@ -54,12 +58,19 @@
     <Filter Include="Module">
       <UniqueIdentifier>{9ee82da5-2763-416a-8c06-1d11dfd5e137}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sprite">
+      <UniqueIdentifier>{8749fdaf-3985-4cca-a361-4ebe016532cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\gl.h" />
-    <ClInclude Include="..\..\Source\ThreeDTest.h" />
     <ClInclude Include="..\..\Source\ComponentList.h" />
     <ClInclude Include="..\..\Source\flextest.h" />
+    <ClInclude Include="..\..\Source\gl.h" />
     <ClInclude Include="..\..\Source\HashStr.h" />
+    <ClInclude Include="..\..\Source\NewComponent.h" />
+    <ClInclude Include="..\..\Source\ThreeDTest.h" />
+    <ClInclude Include="..\..\Source\Sprite.h">
+      <Filter>sprite</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
