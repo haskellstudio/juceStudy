@@ -19,6 +19,7 @@
 
 //[Headers] You can add your own extra header files here...
 #include "ComponentList.h"
+#include "Sprite.h"
 //[/Headers]
 
 #include "ThreeDTest.h"
@@ -28,11 +29,11 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-ThreeDTest::ThreeDTest ()
+ThreeDTest::ThreeDTest () : _sprite(openGLContext), isInit(false)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
-
+	//AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "title", "msg", "exit");
     addAndMakeVisible (textButton = new TextButton ("new button"));
     textButton->addListener (this);
 
@@ -54,6 +55,10 @@ ThreeDTest::ThreeDTest ()
 
 
 	openGLContext.setContinuousRepainting(true);  // true  fps may be high.
+
+
+	//
+
 
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 

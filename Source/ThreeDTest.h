@@ -49,10 +49,26 @@ public:
 
 	void renderOpenGL() override
 	{
+
+
+		if (false == isInit  )
+		{
+			if (openGLContext.isActive())
+			{
+				_sprite.init(0, 0, 0.5, 0.5);
+				isInit = true;
+
+			}
+			else
+				return;
+			
+		}
+
+
 		jassert(OpenGLHelpers::isContextActive());
 
 		const float desktopScale = (float)openGLContext.getRenderingScale();
-
+		//_sprite.init(0, 0, 0.5, 0.5);
 		glClearDepth(1.0);
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -63,11 +79,17 @@ public:
 
 		glEnableClientState(GL_COLOR_ARRAY);
 		glColor3f(0.f, 1.f, 0.f);
-		glBegin(GL_TRIANGLES);
-		glVertex2f(-1, -1);
-		glVertex2f(0, -1);
-		glVertex2f(0, 0);
-		glEnd();
+
+		_sprite.draw();
+
+		
+
+
+		//glBegin(GL_TRIANGLES);
+		//glVertex2f(-1, -1);
+		//glVertex2f(0, -1);
+		//glVertex2f(0, 0);
+		//glEnd();
 
 	//	glEnableClientState(GL_COLOR_ARRAY);
 		//glColor3f(1.f, 0.f, 0.f);
@@ -112,7 +134,8 @@ private:
     //==============================================================================
     ScopedPointer<TextButton> textButton;
 
-
+	Sprite _sprite;
+	bool isInit;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ThreeDTest)
 };
