@@ -3,9 +3,21 @@
 <JUCERPROJECT id="M2IlxI" name="jucea" displaySplashScreen="1" reportAppUsage="1"
               splashScreenColour="Dark" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yourcompany.jucea" includeBinaryInAppConfig="1"
-              jucerVersion="5.0.1">
+              jucerVersion="5.0.2">
   <MAINGROUP id="znxk6f" name="jucea">
     <GROUP id="{81AC715B-817C-8B96-6478-78D50C1EB5CD}" name="Source">
+      <FILE id="Qc1tdM" name="Editor.cpp" compile="1" resource="0" file="Source/Editor.cpp"/>
+      <FILE id="VN0scK" name="Editor.h" compile="0" resource="0" file="Source/Editor.h"/>
+      <FILE id="us59ZH" name="ComponentList.h" compile="0" resource="0" file="Source/ComponentList.h"/>
+      <FILE id="uQQG8M" name="flextest.cpp" compile="1" resource="0" file="Source/flextest.cpp"/>
+      <FILE id="KBuDUU" name="flextest.h" compile="0" resource="0" file="Source/flextest.h"/>
+      <FILE id="xIWJ3b" name="HashStr.cpp" compile="1" resource="0" file="Source/HashStr.cpp"/>
+      <FILE id="ki2CpE" name="HashStr.h" compile="0" resource="0" file="Source/HashStr.h"/>
+      <FILE id="PLT5eL" name="NewComponent.cpp" compile="1" resource="0"
+            file="Source/NewComponent.cpp"/>
+      <FILE id="dDqcjC" name="NewComponent.h" compile="0" resource="0" file="Source/NewComponent.h"/>
+      <FILE id="xbsi4R" name="Sprite.cpp" compile="1" resource="0" file="Source/Sprite.cpp"/>
+      <FILE id="x68LMa" name="Sprite.h" compile="0" resource="0" file="Source/Sprite.h"/>
       <FILE id="VGkEiU" name="ThreeDTest.cpp" compile="1" resource="0" file="Source/ThreeDTest.cpp"/>
       <FILE id="FcBSRO" name="ThreeDTest.h" compile="0" resource="0" file="Source/ThreeDTest.h"/>
       <FILE id="Kg7eQe" name="gl.cpp" compile="1" resource="0" file="Source/gl.cpp"/>

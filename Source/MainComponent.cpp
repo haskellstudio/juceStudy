@@ -54,6 +54,16 @@ public:
 		  addAndMakeVisible(c);
 		
 	  }
+
+
+
+	  s = TStringLst::getDemoTypeList()["Editor"];
+	  if (s)
+	  {
+		  addAndMakeVisible(s->createComponent());
+	  }
+
+
 	  //c->setFocusContainer(true);
 	 // this->focusGained(FocusChangeType::focusChangedByMouseClick);
 	  resized();

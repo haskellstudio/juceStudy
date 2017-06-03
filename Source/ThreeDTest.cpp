@@ -45,7 +45,6 @@ ThreeDTest::ThreeDTest () : _sprite(openGLContext), isInit(false)
 
 
     //[Constructor] You can add your own custom stuff here..
-	owner = nullptr;
 	//addKeyListener(this);
 
 	openGLContext.setRenderer(this);
