@@ -6,7 +6,7 @@ class TStringLst
 {
 public:
 	virtual Component* createComponent() = 0;
-	TStringLst(String &n) : name(n)
+	TStringLst(const String &n) : name(n)
 	{
 		getDemoTypeList().set(n, (TStringLst*)this);
 
@@ -28,7 +28,7 @@ template <class TComponent>
 class ComponentList : TStringLst
 {
 	public:
-	ComponentList( String & n) : TStringLst(n)
+	ComponentList(const  String & n) : TStringLst(n)
 	{
 	}
 

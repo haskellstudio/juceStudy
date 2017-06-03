@@ -3,13 +3,13 @@
 class Sprite
 {
 public:
-	Sprite::Sprite(OpenGLContext& openGLContext) :_vboID(0),
+	Sprite(OpenGLContext& openGLContext) :_vboID(0),
 		_openGLContext(openGLContext)
 	{
 	}
 
 
-	Sprite::~Sprite()
+	~Sprite()
 	{
 		if (0 != _vboID)
 		{

@@ -60,7 +60,7 @@ ThreeDTest::ThreeDTest () : _sprite(openGLContext), isInit(false)
 	//
 
 
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+        //glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
 	//glClearDepth(1.0);
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -174,9 +174,11 @@ bool ThreeDTest::keyPressed (const KeyPress& key)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-static ComponentList<ThreeDTest> td(String("ThreeDTest"));
+const String & s1 = String("ThreeDTest");
+const String & s2 = String("ThreeDTest2");
+static ComponentList<ThreeDTest> td(s1);
 
-static ComponentList<ThreeDTest> td2(String("ThreeDTest2"));
+static ComponentList<ThreeDTest> td2(s2);
 //[/MiscUserCode]
 
 

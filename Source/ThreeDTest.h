@@ -21,6 +21,8 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
 //[/Headers]
 
 
