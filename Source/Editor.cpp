@@ -68,36 +68,29 @@ Editor::Editor ()
 	if (vertexEditorComp)
 	{
 		CodeDocument & v = vertexEditorComp->getDocument();
-		v.insertText(0, STRINGIFY(
-						#version 130\n
-
-						attribute vec2 position; \n
-
-						void main()\n
-						{ \n
-						    gl_Position.xy = position; \n
-							gl_Position.z = 0.0; \n
-							gl_Position.w = 1.0; \n
-						}\n
-
-					));
+		v.insertText(0, "\
+						#version 120\n\
+						attribute vec2 position; \n\
+						void main()\n\
+						{ \n\
+						    gl_Position.xy = position; \n\
+							gl_Position.z = 0.0; \n\
+							gl_Position.w = 1.0; \n\
+						}\n\
+					");
 	}
 
 	if (fragmentEditorComp)
 	{
 		CodeDocument & v = fragmentEditorComp->getDocument();
-		v.insertText(0, STRINGIFY(
-			#version 130\n
-
-			out vec3 color; \n
-
-			void main()\n
-			{ \n
-				color = vec3(1.0, 0.0, 0.0); \n
-			}\n
-
-
-		));
+		v.insertText(0, "\
+			#version 120\n\
+            vec3 color; \n\
+			void main()\n\
+			{ \n\
+				gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); \n\
+			}\n\
+                     ");
 	}
 
 
