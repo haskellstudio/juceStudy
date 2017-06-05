@@ -98,7 +98,7 @@ public:
 
 	
 		FlexBox masterbox;
-		masterbox.flexDirection = FlexBox::Direction::row;// column;// : FlexBox::Direction::row;
+		masterbox.flexDirection = FlexBox::Direction::column;// column;// : FlexBox::Direction::row;
 		masterbox.alignItems = FlexBox::AlignItems::stretch;
 		masterbox.alignContent = FlexBox::AlignContent::stretch;
 		masterbox.flexWrap = FlexBox::Wrap::wrap;

@@ -18,6 +18,7 @@
 */
 
 //[Headers] You can add your own extra header files here...
+#define STRINGIFY(A) #A
 #include "ComponentList.h"
 //[/Headers]
 
@@ -34,10 +35,18 @@ Editor::Editor ()
     //[/Constructor_pre]
 
     addAndMakeVisible (tabbedComponent = new TabbedComponent (TabbedButtonBar::TabsAtLeft));
-    tabbedComponent->setTabBarDepth (80);
+    tabbedComponent->setTabBarDepth (41);
     tabbedComponent->addTab (TRANS("vertex"), Colours::lightgrey, new CodeEditorComponent (vertexDocument, nullptr), true);
     tabbedComponent->addTab (TRANS("fragment"), Colours::lightgrey, new CodeEditorComponent (fragmentDocument, nullptr), true);
     tabbedComponent->setCurrentTabIndex (0);
+
+    addAndMakeVisible (label = new Label ("new label",
+                                          TRANS("label text")));
+    label->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label->setJustificationType (Justification::centredLeft);
+    label->setEditable (false, false, false);
+    label->setColour (TextEditor::textColourId, Colours::black);
+    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
 
     //[UserPreSize]
@@ -47,9 +56,51 @@ Editor::Editor ()
 
 
     //[Constructor] You can add your own custom stuff here..
-	
+
 	tabbedComponent->setName("tabShader");
+	label->setName("labelShader");
 	tabbedComponent->getTabNames();
+
+
+
+	CodeEditorComponent * vertexEditorComp = (CodeEditorComponent *)tabbedComponent->getTabContentComponent(0);
+	CodeEditorComponent * fragmentEditorComp = (CodeEditorComponent *)tabbedComponent->getTabContentComponent(1);
+	if (vertexEditorComp)
+	{
+		CodeDocument & v = vertexEditorComp->getDocument();
+		v.insertText(0, STRINGIFY(
+						#version 130\n
+
+						attribute vec2 position; \n
+
+						void main()\n
+						{ \n
+						    gl_Position.xy = position; \n
+							gl_Position.z = 0.0; \n
+							gl_Position.w = 1.0; \n
+						}\n
+
+					));
+	}
+
+	if (fragmentEditorComp)
+	{
+		CodeDocument & v = fragmentEditorComp->getDocument();
+		v.insertText(0, STRINGIFY(
+			#version 130\n
+
+			out vec3 color; \n
+
+			void main()\n
+			{ \n
+				color = vec3(1.0, 0.0, 0.0); \n
+			}\n
+
+
+		));
+	}
+
+
 
 	 //vertexEditorComp = tabbedComponent->getTabContentComponent(0);
 	 //fragmentEditorComp = tabbedComponent->getTabContentComponent(1);
@@ -63,6 +114,7 @@ Editor::~Editor()
     //[/Destructor_pre]
 
     tabbedComponent = nullptr;
+    label = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -86,7 +138,8 @@ void Editor::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    tabbedComponent->setBounds (32, 88, 992, 784);
+    tabbedComponent->setBounds (16, 16, 712, 216);
+    label->setBounds (56, 256, 664, 80);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -117,14 +170,19 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ff323e44"/>
-  <TABBEDCOMPONENT name="new tabbed component" id="86091f7ab4d0dd38" memberName="tabbedComponent"
-                   virtualName="" explicitFocusOrder="0" pos="32 88 992 784" orientation="left"
-                   tabBarDepth="80" initialTab="0">
+  <TABBEDCOMPONENT name="tabShader " id="86091f7ab4d0dd38" memberName="tabbedComponent"
+                   virtualName="" explicitFocusOrder="0" pos="16 16 712 216" orientation="left"
+                   tabBarDepth="41" initialTab="0">
     <TAB name="vertex" colour="ffd3d3d3" useJucerComp="0" contentClassName="CodeEditorComponent"
          constructorParams="vertexDocument, nullptr" jucerComponentFile=""/>
     <TAB name="fragment" colour="ffd3d3d3" useJucerComp="0" contentClassName="CodeEditorComponent"
          constructorParams="fragmentDocument, nullptr" jucerComponentFile=""/>
   </TABBEDCOMPONENT>
+  <LABEL name="new label" id="ea8f0f5080e894a1" memberName="label" virtualName=""
+         explicitFocusOrder="0" pos="56 256 664 80" edTextCol="ff000000"
+         edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         kerning="0" bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

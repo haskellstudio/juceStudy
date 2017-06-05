@@ -23,6 +23,9 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glu.h>
+
+#include "Attributes.h"
+
 //[/Headers]
 
 
@@ -35,6 +38,7 @@
 class ThreeDTest  : public Component,
                     private OpenGLRenderer,
                     private Timer,
+                    private CodeDocument::Listener,
                     public ButtonListener
 {
 public:
@@ -47,13 +51,19 @@ public:
 
 	void newOpenGLContextCreated() override
 	{
-
+		freeAllContextObjects();
+	}
+	void openGLContextClosing() override
+	{
+		freeAllContextObjects();
+	}
+	void freeAllContextObjects()
+	{
+		shader = nullptr;
 	}
 
 	void renderOpenGL() override
 	{
-
-
 		if (false == isInit  )
 		{
 			if (openGLContext.isActive())
@@ -66,11 +76,26 @@ public:
 				return;
 
 		}
-
+		bool b = OpenGLHelpers::isContextActive();
+		if (!b)
+		{
+			return;
+		}
 
 		jassert(OpenGLHelpers::isContextActive());
 
 		const float desktopScale = (float)openGLContext.getRenderingScale();
+		//  glEnableClientState(GL_VERTEX_ARRAY);
+		//	glEnableClientState(GL_COLOR_ARRAY);
+
+
+		updateShader();
+
+
+		if (shader == nullptr)
+			return;
+
+
 		//_sprite.init(0, 0, 0.5, 0.5);
 		glClearDepth(1.0);
 
@@ -80,12 +105,9 @@ public:
 
 
 
-		glEnableClientState(GL_COLOR_ARRAY);
 		glColor3f(0.f, 1.f, 0.f);
 
-	//	_sprite.draw();
-
-
+		_sprite.draw(shader);
 
 
 		//glBegin(GL_TRIANGLES);
@@ -106,10 +128,7 @@ public:
 
 	}
 
-	void openGLContextClosing() override
-	{
 
-	}
 
 	Component* getChildComponentByName(Component* parent, String name)
 	{
@@ -136,14 +155,14 @@ public:
 
 	void timerCallback() override
 	{
-		static bool find = false;
+		bool find = false;
 
 		if (!find)
 		{
 			Component *editor = getChildComponentByName(getParentComponent(), "Editor");
 			Component *tabShader = getChildComponentByName(editor, "tabShader");
-			
-		
+
+
 			if (tabShader)
 			{
 				TabbedComponent* tc = (TabbedComponent*)tabShader;
@@ -154,23 +173,104 @@ public:
 				CodeEditorComponent * fragmentEditorComp = (CodeEditorComponent *)tc->getTabContentComponent(1);
 				if (vertexEditorComp)
 				{
-					CodeDocument & v = vertexEditorComp->getDocument();
-					CodeDocument & c = fragmentEditorComp->getDocument();
-					DBG(v.getAllContent() + String(" ") + c.getAllContent());
+					 v = &vertexEditorComp->getDocument();
+					 f = &fragmentEditorComp->getDocument();
+
+					v->addListener(this);
+					f->addListener(this);
+					find = true;
+					stopTimer();
+					//DBG(v.getAllContent() + String(" ") + c.getAllContent());
+				
+
+
 					//AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "info", c.getAllContent(), "exit");
 				}
 			}
-				
+
 			//Component *
 			//AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "info", "find Editor", "exit");
-			
+
 		}
-		
 
+		if (!find)
+			return;
+		_strVertex = v->getAllContent();
+		_strFragment = f->getAllContent();
+		stopTimer();
 
-		DBG("timer call back");
+	//	DBG("timer call back");
 
 	}
+
+	void updateShader()
+	{
+		if (_strVertex.isNotEmpty() || _strFragment.isNotEmpty())
+		{
+
+			bool b = OpenGLHelpers::isContextActive();
+			if (!b)
+			{
+				return;
+			}
+			ScopedPointer<OpenGLShaderProgram> newShader(new OpenGLShaderProgram(openGLContext));
+			_strVertex = v->getAllContent();
+			_strFragment = f->getAllContent();
+			Component *editor = getChildComponentByName(getParentComponent(), "Editor");
+			Component *labelShader = getChildComponentByName(editor, "labelShader");
+			Label *l = nullptr;
+			if (labelShader)
+			{
+				l = (Label*)labelShader;
+			}
+			if (newShader->addVertexShader(OpenGLHelpers::translateVertexShaderToV3(_strVertex))
+				&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3(_strFragment))
+				&& newShader->link())
+			{
+				shader = nullptr;
+
+				shader = newShader;
+				shader->use();
+				_sprite.setShader(shader);
+
+				if (l)
+				{
+					_compileResult = "GLSL: v" + String(juce::OpenGLShaderProgram::getLanguageVersion(), 2);
+					l->setText(_compileResult,dontSendNotification);
+				}
+					
+					
+			}
+			else
+			{
+				String s = newShader->getLastError();
+				if (l)
+				{
+					_compileResult = s;
+					l->setText(_compileResult, dontSendNotification);
+				}
+					
+					
+				//statusText = newShader->getLastError();
+			}
+
+		}
+		_strVertex = String();
+		_strFragment = String();
+
+	}
+
+	void codeDocumentTextInserted(const String& /*newText*/, int /*insertIndex*/) override
+	{
+		
+		startTimer(1000);
+	}
+
+	void codeDocumentTextDeleted(int /*startIndex*/, int /*endIndex*/) override
+	{
+		startTimer(1000);
+	}
+
 
 
     //[/UserMethods]
@@ -185,13 +285,20 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+	juce::CodeDocument * v;
+	juce::CodeDocument * f;
 
 	OpenGLContext openGLContext;
+	ScopedPointer<OpenGLShaderProgram> _shader;
 
-	
 
 	bool isInit;
 	Sprite _sprite;
+
+	String _strVertex;
+	String _strFragment;
+	String _compileResult;
+	ScopedPointer<OpenGLShaderProgram> shader;
     //[/UserVariables]
 
     //==============================================================================

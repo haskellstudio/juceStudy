@@ -57,9 +57,9 @@ ThreeDTest::ThreeDTest ()
 	openGLContext.setContinuousRepainting(true);  // true  fps may be high.
 
 
-	startTimer(3000);
+	startTimer(100);
 
-	
+
 	//
 
 
@@ -84,6 +84,8 @@ ThreeDTest::~ThreeDTest()
     //[Destructor]. You can add your own custom destruction code here..
 	openGLContext.detach();
 	stopTimer();
+	v->removeListener(this);
+	f->removeListener(this);
     //[/Destructor]
 }
 
@@ -182,7 +184,7 @@ const String & s1 = String("ThreeDTest");
 const String & s2 = String("ThreeDTest2");
 static ComponentList<ThreeDTest> td(s1);
 
-static ComponentList<ThreeDTest> td2(s2);
+//static ComponentList<ThreeDTest> td2(s2);
 //[/MiscUserCode]
 
 
@@ -196,7 +198,7 @@ static ComponentList<ThreeDTest> td2(s2);
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ThreeDTest" componentName=""
-                 parentClasses="public Component, private OpenGLRenderer, private Timer"
+                 parentClasses="public Component, private OpenGLRenderer, private Timer, private CodeDocument::Listener"
                  constructorParams="" variableInitialisers="_sprite(openGLContext), isInit(false)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">

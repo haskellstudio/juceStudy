@@ -1,5 +1,7 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "Attributes.h"
+#include "windows.h"
 class Sprite
 {
 public:
@@ -15,6 +17,7 @@ public:
 		{
 			_openGLContext.extensions.glDeleteBuffers(1, &_vboID);
 		}
+		attributes = nullptr;
 	}
 
 
@@ -36,7 +39,7 @@ public:
 			return;
 		}
 			
-		float vertexData[12] = { 0 };
+		
 
 
 		//first triangle
@@ -58,35 +61,50 @@ public:
 
 		vertexData[10] = x + width;
 		vertexData[11] = y + height;
-
+		int i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, _vboID);
-		_openGLContext.extensions.glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+		 i = ::GetLastError();
+		 int len = sizeof(vertexData);
 
+		_openGLContext.extensions.glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), &vertexData[0], GL_STATIC_DRAW);
+		i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, 0);
+		i = ::GetLastError();
 	}
 
-	void draw()
+	void setShader(OpenGLShaderProgram * shader)
+	{
+		attributes = nullptr;
+		attributes = new Attributes(_openGLContext, *shader);
+	}
+	void draw(OpenGLShaderProgram * shader)
 	{
 		if (0 == _vboID)
 		{
 			AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "Error", "0 == _vboID", "EXIT");
 			return;
 		}
+		if (attributes == nullptr)
+			return;
+		if (!attributes->getStatus())
+			return;
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, _vboID);
+		int i = ::GetLastError();
+		attributes->enable(_openGLContext);
+		i = ::GetLastError();
+	//	_openGLContext.extensions.glEnableVertexAttribArray(0);
 
 
-		_openGLContext.extensions.glEnableVertexAttribArray(0);
-
-
-		_openGLContext.extensions.glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
+	//	_openGLContext.extensions.glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 		glDrawArrays(GL_TRIANGLES, 0, 6);// sizeof(vertexData)/sizeof(float)/2
 
-		_openGLContext.extensions.glDisableVertexAttribArray(0);
-
-
+	//	_openGLContext.extensions.glDisableVertexAttribArray(0);
+		attributes->disable(_openGLContext);
+		i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, 0);
+		i = ::GetLastError();
+		
 	}
 
 private:
@@ -97,5 +115,10 @@ private:
 	GLuint _vboID;
 
 	OpenGLContext& _openGLContext;
+	OpenGLShaderProgram * _shader;
+
+	ScopedPointer<Attributes> attributes;
+
+	float vertexData[12] = { 0 };
 };
 
