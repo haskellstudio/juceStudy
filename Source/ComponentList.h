@@ -1,6 +1,6 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
-
+#define STRINGIFY(A) #A
 
 class TStringLst
 {

@@ -32,22 +32,22 @@
 
 //==============================================================================
 /**
-                                                                    //[Comments]
-                                                                    //[/Comments]
+																	//[Comments]
+																	//[/Comments]
 */
-class ThreeDTest  : public Component,
-                    private OpenGLRenderer,
-                    private Timer,
-                    private CodeDocument::Listener,
-                    public ButtonListener
+class ThreeDTest : public Component,
+	private OpenGLRenderer,
+	private Timer,
+	private CodeDocument::Listener,
+	public ButtonListener
 {
 public:
-    //==============================================================================
-    ThreeDTest ();
-    ~ThreeDTest();
+	//==============================================================================
+	ThreeDTest();
+	~ThreeDTest();
 
-    //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
+	//==============================================================================
+	//[UserMethods]     -- You can add your own custom methods in this section.
 
 	void newOpenGLContextCreated() override
 	{
@@ -59,16 +59,18 @@ public:
 	}
 	void freeAllContextObjects()
 	{
-		shader = nullptr;
+		_shader = nullptr;
+		_shader2 = nullptr;
 	}
 
 	void renderOpenGL() override
 	{
-		if (false == isInit  )
+		if (false == isInit)
 		{
 			if (openGLContext.isActive())
 			{
 				_sprite.init(0, 0, 0.5, 0.5);
+				_sprite2.init(-1, -1, 0.3, 0.3);
 				isInit = true;
 
 			}
@@ -92,11 +94,10 @@ public:
 		updateShader();
 
 
-		if (shader == nullptr)
+		if (_shader == nullptr || _shader2 == nullptr)
 			return;
 
 
-		//_sprite.init(0, 0, 0.5, 0.5);
 		glClearDepth(1.0);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -107,8 +108,13 @@ public:
 
 		glColor3f(0.f, 1.f, 0.f);
 
-		_sprite.draw(shader);
+		_shader->use();
+		_sprite.setShader(_shader);
+		_sprite.draw(_shader);
 
+		_shader2->use();
+		_sprite2.setShader(_shader2);
+		_sprite2.draw(_shader2);
 
 		//glBegin(GL_TRIANGLES);
 		//glVertex2f(-1, -1);
@@ -169,28 +175,19 @@ public:
 				int n = tc->getNumChildComponents();
 
 
-				CodeEditorComponent * vertexEditorComp =(CodeEditorComponent *) tc->getTabContentComponent(0);
+				CodeEditorComponent * vertexEditorComp = (CodeEditorComponent *)tc->getTabContentComponent(0);
 				CodeEditorComponent * fragmentEditorComp = (CodeEditorComponent *)tc->getTabContentComponent(1);
 				if (vertexEditorComp)
 				{
-					 v = &vertexEditorComp->getDocument();
-					 f = &fragmentEditorComp->getDocument();
+					v = &vertexEditorComp->getDocument();
+					f = &fragmentEditorComp->getDocument();
 
 					v->addListener(this);
 					f->addListener(this);
 					find = true;
 					stopTimer();
-					//DBG(v.getAllContent() + String(" ") + c.getAllContent());
-				
-
-
-					//AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "info", c.getAllContent(), "exit");
 				}
 			}
-
-			//Component *
-			//AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "info", "find Editor", "exit");
-
 		}
 
 		if (!find)
@@ -199,7 +196,7 @@ public:
 		_strFragment = f->getAllContent();
 		stopTimer();
 
-	//	DBG("timer call back");
+		//	DBG("timer call back");
 
 	}
 
@@ -213,48 +210,122 @@ public:
 			{
 				return;
 			}
-			ScopedPointer<OpenGLShaderProgram> newShader(new OpenGLShaderProgram(openGLContext));
-			_strVertex = v->getAllContent();
-			_strFragment = f->getAllContent();
-			Component *editor = getChildComponentByName(getParentComponent(), "Editor");
-			Component *labelShader = getChildComponentByName(editor, "labelShader");
-			Label *l = nullptr;
-			if (labelShader)
-			{
-				l = (Label*)labelShader;
-			}
-			if (newShader->addVertexShader(OpenGLHelpers::translateVertexShaderToV3(_strVertex))
-				&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3(_strFragment))
-				&& newShader->link())
-			{
-				shader = nullptr;
 
-				shader = newShader;
-				shader->use();
-				_sprite.setShader(shader);
 
-				if (l)
-				{
-					_compileResult = "GLSL: v" + String(juce::OpenGLShaderProgram::getLanguageVersion(), 2);
-					l->setText(_compileResult,dontSendNotification);
-				}
-					
-					
-			}
-			else
+
+
 			{
-				String s = newShader->getLastError();
-				if (l)
+				ScopedPointer<OpenGLShaderProgram> newShader(new OpenGLShaderProgram(openGLContext));
+				_strVertex = v->getAllContent();
+				_strFragment = f->getAllContent();
+				Component *editor = getChildComponentByName(getParentComponent(), "Editor");
+				Component *labelShader = getChildComponentByName(editor, "labelShader");
+				Label *l = nullptr;
+				if (labelShader)
 				{
-					_compileResult = s;
-					l->setText(_compileResult, dontSendNotification);
+					l = (Label*)labelShader;
 				}
+				if (newShader->addVertexShader(OpenGLHelpers::translateVertexShaderToV3(_strVertex))
+					&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3(_strFragment))
+					&& newShader->link())
+				{
+					_shader = nullptr;
+
+					_shader = newShader;
 					
+
+					if (l)
+					{
+						_compileResult = "GLSL: v" + String(juce::OpenGLShaderProgram::getLanguageVersion(), 2);
+						l->setText(_compileResult, dontSendNotification);
+					}
+
+
+				}
+				else
+				{
+					String s = newShader->getLastError();
+					if (l)
+					{
+						_compileResult = s;
+						l->setText(_compileResult, dontSendNotification);
+					}
+
+
+					//statusText = newShader->getLastError();
+				}
+
+			}
+			{
+				ScopedPointer<OpenGLShaderProgram> newShader(new OpenGLShaderProgram(openGLContext));
+				_strVertex = v->getAllContent();
+				_strFragment = f->getAllContent();
+				Component *editor = getChildComponentByName(getParentComponent(), "Editor");
+				Component *labelShader = getChildComponentByName(editor, "labelShader");
+				Label *l = nullptr;
+				if (labelShader)
+				{
+					l = (Label*)labelShader;
+				}
+				if (newShader->addVertexShader(OpenGLHelpers::translateVertexShaderToV3(_strVertex))
+					&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3(
 					
-				//statusText = newShader->getLastError();
+						STRINGIFY(
+							#version 130\n
+
+							out vec3 color; \n
+
+							void main()\n
+							{ \n
+										color = vec3(1.0, 1.0, 0.0); \n
+							}\n
+
+
+						)
+					
+					))
+					&& newShader->link())
+				{
+
+					_shader2 = nullptr;
+
+
+					_shader2 = newShader;
+					_shader2->use();
+
+					_sprite2.setShader(_shader2);
+
+					if (l)
+					{
+						_compileResult = "GLSL: v" + String(juce::OpenGLShaderProgram::getLanguageVersion(), 2);
+						l->setText(_compileResult, dontSendNotification);
+					}
+
+
+				}
+				else
+				{
+					String s = newShader->getLastError();
+					if (l)
+					{
+						_compileResult = s;
+						l->setText(_compileResult, dontSendNotification);
+					}
+
+
+					//statusText = newShader->getLastError();
+				}
+
 			}
 
 		}
+
+
+
+
+
+
+
 		_strVertex = String();
 		_strFragment = String();
 
@@ -262,7 +333,7 @@ public:
 
 	void codeDocumentTextInserted(const String& /*newText*/, int /*insertIndex*/) override
 	{
-		
+
 		startTimer(1000);
 	}
 
@@ -273,40 +344,42 @@ public:
 
 
 
-    //[/UserMethods]
+	//[/UserMethods]
 
-    void paint (Graphics& g) override;
-    void resized() override;
-    void buttonClicked (Button* buttonThatWasClicked) override;
-    void mouseMove (const MouseEvent& e) override;
-    bool keyPressed (const KeyPress& key) override;
+	void paint(Graphics& g) override;
+	void resized() override;
+	void buttonClicked(Button* buttonThatWasClicked) override;
+	void mouseMove(const MouseEvent& e) override;
+	bool keyPressed(const KeyPress& key) override;
 
 
 
 private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
+	//[UserVariables]   -- You can add your own custom variables in this section.
 	juce::CodeDocument * v;
 	juce::CodeDocument * f;
 
 	OpenGLContext openGLContext;
-	ScopedPointer<OpenGLShaderProgram> _shader;
+
 
 
 	bool isInit;
 	Sprite _sprite;
+	Sprite _sprite2;
 
 	String _strVertex;
 	String _strFragment;
 	String _compileResult;
-	ScopedPointer<OpenGLShaderProgram> shader;
-    //[/UserVariables]
+	ScopedPointer<OpenGLShaderProgram> _shader;
+	ScopedPointer<OpenGLShaderProgram> _shader2;
+	//[/UserVariables]
 
-    //==============================================================================
-    ScopedPointer<TextButton> textButton;
+	//==============================================================================
+	ScopedPointer<TextButton> textButton;
 
 
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ThreeDTest)
+	//==============================================================================
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ThreeDTest)
 };
 
 //[EndFile] You can add extra defines here...

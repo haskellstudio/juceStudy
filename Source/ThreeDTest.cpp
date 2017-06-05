@@ -30,7 +30,7 @@
 
 //==============================================================================
 ThreeDTest::ThreeDTest ()
-    : _sprite(openGLContext), isInit(false)
+    : _sprite(openGLContext),_sprite2(openGLContext), isInit(false)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
@@ -199,7 +199,7 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ThreeDTest" componentName=""
                  parentClasses="public Component, private OpenGLRenderer, private Timer, private CodeDocument::Listener"
-                 constructorParams="" variableInitialisers="_sprite(openGLContext), isInit(false)"
+                 constructorParams="" variableInitialisers="_sprite(openGLContext),_sprite2(openGLContext), isInit(false)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <METHODS>

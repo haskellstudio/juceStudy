@@ -18,7 +18,7 @@
 */
 
 //[Headers] You can add your own extra header files here...
-#define STRINGIFY(A) #A
+
 #include "ComponentList.h"
 //[/Headers]
 
