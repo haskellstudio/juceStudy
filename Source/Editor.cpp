@@ -29,7 +29,6 @@
 
 //==============================================================================
 Editor::Editor ()
-    : vertexEditorComp (vertexDocument, nullptr), fragmentEditorComp (fragmentDocument, nullptr)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
@@ -48,7 +47,13 @@ Editor::Editor ()
 
 
     //[Constructor] You can add your own custom stuff here..
-	//tabbedComponent->getTabContentComponent(0);
+	
+	tabbedComponent->setName("tabShader");
+	tabbedComponent->getTabNames();
+
+	 //vertexEditorComp = tabbedComponent->getTabContentComponent(0);
+	 //fragmentEditorComp = tabbedComponent->getTabContentComponent(1);
+	//vertexEditorComp (vertexDocument, nullptr), fragmentEditorComp (fragmentDocument, nullptr)
     //[/Constructor]
 }
 
@@ -108,7 +113,7 @@ static ComponentList<Editor> td((const String)(String("Editor")));
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="Editor" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers="vertexEditorComp (vertexDocument, nullptr), fragmentEditorComp (fragmentDocument, nullptr)"
+                 parentClasses="public Component" constructorParams="" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ff323e44"/>

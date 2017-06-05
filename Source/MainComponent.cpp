@@ -60,7 +60,11 @@ public:
 	  s = TStringLst::getDemoTypeList()["Editor"];
 	  if (s)
 	  {
-		  addAndMakeVisible(s->createComponent());
+		  Component * editor = s->createComponent();
+		  addAndMakeVisible(editor);
+		  editor->setName("Editor");
+		  //String en = editor->getName();
+		 // DBG(en);
 	  }
 
 

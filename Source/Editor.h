@@ -53,7 +53,8 @@ private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 
 	CodeDocument vertexDocument, fragmentDocument;
-	CodeEditorComponent vertexEditorComp, fragmentEditorComp;
+	//CodeEditorComponent* vertexEditorComp;
+	//CodeEditorComponent* fragmentEditorComp;
 
 
     //[/UserVariables]

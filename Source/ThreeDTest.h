@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.0.1
+  Created with Projucer version: 5.0.2
 
   ------------------------------------------------------------------------------
 
@@ -23,7 +23,6 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glu.h>
-#include "Editor.h"
 //[/Headers]
 
 
@@ -35,6 +34,7 @@
 */
 class ThreeDTest  : public Component,
                     private OpenGLRenderer,
+                    private Timer,
                     public ButtonListener
 {
 public:
@@ -64,7 +64,7 @@ public:
 			}
 			else
 				return;
-			
+
 		}
 
 
@@ -73,7 +73,7 @@ public:
 		const float desktopScale = (float)openGLContext.getRenderingScale();
 		//_sprite.init(0, 0, 0.5, 0.5);
 		glClearDepth(1.0);
-		
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
@@ -85,7 +85,7 @@ public:
 
 	//	_sprite.draw();
 
-		
+
 
 
 		//glBegin(GL_TRIANGLES);
@@ -111,8 +111,66 @@ public:
 
 	}
 
+	Component* getChildComponentByName(Component* parent, String name)
+	{
+		if (parent)
+		{
+			int n = parent->getNumChildComponents();
+			for (int i = 0; i < n; i++)
+			{
+				Component * c = parent->getChildComponent(i);
+
+				if (c)
+				{
+					String s = c->getName();
+					if (s == name)//tabShader
+					{
+						return c;
+					}
+				}
+			}
+		}
+
+		return nullptr;
+	}
+
+	void timerCallback() override
+	{
+		static bool find = false;
+
+		if (!find)
+		{
+			Component *editor = getChildComponentByName(getParentComponent(), "Editor");
+			Component *tabShader = getChildComponentByName(editor, "tabShader");
+			
+		
+			if (tabShader)
+			{
+				TabbedComponent* tc = (TabbedComponent*)tabShader;
+				int n = tc->getNumChildComponents();
 
 
+				CodeEditorComponent * vertexEditorComp =(CodeEditorComponent *) tc->getTabContentComponent(0);
+				CodeEditorComponent * fragmentEditorComp = (CodeEditorComponent *)tc->getTabContentComponent(1);
+				if (vertexEditorComp)
+				{
+					CodeDocument & v = vertexEditorComp->getDocument();
+					CodeDocument & c = fragmentEditorComp->getDocument();
+					DBG(v.getAllContent() + String(" ") + c.getAllContent());
+					//AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "info", c.getAllContent(), "exit");
+				}
+			}
+				
+			//Component *
+			//AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "info", "find Editor", "exit");
+			
+		}
+		
+
+
+		DBG("timer call back");
+
+	}
 
 
     //[/UserMethods]
@@ -130,15 +188,16 @@ private:
 
 	OpenGLContext openGLContext;
 
-	Editor ed;
+	
 
+	bool isInit;
+	Sprite _sprite;
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<TextButton> textButton;
 
-	Sprite _sprite;
-	bool isInit;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ThreeDTest)
 };
