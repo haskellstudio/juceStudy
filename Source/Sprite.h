@@ -76,6 +76,17 @@ public:
 	{
 		attributes = nullptr;
 		attributes = new Attributes(_openGLContext, *shader);
+
+		uniforms = new Uniforms(_openGLContext, *shader);
+	}
+
+	void setColor(float r, float g, float b, float a)
+	{
+		if (uniforms)
+		{
+			if (uniforms->lightPosition != nullptr)
+				uniforms->lightPosition->set(r, g, b, a);
+		}
 	}
 	void draw(OpenGLShaderProgram * shader)
 	{
@@ -84,16 +95,18 @@ public:
 			AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "Error", "0 == _vboID", "EXIT");
 			return;
 		}
-		if (attributes == nullptr)
+		if (attributes == nullptr || uniforms == nullptr)
 			return;
-		if (!attributes->getStatus())
+		if (!attributes->getStatus() || !uniforms->getStatus())
 			return;
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, _vboID);
         //	int i = ::GetLastError();
 		attributes->enable(_openGLContext);
+		double curTime = Time::getMillisecondCounterHiRes();
+
+		setColor(sin(curTime), 0, 1, 1);
         //	i = ::GetLastError();
 	//	_openGLContext.extensions.glEnableVertexAttribArray(0);
-
 
 	//	_openGLContext.extensions.glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -104,7 +117,6 @@ public:
         //	i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, 0);
         //	i = ::GetLastError();
-		
 	}
 
 private:
@@ -118,7 +130,8 @@ private:
 	OpenGLShaderProgram * _shader;
 
 	ScopedPointer<Attributes> attributes;
-
+	ScopedPointer<Uniforms> uniforms;
+	
 	float vertexData[12] = { 0 };
 };
 

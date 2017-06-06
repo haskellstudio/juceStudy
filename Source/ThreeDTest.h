@@ -21,10 +21,8 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-
-#include "Attributes.h"
+//#include <OpenGL/gl.h>
+//#include <OpenGL/glu.h>
 
 //[/Headers]
 
@@ -270,10 +268,11 @@ public:
 				if (newShader->addVertexShader(OpenGLHelpers::translateVertexShaderToV3(_strVertex))
 					&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3("\
 							#version 120\n\
+							uniform vec4 lightPosition; \n\
 							vec3 color; \n\
 							void main()\n\
 							{ \n\
-										gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0); \n\
+										gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
 							}\n\
 						"
 					))

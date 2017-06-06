@@ -66,3 +66,37 @@ private:
 		return new OpenGLShaderProgram::Attribute(shader, attributeName);
 	}
 };
+
+
+
+struct Uniforms
+{
+	Uniforms(OpenGLContext& openGLContext, OpenGLShaderProgram& shader)
+	{
+		//projectionMatrix = createUniform(openGLContext, shader, "projectionMatrix");
+		//viewMatrix = createUniform(openGLContext, shader, "viewMatrix");
+		//texture = createUniform(openGLContext, shader, "demoTexture");
+		lightPosition = createUniform(openGLContext, shader, "lightPosition");
+	//	bouncingNumber = createUniform(openGLContext, shader, "bouncingNumber");
+	}
+	bool getStatus()
+	{
+		if (lightPosition == nullptr)
+			return false;
+		else
+			return true;
+	}
+	//ScopedPointer<OpenGLShaderProgram::Uniform> projectionMatrix, viewMatrix, texture, lightPosition, bouncingNumber;
+	ScopedPointer<OpenGLShaderProgram::Uniform> lightPosition;
+
+private:
+	static OpenGLShaderProgram::Uniform* createUniform(OpenGLContext& openGLContext,
+		OpenGLShaderProgram& shader,
+		const char* uniformName)
+	{
+		if (openGLContext.extensions.glGetUniformLocation(shader.getProgramID(), uniformName) < 0)
+			return nullptr;
+
+		return new OpenGLShaderProgram::Uniform(shader, uniformName);
+	}
+};

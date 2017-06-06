@@ -85,10 +85,11 @@ Editor::Editor ()
 		CodeDocument & v = fragmentEditorComp->getDocument();
 		v.insertText(0, "\
 			#version 120\n\
+			uniform vec4 lightPosition; \n\
             vec3 color; \n\
 			void main()\n\
 			{ \n\
-				gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); \n\
+				gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
 			}\n\
                      ");
 	}
