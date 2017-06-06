@@ -79,7 +79,13 @@ public:
 			if (uf->lightPosition)
 			{
 				uf->lightPosition->set(1.0f, 1.0f, 0.0f, 1.0f);
+            
 			}
+            if(uf->texture)
+                {
+                uf->texture->set(0);
+                }
+        
 		}
 		
 		atrr->enable(openGLContext);
@@ -146,7 +152,7 @@ public:
 		glEnable(GL_TEXTURE_2D);
 
 		texture.bind();
-		uniforms->texture->set(0);
+		
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		//
