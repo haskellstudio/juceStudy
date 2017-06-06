@@ -109,7 +109,6 @@ ThreeDTest::~ThreeDTest()
 void ThreeDTest::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-	return;
     //[/UserPrePaint]
 
     g.fillAll (Colour (0xff323e44));
