@@ -48,6 +48,7 @@ struct Attributes
 
 	bool getStatus()
 	{
+		return true;
 		if (position == nullptr)
 			return false;
 		else
@@ -75,19 +76,20 @@ struct Uniforms
 	{
 		//projectionMatrix = createUniform(openGLContext, shader, "projectionMatrix");
 		//viewMatrix = createUniform(openGLContext, shader, "viewMatrix");
-		//texture = createUniform(openGLContext, shader, "demoTexture");
+		texture = createUniform(openGLContext, shader, "demoTexture");
 		lightPosition = createUniform(openGLContext, shader, "lightPosition");
 	//	bouncingNumber = createUniform(openGLContext, shader, "bouncingNumber");
 	}
 	bool getStatus()
 	{
-		if (lightPosition == nullptr)
+		return true;
+		if (lightPosition == nullptr || texture == nullptr)
 			return false;
 		else
 			return true;
 	}
 	//ScopedPointer<OpenGLShaderProgram::Uniform> projectionMatrix, viewMatrix, texture, lightPosition, bouncingNumber;
-	ScopedPointer<OpenGLShaderProgram::Uniform> lightPosition;
+	ScopedPointer<OpenGLShaderProgram::Uniform> lightPosition, texture;
 
 private:
 	static OpenGLShaderProgram::Uniform* createUniform(OpenGLContext& openGLContext,
@@ -98,5 +100,39 @@ private:
 			return nullptr;
 
 		return new OpenGLShaderProgram::Uniform(shader, uniformName);
+	}
+};
+
+
+
+
+
+struct DynamicTexture  
+{
+	DynamicTexture() {  }
+
+	Image image;
+
+
+	bool applyTo(OpenGLTexture& texture) 
+	{
+		const int size = 64;
+
+		if (!image.isValid())
+			image = Image(Image::ARGB, size, size, true);
+
+		{
+			Graphics g(image);
+			g.fillAll(Colours::white);
+
+		//	g.setColour(Colours::lightgreen);
+		//	g.drawRect(10, 10, size/2, size/2, 2);
+			g.setColour(Colours::red);
+			g.setFont(40);
+			g.drawFittedText(String("123"), image.getBounds(), Justification::centred, 1);
+		}
+
+		texture.loadImage(image);
+		return true;
 	}
 };

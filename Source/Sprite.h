@@ -88,6 +88,14 @@ public:
 				uniforms->lightPosition->set(r, g, b, a);
 		}
 	}
+	void setTexture(GLint i)
+	{
+		if (uniforms)
+		{
+			if (uniforms->texture != nullptr)
+				uniforms->texture->set(i);
+		}
+	}
 	void draw(OpenGLShaderProgram * shader)
 	{
 		if (0 == _vboID)
@@ -100,11 +108,13 @@ public:
 		if (!attributes->getStatus() || !uniforms->getStatus())
 			return;
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, _vboID);
-        //	int i = ::GetLastError();
+
 		attributes->enable(_openGLContext);
 		double curTime = Time::getMillisecondCounterHiRes();
 
 		setColor(sin(curTime), 0, 1, 1);
+
+		//setTexture(0);
         //	i = ::GetLastError();
 	//	_openGLContext.extensions.glEnableVertexAttribArray(0);
 

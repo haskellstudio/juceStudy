@@ -59,6 +59,7 @@ public:
 	{
 		_shader = nullptr;
 		_shader2 = nullptr;
+		texture.release();
 	}
 
 	void renderOpenGL() override
@@ -70,7 +71,7 @@ public:
 				_sprite.init(0, 0, 0.5, 0.5);
 				_sprite2.init(-1, -1, 0.3, 0.3);
 				isInit = true;
-
+				dt.applyTo(texture);
 			}
 			else
 				return;
@@ -106,7 +107,23 @@ public:
 
 		glColor3f(0.f, 1.f, 0.f);
 
+
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		openGLContext.extensions.glActiveTexture(GL_TEXTURE0);
+		glEnable(GL_TEXTURE_2D);
+
+		texture.bind();
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 		_shader->use();
+
+
+
 		//_sprite.setShader(_shader);
 		_sprite.draw(_shader);
 
@@ -269,10 +286,14 @@ public:
 					&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3("\
 							#version 120\n\
 							uniform vec4 lightPosition; \n\
+							varying vec2 textureCoordOut; \n\
+							uniform sampler2D demoTexture; \n\
 							vec3 color; \n\
 							void main()\n\
 							{ \n\
-										gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
+										//gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
+										//gl_FragColor = lightPosition* texture2D (demoTexture, textureCoordOut);\n\
+										gl_FragColor =  texture2D (demoTexture, textureCoordOut);\n\
 							}\n\
 						"
 					))
@@ -356,6 +377,9 @@ private:
 	String _compileResult;
 	ScopedPointer<OpenGLShaderProgram> _shader;
 	ScopedPointer<OpenGLShaderProgram> _shader2;
+	OpenGLTexture texture;
+	DynamicTexture dt;
+
 	//[/UserVariables]
 
 	//==============================================================================

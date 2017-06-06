@@ -71,11 +71,14 @@ Editor::Editor ()
 		v.insertText(0, "\
 						#version 120\n\
 						attribute vec2 position; \n\
+						attribute vec2 textureCoordIn; \n\
+						varying vec2 textureCoordOut; \n\
 						void main()\n\
 						{ \n\
 						    gl_Position.xy = position; \n\
 							gl_Position.z = 0.0; \n\
 							gl_Position.w = 1.0; \n\
+							textureCoordOut = textureCoordIn;\n\
 						}\n\
 					");
 	}
@@ -86,10 +89,14 @@ Editor::Editor ()
 		v.insertText(0, "\
 			#version 120\n\
 			uniform vec4 lightPosition; \n\
+			varying vec2 textureCoordOut; \n\
+			uniform sampler2D demoTexture; \n\
             vec3 color; \n\
 			void main()\n\
 			{ \n\
-				gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
+				gl_FragColor = texture2D(demoTexture, textureCoordOut);\n\
+				//gl_FragColor = lightPosition* texture2D (demoTexture, textureCoordOut);\n\
+				//gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
 			}\n\
                      ");
 	}
