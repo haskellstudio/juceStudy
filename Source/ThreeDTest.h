@@ -61,7 +61,13 @@ public:
 		_shader2 = nullptr;
 		texture.release();
 	}
+	inline Colour getUIColourIfAvailable(LookAndFeel_V4::ColourScheme::UIColour uiColour, Colour fallback = Colour(0xff4d4d4d))
+	{
+		if (auto* v4 = dynamic_cast<LookAndFeel_V4*> (&LookAndFeel::getDefaultLookAndFeel()))
+			return v4->getCurrentColourScheme().getUIColour(uiColour);
 
+		return fallback;
+	}
 	void renderOpenGL() override
 	{
 		if (false == isInit)
@@ -97,16 +103,15 @@ public:
 			return;
 
 
-		glClearDepth(1.0);
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	/*	glClearDepth(1.0);
 
 		glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-
-		glColor3f(0.f, 1.f, 0.f);
-
+		glColor3f(0.f, 1.f, 0.f);*/
+		OpenGLHelpers::clear(getUIColourIfAvailable(LookAndFeel_V4::ColourScheme::UIColour::windowBackground,
+			Colours::lightblue));
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);

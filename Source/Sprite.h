@@ -2,6 +2,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Attributes.h"
     //#include "windows.h"
+
+
 class Sprite
 {
 public:
@@ -38,35 +40,63 @@ public:
 			AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "Error", "0 == _vboID in init", "EXIT");
 			return;
 		}
-			
-		
-
-
 		//first triangle
-		vertexData[0] = x + width;
-		vertexData[1] = y + height;
+		_vertexData[0].x = x + width;
+		_vertexData[0].y = y + height;
+		_vertexData[0].u = 1.0f;
+		_vertexData[0].v = 1.0f;
 
-		vertexData[2] = x;
-		vertexData[3] = y + height;
+		_vertexData[1].x = x;
+		_vertexData[1].y = y + height;
+		_vertexData[1].u = 0.0f;
+		_vertexData[1].v = 1.0f;
 
-		vertexData[4] = x ;
-		vertexData[5] = y ;
+		_vertexData[2].x = x;
+		_vertexData[2].y = y ;
+		_vertexData[2].u = 0.0f;
+		_vertexData[2].v = 0.0f;
 
 		//second triangle
-		vertexData[6] = x;
-		vertexData[7] = y;
 
-		vertexData[8] = x + width;
-		vertexData[9] = y;
+		_vertexData[3].x = x;
+		_vertexData[3].y = y;
+		_vertexData[3].u = 0.0f;
+		_vertexData[3].v = 0.0f;
 
-		vertexData[10] = x + width;
-		vertexData[11] = y + height;
+		_vertexData[4].x = x+width;
+		_vertexData[4].y = y;
+		_vertexData[4].u = 1.0f;
+		_vertexData[4].v = 0.0f;
+
+		_vertexData[5].x = x + width;
+		_vertexData[5].y = y + height;
+		_vertexData[5].u = 1.0f;
+		_vertexData[5].v = 1.0f;
+		//first triangle
+		//vertexData[0] = x + width;
+		//vertexData[1] = y + height;
+
+		//vertexData[2] = x;
+		//vertexData[3] = y + height;
+
+		//vertexData[4] = x ;
+		//vertexData[5] = y ;
+
+		//second triangle
+		//vertexData[6] = x;
+		//vertexData[7] = y;
+
+		//vertexData[8] = x + width;
+		//vertexData[9] = y;
+
+		//vertexData[10] = x + width;
+		//vertexData[11] = y + height;
         //int i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, _vboID);
         // i = ::GetLastError();
-		 int len = sizeof(vertexData);
+		 //int len = sizeof(vertexData);
 
-		_openGLContext.extensions.glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), &vertexData[0], GL_STATIC_DRAW);
+		_openGLContext.extensions.glBufferData(GL_ARRAY_BUFFER, sizeof(_vertexData), &_vertexData[0], GL_STATIC_DRAW);
         //i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, 0);
         //i = ::GetLastError();
@@ -142,6 +172,6 @@ private:
 	ScopedPointer<Attributes> attributes;
 	ScopedPointer<Uniforms> uniforms;
 	
-	float vertexData[12] = { 0 };
+	Vertex _vertexData[6] = { 0 };
 };
 

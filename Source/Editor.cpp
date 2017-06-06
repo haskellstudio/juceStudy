@@ -76,7 +76,7 @@ Editor::Editor ()
 						void main()\n\
 						{ \n\
 						    gl_Position.xy = position; \n\
-							gl_Position.z = 0.0; \n\
+							gl_Position.z = -1.0; \n\
 							gl_Position.w = 1.0; \n\
 							textureCoordOut = textureCoordIn;\n\
 						}\n\

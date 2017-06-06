@@ -1,13 +1,22 @@
 #pragma once
 
+struct Vertex {
+	float x;
+	float y;
+	float u;
+	float v;
+
+};
+
+
 struct Attributes
 {
 	Attributes(OpenGLContext& openGLContext, OpenGLShaderProgram& shader)
 	{
 		position = createAttribute(openGLContext, shader, "position");
 		/*normal = createAttribute(openGLContext, shader, "normal");
-		sourceColour = createAttribute(openGLContext, shader, "sourceColour");
-		textureCoordIn = createAttribute(openGLContext, shader, "textureCoordIn");*/
+		sourceColour = createAttribute(openGLContext, shader, "sourceColour");*/
+		textureCoordIn = createAttribute(openGLContext, shader, "textureCoordIn");
 	}
 
 	void enable(OpenGLContext& openGLContext)
@@ -15,7 +24,7 @@ struct Attributes
 		if (position != nullptr)
 		{
 			openGLContext.extensions.glEnableVertexAttribArray(position->attributeID);
-			openGLContext.extensions.glVertexAttribPointer(position->attributeID, 2, GL_FLOAT, GL_FALSE, 0, 0);
+			openGLContext.extensions.glVertexAttribPointer(position->attributeID, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 			
 		}
 
@@ -30,20 +39,20 @@ struct Attributes
 		openGLContext.extensions.glVertexAttribPointer(sourceColour->attributeID, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(float) * 6));
 		openGLContext.extensions.glEnableVertexAttribArray(sourceColour->attributeID);
 		}
-
+		*/
 		if (textureCoordIn != nullptr)
 		{
-		openGLContext.extensions.glVertexAttribPointer(textureCoordIn->attributeID, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(float) * 10));
-		openGLContext.extensions.glEnableVertexAttribArray(textureCoordIn->attributeID);
-		}*/
+			openGLContext.extensions.glVertexAttribPointer(textureCoordIn->attributeID, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(float) * 2));
+			openGLContext.extensions.glEnableVertexAttribArray(textureCoordIn->attributeID);
+		}
 	}
 
 	void disable(OpenGLContext& openGLContext)
 	{
 		if (position != nullptr)       openGLContext.extensions.glDisableVertexAttribArray(position->attributeID);
 		/*	if (normal != nullptr)         openGLContext.extensions.glDisableVertexAttribArray(normal->attributeID);
-		if (sourceColour != nullptr)   openGLContext.extensions.glDisableVertexAttribArray(sourceColour->attributeID);
-		if (textureCoordIn != nullptr)  openGLContext.extensions.glDisableVertexAttribArray(textureCoordIn->attributeID);*/
+		if (sourceColour != nullptr)   openGLContext.extensions.glDisableVertexAttribArray(sourceColour->attributeID);*/
+		if (textureCoordIn != nullptr)  openGLContext.extensions.glDisableVertexAttribArray(textureCoordIn->attributeID);
 	}
 
 	bool getStatus()
@@ -54,7 +63,7 @@ struct Attributes
 		else
 			return true;
 	}
-	ScopedPointer<OpenGLShaderProgram::Attribute> position;
+	ScopedPointer<OpenGLShaderProgram::Attribute> position, textureCoordIn;
 
 private:
 	static OpenGLShaderProgram::Attribute* createAttribute(OpenGLContext& openGLContext,
@@ -116,7 +125,7 @@ struct DynamicTexture
 
 	bool applyTo(OpenGLTexture& texture) 
 	{
-		const int size = 64;
+		const int size = 16*16;
 
 		if (!image.isValid())
 			image = Image(Image::ARGB, size, size, true);
@@ -125,11 +134,15 @@ struct DynamicTexture
 			Graphics g(image);
 			g.fillAll(Colours::white);
 
-		//	g.setColour(Colours::lightgreen);
-		//	g.drawRect(10, 10, size/2, size/2, 2);
+			//g.setColour(Colours::black);
+			//g.drawRect(10, 10, size/2, size/2, 2);
+
+
+			//g.fillEllipse(0, 0, 16, 16);
 			g.setColour(Colours::red);
 			g.setFont(40);
-			g.drawFittedText(String("123"), image.getBounds(), Justification::centred, 1);
+			g.drawFittedText(String("Release my soul"), image.getBounds(), Justification::centred, 1);
+
 		}
 
 		texture.loadImage(image);
