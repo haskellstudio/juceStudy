@@ -109,11 +109,11 @@ public:
 		glColor3f(0.f, 1.f, 0.f);
 
 		_shader->use();
-		_sprite.setShader(_shader);
+		//_sprite.setShader(_shader);
 		_sprite.draw(_shader);
 
 		_shader2->use();
-		_sprite2.setShader(_shader2);
+		//_sprite2.setShader(_shader2);
 		_sprite2.draw(_shader2);
 
 		//glBegin(GL_TRIANGLES);
@@ -232,7 +232,7 @@ public:
 					_shader = nullptr;
 
 					_shader = newShader;
-					
+					_sprite.setShader(_shader);
 
 					if (l)
 					{
@@ -291,8 +291,6 @@ public:
 
 
 					_shader2 = newShader;
-					_shader2->use();
-
 					_sprite2.setShader(_shader2);
 
 					if (l)
@@ -319,12 +317,6 @@ public:
 			}
 
 		}
-
-
-
-
-
-
 
 		_strVertex = String();
 		_strFragment = String();
