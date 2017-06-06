@@ -24,6 +24,7 @@
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glu.h>
 #include "Attributes.h"
+
 //[/Headers]
 
 
@@ -131,7 +132,11 @@ public:
 	/*	OpenGLHelpers::clear(getUIColourIfAvailable(LookAndFeel_V4::ColourScheme::UIColour::windowBackground,
 			Colours::lightblue));*/
 
-		OpenGLHelpers::clear(Colours::lightpink);
+		/*OpenGLHelpers::clear(Colours::lightpink);*/
+		//OpenGLHelpers::clear(getUIColourIfAvailable(LookAndFeel_V4::ColourScheme::UIColour::windowBackground,
+		//	Colours::lightblue));
+
+		OpenGLHelpers::clear(Colour(Colours::black.withAlpha(0.0f)));
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);

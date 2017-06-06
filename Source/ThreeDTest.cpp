@@ -20,6 +20,7 @@
 //[Headers] You can add your own extra header files here...
 #include "ComponentList.h"
 #include "Sprite.h"
+#include "OverLay.h"
 //[/Headers]
 
 #include "ThreeDTest.h"
@@ -33,6 +34,8 @@ ThreeDTest::ThreeDTest ()
     : _sprite(openGLContext),_sprite2(openGLContext), isInit(false)
 {
     //[Constructor_pre] You can add your own custom stuff here..
+	//if (MainAppWindow* mw = MainAppWindow::getMainAppWindow())
+	//    mw->setRenderingEngine (0);
     //[/Constructor_pre]
 
     addAndMakeVisible (textButton = new TextButton ("new button"));
@@ -48,8 +51,21 @@ ThreeDTest::ThreeDTest ()
     //[Constructor] You can add your own custom stuff here..
 	//addKeyListener(this);
 
+	//addAndMakeVisible(controlsOverlay = new DemoControlsOverlay(*this));
+
+	setOpaque(true);
+	//TStringLst * s = TStringLst::getDemoTypeList()["OverLay"];
+	//if (s)
+	//{
+	//	addAndMakeVisible(s->createComponent());
+	//}
+	addAndMakeVisible(new OverLay());
+	openGLContext.setComponentPaintingEnabled(true);  // if false , the overlay component can not see.
+
+
 	openGLContext.setRenderer(this);
-	openGLContext.setComponentPaintingEnabled(false);
+	
+	openGLContext.setContinuousRepainting(true);
 	openGLContext.attachTo(*this);
 
 
@@ -63,7 +79,7 @@ ThreeDTest::ThreeDTest ()
 	//
 
 
-        //glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+    //glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
 	//glClearDepth(1.0);
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -93,6 +109,7 @@ ThreeDTest::~ThreeDTest()
 void ThreeDTest::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
+	return;
     //[/UserPrePaint]
 
     g.fillAll (Colour (0xff323e44));
