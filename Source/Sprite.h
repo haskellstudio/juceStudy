@@ -1,7 +1,7 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "Attributes.h"
-#include "windows.h"
+    //#include "windows.h"
 class Sprite
 {
 public:
@@ -61,15 +61,15 @@ public:
 
 		vertexData[10] = x + width;
 		vertexData[11] = y + height;
-		int i = ::GetLastError();
+        //int i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, _vboID);
-		 i = ::GetLastError();
+        // i = ::GetLastError();
 		 int len = sizeof(vertexData);
 
 		_openGLContext.extensions.glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), &vertexData[0], GL_STATIC_DRAW);
-		i = ::GetLastError();
+        //i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, 0);
-		i = ::GetLastError();
+        //i = ::GetLastError();
 	}
 
 	void setShader(OpenGLShaderProgram * shader)
@@ -89,9 +89,9 @@ public:
 		if (!attributes->getStatus())
 			return;
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, _vboID);
-		int i = ::GetLastError();
+        //	int i = ::GetLastError();
 		attributes->enable(_openGLContext);
-		i = ::GetLastError();
+        //	i = ::GetLastError();
 	//	_openGLContext.extensions.glEnableVertexAttribArray(0);
 
 
@@ -101,9 +101,9 @@ public:
 
 	//	_openGLContext.extensions.glDisableVertexAttribArray(0);
 		attributes->disable(_openGLContext);
-		i = ::GetLastError();
+        //	i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, 0);
-		i = ::GetLastError();
+        //	i = ::GetLastError();
 		
 	}
 

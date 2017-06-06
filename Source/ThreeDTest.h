@@ -21,8 +21,8 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
-//#include <OpenGL/gl.h>
-//#include <OpenGL/glu.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
 
 #include "Attributes.h"
 
@@ -268,21 +268,14 @@ public:
 					l = (Label*)labelShader;
 				}
 				if (newShader->addVertexShader(OpenGLHelpers::translateVertexShaderToV3(_strVertex))
-					&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3(
-					
-						STRINGIFY(
-							#version 130\n
-
-							out vec3 color; \n
-
-							void main()\n
-							{ \n
-										color = vec3(1.0, 1.0, 0.0); \n
-							}\n
-
-
-						)
-					
+					&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3("\
+							#version 120\n\
+							vec3 color; \n\
+							void main()\n\
+							{ \n\
+										gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0); \n\
+							}\n\
+						"
 					))
 					&& newShader->link())
 				{
