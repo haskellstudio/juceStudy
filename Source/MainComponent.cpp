@@ -101,7 +101,7 @@ public:
 		masterbox.flexDirection = FlexBox::Direction::column;// column;// : FlexBox::Direction::row;
 		masterbox.alignItems = FlexBox::AlignItems::stretch;
 		masterbox.alignContent = FlexBox::AlignContent::stretch;
-		masterbox.flexWrap = FlexBox::Wrap::wrap;
+		masterbox.flexWrap = juce::FlexBox::Wrap::wrap;
 		masterbox.justifyContent = FlexBox::JustifyContent::center;
 		
 

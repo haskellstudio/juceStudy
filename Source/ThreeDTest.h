@@ -434,6 +434,8 @@ private:
 	OpenGLTexture texture;
 	DynamicTexture dt;
 
+
+	OverLay * o=nullptr;
 	//[/UserVariables]
 
 	//==============================================================================

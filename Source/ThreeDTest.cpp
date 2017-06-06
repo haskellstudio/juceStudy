@@ -53,13 +53,13 @@ ThreeDTest::ThreeDTest ()
 
 	//addAndMakeVisible(controlsOverlay = new DemoControlsOverlay(*this));
 
-	setOpaque(true);
+	//setOpaque(true);
 	//TStringLst * s = TStringLst::getDemoTypeList()["OverLay"];
 	//if (s)
 	//{
 	//	addAndMakeVisible(s->createComponent());
 	//}
-	addAndMakeVisible(new OverLay());
+	addAndMakeVisible(o = new OverLay());
 	openGLContext.setComponentPaintingEnabled(true);  // if false , the overlay component can not see.
 
 
@@ -121,7 +121,8 @@ void ThreeDTest::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
-
+	if(o)
+		o->setBounds(0, 0, getParentWidth(), getParentHeight());
     textButton->setBounds (proportionOfWidth (0.3141f), proportionOfHeight (0.1860f), 150, 24);
     //[UserResized] Add your own custom resize handling here..
 	DBG("width is " + String(getWidth()));
