@@ -1968,7 +1968,9 @@
     <ClCompile Include="..\..\Source\OverLay.cpp">
       <Filter>jucea\Source</Filter>
     </ClCompile>
-    <ClCompile Include="TransparentOpenGLComponent.cpp" />
+    <ClCompile Include="..\..\Source\TransparentOpenGLComponent.cpp">
+      <Filter>jucea\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Editor.h">
@@ -3774,7 +3776,9 @@
     <ClInclude Include="..\..\Source\OverLay.h">
       <Filter>jucea\Source</Filter>
     </ClInclude>
-    <ClInclude Include="TransparentOpenGLComponent.h" />
+    <ClInclude Include="..\..\Source\TransparentOpenGLComponent.h">
+      <Filter>jucea\Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\projucer\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt">
