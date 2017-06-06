@@ -19,7 +19,6 @@ public:
 		{
 			_openGLContext.extensions.glDeleteBuffers(1, &_vboID);
 		}
-		attributes = nullptr;
 	}
 
 
@@ -102,47 +101,52 @@ public:
         //i = ::GetLastError();
 	}
 
-	void setShader(OpenGLShaderProgram * shader)
-	{
-		attributes = nullptr;
-		attributes = new Attributes(_openGLContext, *shader);
+	//void setShader(OpenGLShaderProgram * shader)
+	//{
+	//	attributes = nullptr;
+	//	attributes = new Attributes(_openGLContext, *shader);
 
-		uniforms = new Uniforms(_openGLContext, *shader);
-	}
+	//	uniforms = new Uniforms(_openGLContext, *shader);
+	//}
 
-	void setColor(float r, float g, float b, float a)
+	//void setColor(float r, float g, float b, float a)
+	//{
+	//	if (uniforms)
+	//	{
+	//		if (uniforms->lightPosition != nullptr)
+	//			uniforms->lightPosition->set(r, g, b, a);
+	//	}
+	//}
+	//void setTexture(GLint i)
+	//{
+	//	if (uniforms)
+	//	{
+	//		if (uniforms->texture != nullptr)
+	//			uniforms->texture->set(i);
+	//	}
+	//}
+	void bind()
 	{
-		if (uniforms)
-		{
-			if (uniforms->lightPosition != nullptr)
-				uniforms->lightPosition->set(r, g, b, a);
-		}
+		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, _vboID);
+
 	}
-	void setTexture(GLint i)
-	{
-		if (uniforms)
-		{
-			if (uniforms->texture != nullptr)
-				uniforms->texture->set(i);
-		}
-	}
-	void draw(OpenGLShaderProgram * shader)
+	void draw()
 	{
 		if (0 == _vboID)
 		{
 			AlertWindow::showMessageBox(AlertWindow::AlertIconType::InfoIcon, "Error", "0 == _vboID", "EXIT");
 			return;
 		}
-		if (attributes == nullptr || uniforms == nullptr)
-			return;
-		if (!attributes->getStatus() || !uniforms->getStatus())
-			return;
-		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, _vboID);
+		//if (attributes == nullptr || uniforms == nullptr)
+		//	return;
+		//if (!attributes->getStatus() || !uniforms->getStatus())
+		//	return;
+		
 
-		attributes->enable(_openGLContext);
-		double curTime = Time::getMillisecondCounterHiRes();
+		//attributes->enable(_openGLContext);
+		//double curTime = Time::getMillisecondCounterHiRes();
 
-		setColor(sin(curTime), 0, 1, 1);
+		//setColor(sin(curTime), 0, 1, 1);
 
 		//setTexture(0);
         //	i = ::GetLastError();
@@ -153,7 +157,7 @@ public:
 		glDrawArrays(GL_TRIANGLES, 0, 6);// sizeof(vertexData)/sizeof(float)/2
 
 	//	_openGLContext.extensions.glDisableVertexAttribArray(0);
-		attributes->disable(_openGLContext);
+	//	attributes->disable(_openGLContext);
         //	i = ::GetLastError();
 		_openGLContext.extensions.glBindBuffer(GL_ARRAY_BUFFER, 0);
         //	i = ::GetLastError();
@@ -169,8 +173,7 @@ private:
 	OpenGLContext& _openGLContext;
 	OpenGLShaderProgram * _shader;
 
-	ScopedPointer<Attributes> attributes;
-	ScopedPointer<Uniforms> uniforms;
+
 	
 	Vertex _vertexData[6] = { 0 };
 };

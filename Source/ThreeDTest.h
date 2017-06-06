@@ -23,7 +23,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glu.h>
-
+#include "Attributes.h"
 //[/Headers]
 
 
@@ -68,6 +68,24 @@ public:
 
 		return fallback;
 	}
+
+	void drawSprite(OpenGLShaderProgram* s,  Sprite&  sp , Attributes* atrr, Uniforms* uf) {
+
+		s->use();
+		sp.bind();
+		if (uf)
+		{
+			if (uf->lightPosition)
+			{
+				uf->lightPosition->set(1.0f, 1.0f, 0.0f, 1.0f);
+			}
+		}
+		
+		atrr->enable(openGLContext);
+		sp.draw();
+		atrr->disable(openGLContext);
+	
+	}
 	void renderOpenGL() override
 	{
 		if (false == isInit)
@@ -110,8 +128,10 @@ public:
 
 
 		glColor3f(0.f, 1.f, 0.f);*/
-		OpenGLHelpers::clear(getUIColourIfAvailable(LookAndFeel_V4::ColourScheme::UIColour::windowBackground,
-			Colours::lightblue));
+	/*	OpenGLHelpers::clear(getUIColourIfAvailable(LookAndFeel_V4::ColourScheme::UIColour::windowBackground,
+			Colours::lightblue));*/
+
+		OpenGLHelpers::clear(Colours::lightpink);
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
@@ -121,20 +141,30 @@ public:
 		glEnable(GL_TEXTURE_2D);
 
 		texture.bind();
+		uniforms->texture->set(0);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		//
+		drawSprite(_shader, _sprite, attributes, uniforms);
+		//_shader->use();
+		//_sprite.bind();
+		//attributes->enable(openGLContext);
+		//_sprite.draw();
+		//attributes->disable(openGLContext);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		_shader->use();
+		drawSprite(_shader2, _sprite2, attributes2, uniforms2);
 
+		//_shader2->use();
+		//_sprite2.bind();
+		//attributes->enable(openGLContext);
+		//_sprite2.draw();
+		//attributes->disable(openGLContext);
 
+	
+		//_shader2->use();
+		//_sprite2.draw(_shader2);
 
-		//_sprite.setShader(_shader);
-		_sprite.draw(_shader);
-
-		_shader2->use();
-		//_sprite2.setShader(_shader2);
-		_sprite2.draw(_shader2);
 
 		//glBegin(GL_TRIANGLES);
 		//glVertex2f(-1, -1);
@@ -250,9 +280,16 @@ public:
 					&& newShader->link())
 				{
 					_shader = nullptr;
-
 					_shader = newShader;
-					_sprite.setShader(_shader);
+
+					attributes = nullptr; 
+					attributes = new Attributes(openGLContext, *_shader);
+
+					uniforms = nullptr;
+					uniforms = new Uniforms(openGLContext, *_shader);
+
+
+					//_sprite.setShader(_shader);
 
 					if (l)
 					{
@@ -296,9 +333,9 @@ public:
 							vec3 color; \n\
 							void main()\n\
 							{ \n\
-										//gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
+										gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
 										//gl_FragColor = lightPosition* texture2D (demoTexture, textureCoordOut);\n\
-										gl_FragColor =  texture2D (demoTexture, textureCoordOut);\n\
+										//gl_FragColor =  vec4(1.0, 0.0, 0.0, 1.0);//texture2D (demoTexture, textureCoordOut);\n\
 							}\n\
 						"
 					))
@@ -306,18 +343,18 @@ public:
 				{
 
 					_shader2 = nullptr;
-
-
 					_shader2 = newShader;
-					_sprite2.setShader(_shader2);
 
+					attributes2 = nullptr;
+					attributes2 = new Attributes(openGLContext, *_shader2);
+
+					uniforms2 = nullptr;
+					uniforms2 = new Uniforms(openGLContext, *_shader2);
 					if (l)
 					{
 						_compileResult = "GLSL: v" + String(juce::OpenGLShaderProgram::getLanguageVersion(), 2);
 						l->setText(_compileResult, dontSendNotification);
 					}
-
-
 				}
 				else
 				{
@@ -382,6 +419,13 @@ private:
 	String _compileResult;
 	ScopedPointer<OpenGLShaderProgram> _shader;
 	ScopedPointer<OpenGLShaderProgram> _shader2;
+
+	ScopedPointer<Attributes> attributes;
+	ScopedPointer<Uniforms> uniforms;
+
+	ScopedPointer<Attributes> attributes2;
+	ScopedPointer<Uniforms> uniforms2;
+
 	OpenGLTexture texture;
 	DynamicTexture dt;
 
