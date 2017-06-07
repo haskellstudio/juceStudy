@@ -352,32 +352,17 @@
     <Filter Include="Juce Library Code">
       <UniqueIdentifier>{8B4D1BAA-6DB4-CAEC-A0FA-271F354D5C61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="jucea\unuse">
+      <UniqueIdentifier>{b6f96a72-11f2-4629-b085-27009f7b0a08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jucea\gamelib">
+      <UniqueIdentifier>{7384c320-be51-49da-adf5-324b14b8c6e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jucea\ShaderEditor">
+      <UniqueIdentifier>{d9b7856d-2101-4163-a723-618b84c48ff9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\Editor.cpp">
-      <Filter>jucea\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\flextest.cpp">
-      <Filter>jucea\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\HashStr.cpp">
-      <Filter>jucea\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\NewComponent.cpp">
-      <Filter>jucea\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Sprite.cpp">
-      <Filter>jucea\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\ThreeDTest.cpp">
-      <Filter>jucea\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\gl.cpp">
-      <Filter>jucea\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\MainComponent.cpp">
-      <Filter>jucea\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>jucea\Source</Filter>
     </ClCompile>
@@ -1965,36 +1950,42 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\ThreeDTest.cpp">
+      <Filter>jucea\ShaderEditor</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\OverLay.cpp">
+      <Filter>jucea\ShaderEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>jucea\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Editor.cpp">
+      <Filter>jucea\ShaderEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ShaderEditor.cpp">
+      <Filter>jucea\ShaderEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\flextest.cpp">
+      <Filter>jucea\unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\gl.cpp">
+      <Filter>jucea\unuse</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\TransparentOpenGLComponent.cpp">
+      <Filter>jucea\unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HashStr.cpp">
+      <Filter>jucea\unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Sprite.cpp">
+      <Filter>jucea\gamelib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\NewComponent.cpp">
       <Filter>jucea\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\Editor.h">
-      <Filter>jucea\Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\ComponentList.h">
-      <Filter>jucea\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\flextest.h">
-      <Filter>jucea\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\HashStr.h">
-      <Filter>jucea\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\NewComponent.h">
-      <Filter>jucea\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Sprite.h">
-      <Filter>jucea\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\ThreeDTest.h">
-      <Filter>jucea\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\gl.h">
       <Filter>jucea\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\projucer\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">
@@ -3770,13 +3761,37 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>Juce Library Code</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Attributes.h">
-      <Filter>jucea\Source</Filter>
+    <ClInclude Include="..\..\Source\ThreeDTest.h">
+      <Filter>jucea\ShaderEditor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\OverLay.h">
-      <Filter>jucea\Source</Filter>
+      <Filter>jucea\ShaderEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Editor.h">
+      <Filter>jucea\ShaderEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ShaderEditor.h">
+      <Filter>jucea\ShaderEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\flextest.h">
+      <Filter>jucea\unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\gl.h">
+      <Filter>jucea\unuse</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TransparentOpenGLComponent.h">
+      <Filter>jucea\unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HashStr.h">
+      <Filter>jucea\unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Sprite.h">
+      <Filter>jucea\gamelib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Attributes.h">
+      <Filter>jucea\gamelib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\NewComponent.h">
       <Filter>jucea\Source</Filter>
     </ClInclude>
   </ItemGroup>
