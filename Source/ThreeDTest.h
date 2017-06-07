@@ -305,7 +305,12 @@ public:
 					if (l)
 					{
 						_compileResult = "GLSL: v" + String(juce::OpenGLShaderProgram::getLanguageVersion(), 2);
-						l->setText(_compileResult, dontSendNotification);
+						const MessageManagerLock mmLock;
+						if (mmLock.lockWasGained())
+						{
+							l->setText(_compileResult, dontSendNotification);
+						}
+						
 					}
 
 
@@ -316,7 +321,13 @@ public:
 					if (l)
 					{
 						_compileResult = s;
-						l->setText(_compileResult, dontSendNotification);
+
+						const MessageManagerLock mmLock;
+						if (mmLock.lockWasGained())
+						{
+							l->setText(_compileResult, dontSendNotification);
+						}
+
 					}
 
 
@@ -364,6 +375,7 @@ public:
 					if (l)
 					{
 						_compileResult = "GLSL: v" + String(juce::OpenGLShaderProgram::getLanguageVersion(), 2);
+						const MessageManagerLock mmLock;
 						l->setText(_compileResult, dontSendNotification);
 					}
 				}
@@ -373,6 +385,7 @@ public:
 					if (l)
 					{
 						_compileResult = s;
+						const MessageManagerLock mmLock;
 						l->setText(_compileResult, dontSendNotification);
 					}
 

@@ -42,16 +42,6 @@ NewComponent::NewComponent ()
     textEditor->setPopupMenuEnabled (true);
     textEditor->setText (String());
 
-    addAndMakeVisible (label = new Label ("new label",
-                                          TRANS("label textdd")));
-    label->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label->setJustificationType (Justification::centredLeft);
-    label->setEditable (false, false, false);
-    label->setColour (Label::backgroundColourId, Colour (0x00d28618));
-    label->setColour (Label::textColourId, Colour (0xff4b0808));
-    label->setColour (TextEditor::textColourId, Colours::black);
-    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
     addAndMakeVisible (slider = new Slider ("new slider"));
     slider->setRange (0, 10, 0);
     slider->setSliderStyle (Slider::LinearVertical);
@@ -77,7 +67,6 @@ NewComponent::~NewComponent()
     //[/Destructor_pre]
 
     textEditor = nullptr;
-    label = nullptr;
     slider = nullptr;
 
 
@@ -103,9 +92,8 @@ void NewComponent::resized()
 
     //[/UserPreResize]
 
-    textEditor->setBounds (proportionOfWidth (0.2000f) - (150 / 2), proportionOfHeight (0.3000f), 150, 24);
-    label->setBounds (proportionOfWidth (0.5011f) - (150 / 2), proportionOfHeight (0.5016f), 150, 24);
-    slider->setBounds (203 - (150 / 2), 256, 150, 24);
+    textEditor->setBounds (proportionOfWidth (0.1932f) - (150 / 2), proportionOfHeight (0.1851f), 150, 24);
+    slider->setBounds (400 - (608 / 2), 264, 608, 24);
     //[UserResized] Add your own custom resize handling here..
 
     //[/UserResized]
@@ -131,7 +119,7 @@ void NewComponent::sliderValueChanged (Slider* sliderThatWasMoved)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//static ComponentList<NewComponent> lbs(String("NewComponent"));
+static ComponentList<NewComponent> td((const String)("NewComponent"));
 //[/MiscUserCode]
 
 
@@ -150,17 +138,11 @@ BEGIN_JUCER_METADATA
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ff323e44"/>
   <TEXTEDITOR name="new text editor" id="d6c1c362f1b41a29" memberName="textEditor"
-              virtualName="" explicitFocusOrder="0" pos="20%c 29.949% 150 24"
+              virtualName="" explicitFocusOrder="0" pos="19.303%c 18.509% 150 24"
               initialText="" multiline="0" retKeyStartsLine="0" readonly="0"
               scrollbars="1" caret="1" popupmenu="1"/>
-  <LABEL name="new label" id="8c533bfa7cc9e481" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="50.149%c 50.129% 150 24" bkgCol="d28618"
-         textCol="ff4b0808" edTextCol="ff000000" edBkgCol="0" labelText="label textdd"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15" kerning="0" bold="0" italic="0"
-         justification="33"/>
   <SLIDER name="new slider" id="8a44ab210d3917f8" memberName="slider" virtualName=""
-          explicitFocusOrder="0" pos="203c 256 150 24" min="0" max="10"
+          explicitFocusOrder="0" pos="400c 264 608 24" min="0" max="10"
           int="0" style="LinearVertical" textBoxPos="TextBoxLeft" textBoxEditable="1"
           textBoxWidth="80" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
 </JUCER_COMPONENT>

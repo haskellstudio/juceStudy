@@ -57,7 +57,6 @@ private:
 
     //==============================================================================
     ScopedPointer<TextEditor> textEditor;
-    ScopedPointer<Label> label;
     ScopedPointer<Slider> slider;
 
 

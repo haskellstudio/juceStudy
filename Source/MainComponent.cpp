@@ -33,44 +33,32 @@ public:
 	}
 
 	ListBox _listBox;
-	Component * c;
+
+	ScopedPointer<Component> currentDemo;
+
+	int currentIndex;
     //==============================================================================
     MainContentComponent()
     {
 		//setOpaque(true);
 	
-      setSize (500, 600);
+      setSize (800, 600);
+	  _listBox.setModel(this);
+
+
+
+	  addAndMakeVisible(_listBox);
+	  _listBox.setName("_listBox");
+
+
 	  TStringLst * s = TStringLst::getDemoTypeList()["ShaderEditor"];
-	  
 	  if (s)
 	  {
-		  addAndMakeVisible( s->createComponent());
+		  currentDemo = nullptr;
+		  currentDemo = s->createComponent();
+		  addAndMakeVisible(currentDemo);
+		  currentIndex = 0;
 	  }
-
-
-	  //s = TStringLst::getDemoTypeList()["ThreeDTest2"];
-
-	  //if (s)
-	  //{
-		 //c = s->createComponent();		
-		 // addAndMakeVisible(c);
-	  //}
-
-
-
-	  //s = TStringLst::getDemoTypeList()["Editor"];
-	  //if (s)
-	  //{
-		 // Component * editor = s->createComponent();
-		 // addAndMakeVisible(editor);
-		 // editor->setName("Editor");
-		 // //String en = editor->getName();
-		 //// DBG(en);
-	  //}
-
-
-	  //c->setFocusContainer(true);
-	 // this->focusGained(FocusChangeType::focusChangedByMouseClick);
 	  resized();
     }
 
@@ -82,8 +70,61 @@ public:
 	void paintListBoxItem(int rowNumber, Graphics& g, int width, int height, bool rowIsSelected) override
 	{
 
+		if (rowIsSelected)
+			g.fillAll(Colours::deepskyblue);
 
+		HashMap <String, TStringLst*>& hm = TStringLst::getDemoTypeList();
+
+		int count = 0;
+		for (HashMap<String, TStringLst*>::Iterator i(hm); i.next();)
+		{
+			if (rowNumber == count)
+			{
+				AttributedString a;
+				a.setJustification(Justification::centredLeft);
+
+
+				a.append(i.getKey(), Font(20.0f), Colours::white);
+
+				a.draw(g, Rectangle<int>(width + 10, height).reduced(6, 0).toFloat());
+			}
+			count++;
+			//if()
+		}
+			
+			//DBG( << " -> " << i.getValue());
 	}
+
+
+	void selectedRowsChanged(int lastRowSelected) override
+	{
+		if (currentIndex == lastRowSelected)
+		{
+			return;
+		}
+		currentIndex = lastRowSelected;
+		HashMap <String, TStringLst*>& hm = TStringLst::getDemoTypeList();
+
+		int count = 0;
+		for (HashMap<String, TStringLst*>::Iterator i(hm); i.next();)
+		{
+			if (lastRowSelected == count)
+			{
+				String ts = i.getKey();
+				TStringLst * s = TStringLst::getDemoTypeList()[i.getKey()];
+				if (s)
+				{
+					currentDemo = nullptr;
+					currentDemo = s->createComponent();
+					addAndMakeVisible(currentDemo);
+				}
+				resized();
+			}
+			count++;
+		}
+	}
+
+
 
     void paint (Graphics& g) override
     {
@@ -93,6 +134,7 @@ public:
     }
 	int getNumRows() override
 	{
+		int i = TStringLst::getDemoTypeList().size();
 		return  TStringLst::getDemoTypeList().size();
 	}
     void resized() override
@@ -120,6 +162,8 @@ public:
 		for (auto i = 0; i < num; i++)
 		{
 			auto c = getChildComponent(i);
+			if (c->getName() == "_listBox")
+				continue;
 			if (c)
 			{
 				masterbox.items.add(FlexItem(1, 1).withFlex(1).withMargin(10));

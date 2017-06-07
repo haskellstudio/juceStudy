@@ -96,8 +96,6 @@ ThreeDTest::~ThreeDTest()
     //[Destructor]. You can add your own custom destruction code here..
 	openGLContext.detach();
 	stopTimer();
-	v->removeListener(this);
-	f->removeListener(this);
 	o = nullptr;
     //[/Destructor]
 }
