@@ -6,6 +6,11 @@
               jucerVersion="5.0.2">
   <MAINGROUP id="znxk6f" name="jucea">
     <GROUP id="{81AC715B-817C-8B96-6478-78D50C1EB5CD}" name="Source">
+      <FILE id="G2dKrV" name="ShaderEditor.cpp" compile="1" resource="0"
+            file="Source/ShaderEditor.cpp"/>
+      <FILE id="sn3u9l" name="ShaderEditor.h" compile="0" resource="0" file="Source/ShaderEditor.h"/>
+      <FILE id="OIT5NS" name="OverLay.cpp" compile="1" resource="0" file="Source/OverLay.cpp"/>
+      <FILE id="Oaj8i4" name="OverLay.h" compile="0" resource="0" file="Source/OverLay.h"/>
       <FILE id="Qc1tdM" name="Editor.cpp" compile="1" resource="0" file="Source/Editor.cpp"/>
       <FILE id="VN0scK" name="Editor.h" compile="0" resource="0" file="Source/Editor.h"/>
       <FILE id="us59ZH" name="ComponentList.h" compile="0" resource="0" file="Source/ComponentList.h"/>
