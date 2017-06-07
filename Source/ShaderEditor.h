@@ -21,10 +21,10 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "ThreeDTest.h"
-#include "Editor.h"
 //[/Headers]
 
+#include "ThreeDTest.h"
+#include "Editor.h"
 
 
 //==============================================================================
@@ -35,7 +35,8 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class ShaderEditor  : public Component
+class ShaderEditor  : public Component,
+                      public ComboBoxListener
 {
 public:
     //==============================================================================
@@ -48,16 +49,20 @@ public:
 
     void paint (Graphics& g) override;
     void resized() override;
+    void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-	ScopedPointer<ThreeDTest> td;
-	ScopedPointer<Editor> e;
+	//ScopedPointer<ThreeDTest> td;
+	//ScopedPointer<Editor> e;
     //[/UserVariables]
 
     //==============================================================================
+    ScopedPointer<ThreeDTest> ThreedScene;
+    ScopedPointer<Editor> editor;
+    ScopedPointer<ComboBox> comboBox;
 
 
     //==============================================================================

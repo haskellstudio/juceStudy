@@ -34,6 +34,15 @@ ShaderEditor::ShaderEditor ()
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
+    addAndMakeVisible (ThreedScene = new ThreeDTest());
+    addAndMakeVisible (editor = new Editor());
+    addAndMakeVisible (comboBox = new ComboBox ("combobox"));
+    comboBox->setEditableText (false);
+    comboBox->setJustificationType (Justification::centredLeft);
+    comboBox->setTextWhenNothingSelected (String());
+    comboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    comboBox->addListener (this);
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -44,8 +53,8 @@ ShaderEditor::ShaderEditor ()
     //[Constructor] You can add your own custom stuff here..
 
 
-	addAndMakeVisible(td = new  ThreeDTest());
-	addAndMakeVisible(e = new Editor());
+	//addAndMakeVisible(td = new  ThreeDTest());
+	//addAndMakeVisible(e = new Editor());
 	resized();
     //[/Constructor]
 }
@@ -55,11 +64,14 @@ ShaderEditor::~ShaderEditor()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
+    ThreedScene = nullptr;
+    editor = nullptr;
+    comboBox = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
-	td = nullptr;
-	e = nullptr;
+	//td = nullptr;
+	//e = nullptr;
     //[/Destructor]
 }
 
@@ -69,7 +81,7 @@ void ShaderEditor::paint (Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colours::white);
+    g.fillAll (Colour (0xff323e44));
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -80,6 +92,9 @@ void ShaderEditor::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
+    ThreedScene->setBounds (48, 32, 300, 200);
+    editor->setBounds (64, 400, 300, 200);
+    comboBox->setBounds (48, 320, 150, 24);
     //[UserResized] Add your own custom resize handling here..
 
 	FlexBox masterbox;
@@ -97,9 +112,33 @@ void ShaderEditor::resized()
 		auto c = getChildComponent(i);
 		if (c)
 		{
-			masterbox.items.add(FlexItem(1, 1).withFlex(1).withMargin(10));
-			auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
-			flexitem.associatedComponent = c;
+			String n = c->getName();
+			DBG(n);
+			if (n == "combobox")
+			{
+				if (masterbox.items.size() >= 2)
+				{
+					masterbox.items.insert(1, FlexItem(1, 1).withFlex(1).withMargin(10));
+					auto& flexitem = masterbox.items.getReference(1);
+					flexitem.associatedComponent = c;
+				}
+				else
+				{
+					masterbox.items.add(FlexItem(1, 1).withFlex(1).withMargin(10));
+					auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
+					flexitem.associatedComponent = c;
+				}
+
+			}
+			else
+			{
+			
+				masterbox.items.add(FlexItem(1, 1).withFlex(8).withMargin(10));
+				auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
+				flexitem.associatedComponent = c;
+			}
+			
+
 		}
 	}
 	Rectangle<float> r = getLocalBounds().toFloat();
@@ -107,6 +146,21 @@ void ShaderEditor::resized()
 	masterbox.performLayout(r);
 
     //[/UserResized]
+}
+
+void ShaderEditor::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+{
+    //[UsercomboBoxChanged_Pre]
+    //[/UsercomboBoxChanged_Pre]
+
+    if (comboBoxThatHasChanged == comboBox)
+    {
+        //[UserComboBoxCode_comboBox] -- add your combo box handling code here..
+        //[/UserComboBoxCode_comboBox]
+    }
+
+    //[UsercomboBoxChanged_Post]
+    //[/UsercomboBoxChanged_Post]
 }
 
 
@@ -130,7 +184,16 @@ BEGIN_JUCER_METADATA
                  parentClasses="public Component" constructorParams="" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
-  <BACKGROUND backgroundColour="ffffffff"/>
+  <BACKGROUND backgroundColour="ff323e44"/>
+  <JUCERCOMP name="" id="10aea56741338efc" memberName="ThreedScene" virtualName=""
+             explicitFocusOrder="0" pos="48 32 300 200" sourceFile="ThreeDTest.cpp"
+             constructorParams=""/>
+  <JUCERCOMP name="" id="9c071996b5695aaa" memberName="editor" virtualName=""
+             explicitFocusOrder="0" pos="64 400 300 200" sourceFile="Editor.cpp"
+             constructorParams=""/>
+  <COMBOBOX name="combobox" id="2a3d114fe30305ba" memberName="comboBox" virtualName=""
+            explicitFocusOrder="0" pos="48 320 150 24" editable="0" layout="33"
+            items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
