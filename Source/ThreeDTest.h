@@ -91,6 +91,7 @@ public:
 		atrr->enable(openGLContext);
 		sp.draw();
 		atrr->disable(openGLContext);
+		openGLContext.extensions.glUseProgram(0);
 
 	}
 	void renderOpenGL() override
