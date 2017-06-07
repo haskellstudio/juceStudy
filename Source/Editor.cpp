@@ -100,8 +100,10 @@ Editor::Editor ()
 			}\n\
                      ");
 	}
+	
+	this->setName("Editor");
 
-
+	resized();
 
 	 //vertexEditorComp = tabbedComponent->getTabContentComponent(0);
 	 //fragmentEditorComp = tabbedComponent->getTabContentComponent(1);
@@ -142,18 +144,63 @@ void Editor::resized()
     tabbedComponent->setBounds (16, 16, 712, 216);
     label->setBounds (56, 256, 664, 80);
     //[UserResized] Add your own custom resize handling here..
+
+
+	FlexBox masterbox;
+	masterbox.flexDirection = FlexBox::Direction::column;// column;// : FlexBox::Direction::row;
+	masterbox.alignItems = FlexBox::AlignItems::stretch;
+	masterbox.alignContent = FlexBox::AlignContent::stretch;
+	masterbox.flexWrap = juce::FlexBox::Wrap::noWrap;
+	masterbox.justifyContent = FlexBox::JustifyContent::center;
+
+
+	int num = getNumChildComponents();
+	for (auto i = 0; i < num; i++)
+	{
+		auto c = getChildComponent(i);
+		if (c)
+		{
+			if (c->getName() == "tabShader")
+			{
+				masterbox.items.add
+				(
+					juce::FlexItem(1, 1).withFlex(5)
+					//.withMargin(10)
+					//.withMaxHeight(200)
+					//.withMaxHeight(200)
+					//.withMinHeight(100)
+					//.withMinHeight(100)
+
+				);
+			}
+			else
+			{
+				masterbox.items.add
+				(
+					juce::FlexItem(1, 1).withFlex(1)
+					//.withMargin(10)
+					//.withMaxHeight(200)
+					//.withMaxHeight(200)
+					//.withMinHeight(100)
+					//.withMinHeight(100)
+
+				);
+			}
+
+			auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
+			flexitem.associatedComponent = c;
+		}
+	}
+	Rectangle<float> r = getLocalBounds().toFloat();
+	//	r.reduce(10.0f, 10.0f);
+	masterbox.performLayout(r);
+
     //[/UserResized]
 }
 
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-
-//static ComponentList<Editor> td((const String)("Editor"));
-static ComponentList<Editor> td((const String)(String("Editor")));
-
-
-
 //[/MiscUserCode]
 
 

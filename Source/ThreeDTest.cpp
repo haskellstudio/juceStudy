@@ -38,9 +38,6 @@ ThreeDTest::ThreeDTest ()
 	//    mw->setRenderingEngine (0);
     //[/Constructor_pre]
 
-    addAndMakeVisible (textButton = new TextButton ("new button"));
-    textButton->addListener (this);
-
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -64,7 +61,7 @@ ThreeDTest::ThreeDTest ()
 
 
 	openGLContext.setRenderer(this);
-	
+
 	openGLContext.setContinuousRepainting(true);
 	openGLContext.attachTo(*this);
 
@@ -74,7 +71,7 @@ ThreeDTest::ThreeDTest ()
 
 
 	startTimer(100);
-
+	resized();
 
 	//
 
@@ -94,7 +91,6 @@ ThreeDTest::~ThreeDTest()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    textButton = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -102,6 +98,7 @@ ThreeDTest::~ThreeDTest()
 	stopTimer();
 	v->removeListener(this);
 	f->removeListener(this);
+	o = nullptr;
     //[/Destructor]
 }
 
@@ -120,28 +117,46 @@ void ThreeDTest::paint (Graphics& g)
 void ThreeDTest::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
+	//if (o)
+	//	o->setBounds(0, 0, getParentWidth(), getParentHeight());
     //[/UserPreResize]
-	if(o)
-		o->setBounds(0, 0, getParentWidth(), getParentHeight());
-    textButton->setBounds (proportionOfWidth (0.3141f), proportionOfHeight (0.1860f), 150, 24);
+
     //[UserResized] Add your own custom resize handling here..
 	DBG("width is " + String(getWidth()));
+
+
+	FlexBox masterbox;
+	masterbox.flexDirection = FlexBox::Direction::row;// column;// : FlexBox::Direction::row;
+	masterbox.alignItems = FlexBox::AlignItems::stretch;
+	masterbox.alignContent = FlexBox::AlignContent::stretch;
+	masterbox.flexWrap = juce::FlexBox::Wrap::noWrap;
+	masterbox.justifyContent = FlexBox::JustifyContent::center;
+
+
+	int num = getNumChildComponents();
+	for (auto i = 0; i < num; i++)
+	{
+		auto c = getChildComponent(i);
+		if (c)
+		{
+			masterbox.items.add
+			(
+				juce::FlexItem(1, 1).withFlex(1)
+				//.withMargin(10)
+				//.withMaxHeight(200)
+				//.withMaxHeight(200)
+				//.withMinHeight(100)
+				//.withMinHeight(100)
+
+			);
+			auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
+			flexitem.associatedComponent = c;
+		}
+	}
+	Rectangle<float> r = getLocalBounds().toFloat();
+//	r.reduce(10.0f, 10.0f);
+	masterbox.performLayout(r);
     //[/UserResized]
-}
-
-void ThreeDTest::buttonClicked (Button* buttonThatWasClicked)
-{
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
-    if (buttonThatWasClicked == textButton)
-    {
-        //[UserButtonCode_textButton] -- add your button handler code here..
-        //[/UserButtonCode_textButton]
-    }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
 
 void ThreeDTest::mouseMove (const MouseEvent& e)
@@ -197,9 +212,9 @@ bool ThreeDTest::keyPressed (const KeyPress& key)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-const String & s1 = String("ThreeDTest");
-const String & s2 = String("ThreeDTest2");
-static ComponentList<ThreeDTest> td(s1);
+//const String & s1 = String("ThreeDTest");
+////const String & s2 = String("ThreeDTest2");
+//static ComponentList<ThreeDTest> td(s1);
 
 //static ComponentList<ThreeDTest> td2(s2);
 //[/MiscUserCode]
@@ -224,10 +239,6 @@ BEGIN_JUCER_METADATA
     <METHOD name="mouseMove (const MouseEvent&amp; e)"/>
   </METHODS>
   <BACKGROUND backgroundColour="ff323e44"/>
-  <TEXTBUTTON name="new button" id="3d7ed1a37e136823" memberName="textButton"
-              virtualName="" explicitFocusOrder="0" pos="31.405% 18.6% 150 24"
-              buttonText="new button" connectedEdges="0" needsCallback="1"
-              radioGroupId="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

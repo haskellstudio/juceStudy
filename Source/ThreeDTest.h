@@ -24,29 +24,29 @@
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glu.h>
 #include "Attributes.h"
-
+#include "Sprite.h"
+#include "OverLay.h"
 //[/Headers]
 
 
 
 //==============================================================================
 /**
-																	//[Comments]
-																	//[/Comments]
+                                                                    //[Comments]
+                                                                    //[/Comments]
 */
-class ThreeDTest : public Component,
-	private OpenGLRenderer,
-	private Timer,
-	private CodeDocument::Listener,
-	public ButtonListener
+class ThreeDTest  : public Component,
+                    private OpenGLRenderer,
+                    private Timer,
+                    private CodeDocument::Listener
 {
 public:
-	//==============================================================================
-	ThreeDTest();
-	~ThreeDTest();
+    //==============================================================================
+    ThreeDTest ();
+    ~ThreeDTest();
 
-	//==============================================================================
-	//[UserMethods]     -- You can add your own custom methods in this section.
+    //==============================================================================
+    //[UserMethods]     -- You can add your own custom methods in this section.
 
 	void newOpenGLContextCreated() override
 	{
@@ -79,19 +79,19 @@ public:
 			if (uf->lightPosition)
 			{
 				uf->lightPosition->set(1.0f, 1.0f, 0.0f, 1.0f);
-            
+
 			}
             if(uf->texture)
                 {
                 uf->texture->set(0);
                 }
-        
+
 		}
-		
+
 		atrr->enable(openGLContext);
 		sp.draw();
 		atrr->disable(openGLContext);
-	
+
 	}
 	void renderOpenGL() override
 	{
@@ -152,7 +152,7 @@ public:
 		glEnable(GL_TEXTURE_2D);
 
 		texture.bind();
-		
+
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		//
@@ -172,7 +172,7 @@ public:
 		//_sprite2.draw();
 		//attributes->disable(openGLContext);
 
-	
+
 		//_shader2->use();
 		//_sprite2.draw(_shader2);
 
@@ -293,7 +293,7 @@ public:
 					_shader = nullptr;
 					_shader = newShader;
 
-					attributes = nullptr; 
+					attributes = nullptr;
 					attributes = new Attributes(openGLContext, *_shader);
 
 					uniforms = nullptr;
@@ -402,18 +402,17 @@ public:
 
 
 
-	//[/UserMethods]
+    //[/UserMethods]
 
-	void paint(Graphics& g) override;
-	void resized() override;
-	void buttonClicked(Button* buttonThatWasClicked) override;
-	void mouseMove(const MouseEvent& e) override;
-	bool keyPressed(const KeyPress& key) override;
+    void paint (Graphics& g) override;
+    void resized() override;
+    void mouseMove (const MouseEvent& e) override;
+    bool keyPressed (const KeyPress& key) override;
 
 
 
 private:
-	//[UserVariables]   -- You can add your own custom variables in this section.
+    //[UserVariables]   -- You can add your own custom variables in this section.
 	juce::CodeDocument * v;
 	juce::CodeDocument * f;
 
@@ -439,17 +438,16 @@ private:
 
 	OpenGLTexture texture;
 	DynamicTexture dt;
+	ScopedPointer<OverLay> o;
 
 
-	OverLay * o=nullptr;
-	//[/UserVariables]
+    //[/UserVariables]
 
-	//==============================================================================
-	ScopedPointer<TextButton> textButton;
+    //==============================================================================
 
 
-	//==============================================================================
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ThreeDTest)
+    //==============================================================================
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ThreeDTest)
 };
 
 //[EndFile] You can add extra defines here...

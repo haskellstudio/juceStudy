@@ -21,6 +21,8 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "ThreeDTest.h"
+#include "Editor.h"
 //[/Headers]
 
 
@@ -33,13 +35,12 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class NewComponent  : public Component,
-                      public SliderListener
+class ShaderEditor  : public Component
 {
 public:
     //==============================================================================
-    NewComponent ();
-    ~NewComponent();
+    ShaderEditor ();
+    ~ShaderEditor();
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
@@ -47,22 +48,20 @@ public:
 
     void paint (Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+	ScopedPointer<ThreeDTest> td;
+	ScopedPointer<Editor> e;
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<TextEditor> textEditor;
-    ScopedPointer<Label> label;
-    ScopedPointer<Slider> slider;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ShaderEditor)
 };
 
 //[EndFile] You can add extra defines here...

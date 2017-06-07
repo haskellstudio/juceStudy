@@ -20,32 +20,19 @@
 //[Headers] You can add your own extra header files here...
 //[/Headers]
 
-#include "OverLay.h"
+#include "ShaderEditor.h"
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
+
 #include "ComponentList.h"
 //[/MiscUserDefs]
 
 //==============================================================================
-OverLay::OverLay ()
+ShaderEditor::ShaderEditor ()
 {
     //[Constructor_pre] You can add your own custom stuff here..
-	setOpaque(true);
     //[/Constructor_pre]
-
-    addAndMakeVisible (textEditor = new TextEditor ("new text editor"));
-    textEditor->setMultiLine (false);
-    textEditor->setReturnKeyStartsNewLine (false);
-    textEditor->setReadOnly (false);
-    textEditor->setScrollbarsShown (true);
-    textEditor->setCaretVisible (true);
-    textEditor->setPopupMenuEnabled (true);
-    textEditor->setText (TRANS("toggle?\n"));
-
-    addAndMakeVisible (toggleButton = new ToggleButton ("new toggle button"));
-    toggleButton->addListener (this);
-    toggleButton->setColour (ToggleButton::textColourId, Colour (0xffcb1212));
 
 
     //[UserPreSize]
@@ -55,51 +42,53 @@ OverLay::OverLay ()
 
 
     //[Constructor] You can add your own custom stuff here..
+
+
+	addAndMakeVisible(td = new  ThreeDTest());
+	addAndMakeVisible(e = new Editor());
+	resized();
     //[/Constructor]
 }
 
-OverLay::~OverLay()
+ShaderEditor::~ShaderEditor()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    textEditor = nullptr;
-    toggleButton = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
+	td = nullptr;
+	e = nullptr;
     //[/Destructor]
 }
 
 //==============================================================================
-void OverLay::paint (Graphics& g)
+void ShaderEditor::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-	return;
     //[/UserPrePaint]
 
-    g.fillAll (Colour (0xff323e44));
+    g.fillAll (Colours::white);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
 }
 
-void OverLay::resized()
+void ShaderEditor::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    textEditor->setBounds (240, 168, 224, 72);
-    toggleButton->setBounds (232, 128, 150, 24);
     //[UserResized] Add your own custom resize handling here..
 
-
 	FlexBox masterbox;
-	masterbox.flexDirection = FlexBox::Direction::row;// column;// : FlexBox::Direction::row;
-	masterbox.alignItems = FlexBox::AlignItems::center;
-	masterbox.alignContent = FlexBox::AlignContent::center;
-	masterbox.flexWrap = juce::FlexBox::Wrap::noWrap;
+	masterbox.flexDirection = FlexBox::Direction::column;// column;// : FlexBox::Direction::row;
+	masterbox.alignItems = FlexBox::AlignItems::stretch;
+	masterbox.alignContent = FlexBox::AlignContent::stretch;
+	masterbox.flexWrap = juce::FlexBox::Wrap::wrap;
 	masterbox.justifyContent = FlexBox::JustifyContent::center;
+
 
 
 	int num = getNumChildComponents();
@@ -108,48 +97,23 @@ void OverLay::resized()
 		auto c = getChildComponent(i);
 		if (c)
 		{
-			masterbox.items.add
-			(
-				juce::FlexItem(1, 1).withFlex(1)
-				//.withMargin(10)
-				.withMaxHeight(200)
-				.withMaxHeight(200)
-				.withMinHeight(100)
-				.withMinHeight(100)
-
-			);
+			masterbox.items.add(FlexItem(1, 1).withFlex(1).withMargin(10));
 			auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
 			flexitem.associatedComponent = c;
 		}
 	}
 	Rectangle<float> r = getLocalBounds().toFloat();
-	//	r.reduce(10.0f, 10.0f);
+	//r.reduce(10.0f, 10.0f);
 	masterbox.performLayout(r);
 
-
     //[/UserResized]
-}
-
-void OverLay::buttonClicked (Button* buttonThatWasClicked)
-{
-    //[UserbuttonClicked_Pre]
-    //[/UserbuttonClicked_Pre]
-
-    if (buttonThatWasClicked == toggleButton)
-    {
-        //[UserButtonCode_toggleButton] -- add your button handler code here..
-        //[/UserButtonCode_toggleButton]
-    }
-
-    //[UserbuttonClicked_Post]
-    //[/UserbuttonClicked_Post]
 }
 
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//const String & s = String("OverLay");
-//static ComponentList<OverLay> td(s);
+static ComponentList<ShaderEditor> td((const String)("ShaderEditor"));
+
 //[/MiscUserCode]
 
 
@@ -162,19 +126,11 @@ void OverLay::buttonClicked (Button* buttonThatWasClicked)
 
 BEGIN_JUCER_METADATA
 
-<JUCER_COMPONENT documentType="Component" className="OverLay" componentName=""
+<JUCER_COMPONENT documentType="Component" className="ShaderEditor" componentName=""
                  parentClasses="public Component" constructorParams="" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
-  <BACKGROUND backgroundColour="ff323e44"/>
-  <TEXTEDITOR name="new text editor" id="cf121c3fcedac02b" memberName="textEditor"
-              virtualName="" explicitFocusOrder="0" pos="240 168 224 72" initialText="toggle?&#10;"
-              multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
-              caret="1" popupmenu="1"/>
-  <TOGGLEBUTTON name="new toggle button" id="82a4765ef10657c8" memberName="toggleButton"
-                virtualName="" explicitFocusOrder="0" pos="232 128 150 24" txtcol="ffcb1212"
-                buttonText="new toggle button" connectedEdges="0" needsCallback="1"
-                radioGroupId="0" state="0"/>
+  <BACKGROUND backgroundColour="ffffffff"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

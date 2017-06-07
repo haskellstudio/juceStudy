@@ -19,6 +19,7 @@
 
 
 class MainContentComponent   : public Component
+	, public ListBoxModel
 {
 public:
 
@@ -30,6 +31,8 @@ public:
 		DBG("MainContentComponent keyPressed");
 		return false;
 	}
+
+	ListBox _listBox;
 	Component * c;
     //==============================================================================
     MainContentComponent()
@@ -37,7 +40,7 @@ public:
 		//setOpaque(true);
 	
       setSize (500, 600);
-	  TStringLst * s = TStringLst::getDemoTypeList()["ThreeDTest"];
+	  TStringLst * s = TStringLst::getDemoTypeList()["ShaderEditor"];
 	  
 	  if (s)
 	  {
@@ -45,27 +48,25 @@ public:
 	  }
 
 
-	  s = TStringLst::getDemoTypeList()["ThreeDTest2"];
+	  //s = TStringLst::getDemoTypeList()["ThreeDTest2"];
 
-	  if (s)
-	  {
-		 c = s->createComponent();
-		
-		  addAndMakeVisible(c);
-		
-	  }
+	  //if (s)
+	  //{
+		 //c = s->createComponent();		
+		 // addAndMakeVisible(c);
+	  //}
 
 
 
-	  s = TStringLst::getDemoTypeList()["Editor"];
-	  if (s)
-	  {
-		  Component * editor = s->createComponent();
-		  addAndMakeVisible(editor);
-		  editor->setName("Editor");
-		  //String en = editor->getName();
-		 // DBG(en);
-	  }
+	  //s = TStringLst::getDemoTypeList()["Editor"];
+	  //if (s)
+	  //{
+		 // Component * editor = s->createComponent();
+		 // addAndMakeVisible(editor);
+		 // editor->setName("Editor");
+		 // //String en = editor->getName();
+		 //// DBG(en);
+	  //}
 
 
 	  //c->setFocusContainer(true);
@@ -78,7 +79,11 @@ public:
 		//currentDemo = nullptr;
     }
 
- 
+	void paintListBoxItem(int rowNumber, Graphics& g, int width, int height, bool rowIsSelected) override
+	{
+
+
+	}
 
     void paint (Graphics& g) override
     {
@@ -86,7 +91,10 @@ public:
         // You can add your component specific drawing code here!
         // This will draw over the top of the openGL background.
     }
-
+	int getNumRows() override
+	{
+		return  TStringLst::getDemoTypeList().size();
+	}
     void resized() override
     {
         // This is called when the MainContentComponent is resized.
@@ -95,7 +103,9 @@ public:
 		//auto r = getLocalBounds();
 		//if (currentDemo != nullptr)
 		//	currentDemo->setBounds(r);
-
+		auto r = getLocalBounds();
+		int listBoxWidth = roundToInt(proportionOfWidth(0.2000f));
+		_listBox.setBounds(r.removeFromLeft(listBoxWidth));
 	
 		FlexBox masterbox;
 		masterbox.flexDirection = FlexBox::Direction::column;// column;// : FlexBox::Direction::row;
@@ -117,8 +127,8 @@ public:
 				flexitem.associatedComponent = c;
 			}
 		}
-		Rectangle<float> r = getLocalBounds().toFloat();
-		r.reduce(10.0f, 10.0f);
+		//Rectangle<float> r = getLocalBounds().toFloat();
+		//r.reduce(10.0f, 10.0f);
 		masterbox.performLayout(r);
     }
 
