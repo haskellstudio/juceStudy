@@ -361,6 +361,9 @@
     <Filter Include="jucea\ShaderEditor">
       <UniqueIdentifier>{d9b7856d-2101-4163-a723-618b84c48ff9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="jucea\Common">
+      <UniqueIdentifier>{78f0cf73-bde6-4949-8699-0933a5a199c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Main.cpp">
@@ -1982,6 +1985,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\NewComponent.cpp">
       <Filter>jucea\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CommonFun.cpp">
+      <Filter>jucea\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3793,6 +3799,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\NewComponent.h">
       <Filter>jucea\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CommonFun.h">
+      <Filter>jucea\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

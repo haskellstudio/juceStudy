@@ -131,6 +131,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\CommonFun.cpp" />
     <ClCompile Include="..\..\Source\Editor.cpp" />
     <ClCompile Include="..\..\Source\flextest.cpp" />
     <ClCompile Include="..\..\Source\HashStr.cpp" />
@@ -1704,6 +1705,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Attributes.h" />
+    <ClInclude Include="..\..\Source\CommonFun.h" />
     <ClInclude Include="..\..\Source\Editor.h" />
     <ClInclude Include="..\..\Source\ComponentList.h" />
     <ClInclude Include="..\..\Source\flextest.h" />
