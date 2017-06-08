@@ -20,7 +20,8 @@
 //[Headers] You can add your own extra header files here...
 #include "ComponentList.h"
 #include "Sprite.h"
-#include "OverLay.h"
+
+
 //[/Headers]
 
 #include "ThreeDTest.h"
@@ -31,7 +32,7 @@
 
 //==============================================================================
 ThreeDTest::ThreeDTest ()
-    : _sprite(openGLContext),_sprite2(openGLContext), isInit(false)
+    : _sprite(openGLContext),_sprite2(openGLContext), isInit(false),find(false),combobox(nullptr)
 {
     //[Constructor_pre] You can add your own custom stuff here..
 	//if (MainAppWindow* mw = MainAppWindow::getMainAppWindow())
@@ -120,7 +121,7 @@ void ThreeDTest::resized()
     //[/UserPreResize]
 
     //[UserResized] Add your own custom resize handling here..
-	DBG("width is " + String(getWidth()));
+//	DBG("width is " + String(getWidth()));
 
 
 	FlexBox masterbox;
@@ -229,7 +230,7 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ThreeDTest" componentName=""
                  parentClasses="public Component, private OpenGLRenderer, private Timer, private CodeDocument::Listener"
-                 constructorParams="" variableInitialisers="_sprite(openGLContext),_sprite2(openGLContext), isInit(false)"
+                 constructorParams="" variableInitialisers="_sprite(openGLContext),_sprite2(openGLContext), isInit(false),find(false),combobox(nullptr)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <METHODS>

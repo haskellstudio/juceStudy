@@ -23,9 +23,11 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glu.h>
+#include "CommonFun.h"
 #include "Attributes.h"
 #include "Sprite.h"
 #include "OverLay.h"
+extern ShaderData g_shaderData;
 //[/Headers]
 
 
@@ -198,47 +200,31 @@ public:
 
 
 
-	Component* getChildComponentByName(Component* parent, String name)
-	{
-		if (parent)
-		{
-			int n = parent->getNumChildComponents();
-			for (int i = 0; i < n; i++)
-			{
-				Component * c = parent->getChildComponent(i);
 
-				if (c)
-				{
-					String s = c->getName();
-					if (s == name)//tabShader
-					{
-						return c;
-					}
-				}
-			}
-		}
-
-		return nullptr;
-	}
 
 	void timerCallback() override
 	{
-		bool find = false;
+
 
 		if (!find)
 		{
 			Component *editor = getChildComponentByName(getParentComponent(), "Editor");
 			Component *tabShader = getChildComponentByName(editor, "tabShader");
 
+			combobox = (juce::ComboBox*)getChildComponentByName(getParentComponent(), "combobox");
 
-			if (tabShader)
+
+
+			if (tabShader && combobox)
 			{
+
+
 				TabbedComponent* tc = (TabbedComponent*)tabShader;
-				int n = tc->getNumChildComponents();
+				//int n = tc->getNumChildComponents();
 
 
-				CodeEditorComponent * vertexEditorComp = (CodeEditorComponent *)tc->getTabContentComponent(0);
-				CodeEditorComponent * fragmentEditorComp = (CodeEditorComponent *)tc->getTabContentComponent(1);
+				juce::CodeEditorComponent * vertexEditorComp = (juce::CodeEditorComponent *)tc->getTabContentComponent(0);
+				juce::CodeEditorComponent * fragmentEditorComp = (juce::CodeEditorComponent *)tc->getTabContentComponent(1);
 				if (vertexEditorComp)
 				{
 					v = &vertexEditorComp->getDocument();
@@ -254,15 +240,25 @@ public:
 
 		if (!find)
 			return;
-		_strVertex = v->getAllContent();
-		_strFragment = f->getAllContent();
+
+		int i = combobox->getSelectedItemIndex();
+		if (i == 0)
+		{
+			_strVertex = v->getAllContent();
+			_strFragment = f->getAllContent();
+		}
+		else if (i == 1)
+		{
+			_strVertex2 = v->getAllContent();
+			_strFragment2 = f->getAllContent();
+		}
+
 		stopTimer();
 
-		//	DBG("timer call back");
 
 	}
 
-	void updateShader()
+	void updateShader1()
 	{
 		if (_strVertex.isNotEmpty() || _strFragment.isNotEmpty())
 		{
@@ -273,13 +269,8 @@ public:
 				return;
 			}
 
-
-
-
 			{
 				ScopedPointer<OpenGLShaderProgram> newShader(new OpenGLShaderProgram(openGLContext));
-				_strVertex = v->getAllContent();
-				_strFragment = f->getAllContent();
 				Component *editor = getChildComponentByName(getParentComponent(), "Editor");
 				Component *labelShader = getChildComponentByName(editor, "labelShader");
 				Label *l = nullptr;
@@ -311,7 +302,7 @@ public:
 						{
 							l->setText(_compileResult, dontSendNotification);
 						}
-						
+
 					}
 
 
@@ -336,10 +327,36 @@ public:
 				}
 
 			}
+			g_shaderData._shaderPreset[0]->vertexShader = _strVertex;
+			g_shaderData._shaderPreset[0]->fragmentShader = _strFragment;
+
+
+		}
+
+		_strVertex = String();
+		_strFragment = String();
+
+	}
+
+	void updateShader()
+	{
+		updateShader1();
+		updateShader2();
+	}
+
+	void updateShader2()
+	{
+		if (_strVertex2.isNotEmpty() || _strFragment2.isNotEmpty())
+		{
+
+			bool b = OpenGLHelpers::isContextActive();
+			if (!b)
+			{
+				return;
+			}
+
 			{
 				ScopedPointer<OpenGLShaderProgram> newShader(new OpenGLShaderProgram(openGLContext));
-				_strVertex = v->getAllContent();
-				_strFragment = f->getAllContent();
 				Component *editor = getChildComponentByName(getParentComponent(), "Editor");
 				Component *labelShader = getChildComponentByName(editor, "labelShader");
 				Label *l = nullptr;
@@ -347,21 +364,8 @@ public:
 				{
 					l = (Label*)labelShader;
 				}
-				if (newShader->addVertexShader(OpenGLHelpers::translateVertexShaderToV3(_strVertex))
-					&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3("\
-							#version 120\n\
-							uniform vec4 lightPosition; \n\
-							varying vec2 textureCoordOut; \n\
-							uniform sampler2D demoTexture; \n\
-							vec3 color; \n\
-							void main()\n\
-							{ \n\
-										gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
-										//gl_FragColor = lightPosition* texture2D (demoTexture, textureCoordOut);\n\
-										//gl_FragColor =  vec4(1.0, 0.0, 0.0, 1.0);//texture2D (demoTexture, textureCoordOut);\n\
-							}\n\
-						"
-					))
+				if (newShader->addVertexShader(OpenGLHelpers::translateVertexShaderToV3(_strVertex2))
+					&& newShader->addFragmentShader(OpenGLHelpers::translateFragmentShaderToV3(_strFragment2))
 					&& newShader->link())
 				{
 
@@ -389,20 +393,22 @@ public:
 						const MessageManagerLock mmLock;
 						l->setText(_compileResult, dontSendNotification);
 					}
-
-
 					//statusText = newShader->getLastError();
 				}
-
 			}
+			g_shaderData._shaderPreset[1]->vertexShader = _strVertex2;
+			g_shaderData._shaderPreset[1]->fragmentShader = _strFragment2;/*
+			String s = g_shaderData._shaderPreset[1]->vertexShader;
+			DBG(s);*/
 
 		}
 
-		_strVertex = String();
-		_strFragment = String();
+		
+
+		_strVertex2 = String();
+		_strFragment2 = String();
 
 	}
-
 	void codeDocumentTextInserted(const String& /*newText*/, int /*insertIndex*/) override
 	{
 
@@ -429,10 +435,10 @@ private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 	juce::CodeDocument * v;
 	juce::CodeDocument * f;
-
+	juce::ComboBox *combobox;
 	OpenGLContext openGLContext;
 
-
+	bool find ;
 
 	bool isInit;
 	Sprite _sprite;
@@ -440,6 +446,11 @@ private:
 
 	String _strVertex;
 	String _strFragment;
+
+	String _strVertex2;
+	String _strFragment2;
+
+
 	String _compileResult;
 	ScopedPointer<OpenGLShaderProgram> _shader;
 	ScopedPointer<OpenGLShaderProgram> _shader2;

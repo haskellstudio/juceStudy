@@ -26,6 +26,8 @@
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 
 #include "ComponentList.h"
+
+extern ShaderData g_shaderData;
 //[/MiscUserDefs]
 
 //==============================================================================
@@ -52,9 +54,46 @@ ShaderEditor::ShaderEditor ()
 
     //[Constructor] You can add your own custom stuff here..
 
+	//Array<ShaderPreset> presets(g_shaderData.presets);
 
-	//addAndMakeVisible(td = new  ThreeDTest());
-	//addAndMakeVisible(e = new Editor());
+
+	for (int i = 0; i < g_shaderData._shaderPreset.size(); ++i)
+		comboBox->addItem(g_shaderData._shaderPreset[i]->name, i + 1);
+
+
+	comboBox->setSelectedItemIndex(0);
+
+
+
+
+
+/*
+	Component *editor = getChildComponentByName(this, "Editor");
+
+	Component *tabShader = getChildComponentByName(editor, "tabShader");
+
+	if (tabShader)
+	{
+		TabbedComponent* tc = (TabbedComponent*)tabShader;
+		int n = tc->getNumChildComponents();
+
+		if (n != 2)
+			return;
+
+		juce::CodeEditorComponent * vertexEditorComp = (juce::CodeEditorComponent *)tc->getTabContentComponent(0);
+		juce::CodeEditorComponent * fragmentEditorComp = (juce::CodeEditorComponent *)tc->getTabContentComponent(1);
+		if (vertexEditorComp)
+		{
+			if (vertexEditorComp->getDocument().getNumCharacters() < 3)
+				vertexEditorComp->getDocument().replaceAllContent(getPresets()[comboBox->getSelectedItemIndex()].vertexShader);
+
+			if (fragmentEditorComp->getDocument().getNumCharacters() < 3)
+				fragmentEditorComp->getDocument().replaceAllContent(getPresets()[comboBox->getSelectedItemIndex()].fragmentShader);
+		}
+	}
+*/
+
+
 	resized();
     //[/Constructor]
 }
@@ -113,7 +152,7 @@ void ShaderEditor::resized()
 		if (c)
 		{
 			String n = c->getName();
-			DBG(n);
+		//	DBG(n);
 			if (n == "combobox")
 			{
 				if (masterbox.items.size() >= 2)
@@ -132,12 +171,12 @@ void ShaderEditor::resized()
 			}
 			else
 			{
-			
+
 				masterbox.items.add(FlexItem(1, 1).withFlex(8).withMargin(10));
 				auto& flexitem = masterbox.items.getReference(masterbox.items.size() - 1);
 				flexitem.associatedComponent = c;
 			}
-			
+
 
 		}
 	}
@@ -156,6 +195,51 @@ void ShaderEditor::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     if (comboBoxThatHasChanged == comboBox)
     {
         //[UserComboBoxCode_comboBox] -- add your combo box handling code here..
+		//String s;
+		//DBG(comboBox->getSelectedItemIndex() << " index is select");
+		
+		Component *editor = getChildComponentByName(this, "Editor");
+
+		Component *tabShader = getChildComponentByName(editor, "tabShader");
+
+		if (tabShader)
+		{
+			TabbedComponent* tc = (TabbedComponent*)tabShader;
+			int n = tc->getNumChildComponents();
+
+			if (n != 2)
+				return;
+
+			juce::CodeEditorComponent * vertexEditorComp = (juce::CodeEditorComponent *)tc->getTabContentComponent(0);
+			juce::CodeEditorComponent * fragmentEditorComp = (juce::CodeEditorComponent *)tc->getTabContentComponent(1);
+			if (vertexEditorComp)
+			{
+				if (  comboBox->getSelectedItemIndex() == 0)
+				{
+					if (!vertexEditorComp->getDocument().getLine(0).contains("/1"))
+					{
+						vertexEditorComp->getDocument().replaceAllContent(g_shaderData._shaderPreset[comboBox->getSelectedItemIndex()]->vertexShader);
+					}
+					if (!fragmentEditorComp->getDocument().getLine(0).contains("/1"))
+					{
+						fragmentEditorComp->getDocument().replaceAllContent(g_shaderData._shaderPreset[comboBox->getSelectedItemIndex()]->fragmentShader);
+					}
+				}
+				
+				if (comboBox->getSelectedItemIndex() == 1)
+				{
+					String s = vertexEditorComp->getDocument().getLine(0);
+					if (!s.contains("/2"))
+					{
+						vertexEditorComp->getDocument().replaceAllContent(g_shaderData._shaderPreset[comboBox->getSelectedItemIndex()]->vertexShader);
+					}
+					if (!fragmentEditorComp->getDocument().getLine(0).contains("/2"))
+					{
+						fragmentEditorComp->getDocument().replaceAllContent(g_shaderData._shaderPreset[comboBox->getSelectedItemIndex()]->fragmentShader);
+					}
+				}
+			}
+		}
         //[/UserComboBoxCode_comboBox]
     }
 
@@ -188,7 +272,7 @@ BEGIN_JUCER_METADATA
   <JUCERCOMP name="" id="10aea56741338efc" memberName="ThreedScene" virtualName=""
              explicitFocusOrder="0" pos="48 32 300 200" sourceFile="ThreeDTest.cpp"
              constructorParams=""/>
-  <JUCERCOMP name="" id="9c071996b5695aaa" memberName="editor" virtualName=""
+  <JUCERCOMP name="Editora" id="9c071996b5695aaa" memberName="editor" virtualName=""
              explicitFocusOrder="0" pos="64 400 300 200" sourceFile="Editor.cpp"
              constructorParams=""/>
   <COMBOBOX name="combobox" id="2a3d114fe30305ba" memberName="comboBox" virtualName=""

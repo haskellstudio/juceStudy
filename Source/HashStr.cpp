@@ -13,7 +13,7 @@ HashStr::HashStr()
 	hs.set("name", 123);
 	hs.set("some", 234);
 //	String s (hs["name"]);
-	DBG(hs["name"] );
+//	DBG(hs["name"] );
 }
 
 
