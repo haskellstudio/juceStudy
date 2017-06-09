@@ -445,7 +445,7 @@ public:
         //);
     
         //  glm::mat4 proj = glm::perspective(60.0f, h, 0.3f, 1000.0f);
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), h, 0.3f, 1000.0f);
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 1000.0f);
     Matrix3D<float> r(
                       projectionMatrix[0][0], projectionMatrix[0][1], projectionMatrix[0][2], projectionMatrix[0][3],
                       projectionMatrix[1][0], projectionMatrix[1][1], projectionMatrix[1][2], projectionMatrix[1][3],
@@ -461,14 +461,14 @@ public:
 
 		Matrix3D<float> rotationMatrix = viewMatrix.rotated(Vector3D<float>(0.0,0.0, 0.0 ));
 
-
+    
 
 		glm::mat4 model  ; // 构造单位矩阵
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, -8.0f+rotation));
 
 
 		glm::mat4 CameraMatrix = glm::lookAt(
-			glm::vec3(0, 0, 0), // the position of your camera, in world space
+			glm::vec3(0, 0, 3), // the position of your camera, in world space
 			glm::vec3(0, 0, -1),   // where you want to look at, in world space
 			glm::vec3(0, 1, 0)        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
 		);
