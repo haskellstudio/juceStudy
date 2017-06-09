@@ -72,6 +72,15 @@ ThreeDTest::ThreeDTest ()
 
 
 	startTimer(100);
+	scale = 1.0f;
+	rotation = 0.0f;
+
+	_strVertex = g_shaderData._shaderPreset[0]->vertexShader;
+	_strFragment = g_shaderData._shaderPreset[0]->fragmentShader;
+
+	_strVertex2 = g_shaderData._shaderPreset[1]->vertexShader;;
+	_strFragment2 = g_shaderData._shaderPreset[1]->fragmentShader;
+
 	resized();
 
 	//
@@ -123,7 +132,7 @@ void ThreeDTest::resized()
     //[UserResized] Add your own custom resize handling here..
 //	DBG("width is " + String(getWidth()));
 
-
+	draggableOrientation.setViewport(getLocalBounds());
 	FlexBox masterbox;
 	masterbox.flexDirection = FlexBox::Direction::row;// column;// : FlexBox::Direction::row;
 	masterbox.alignItems = FlexBox::AlignItems::stretch;

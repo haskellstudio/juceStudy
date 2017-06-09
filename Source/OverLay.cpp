@@ -34,15 +34,6 @@ OverLay::OverLay ()
 	setOpaque(true);
     //[/Constructor_pre]
 
-    addAndMakeVisible (textEditor = new TextEditor ("new text editor"));
-    textEditor->setMultiLine (true);
-    textEditor->setReturnKeyStartsNewLine (true);
-    textEditor->setReadOnly (false);
-    textEditor->setScrollbarsShown (true);
-    textEditor->setCaretVisible (true);
-    textEditor->setPopupMenuEnabled (true);
-    textEditor->setText (TRANS("toggle?\n"));
-
     addAndMakeVisible (toggleButton = new ToggleButton ("new toggle button"));
     toggleButton->addListener (this);
     toggleButton->setColour (ToggleButton::textColourId, Colour (0xffcb1212));
@@ -63,7 +54,6 @@ OverLay::~OverLay()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    textEditor = nullptr;
     toggleButton = nullptr;
 
 
@@ -89,7 +79,6 @@ void OverLay::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    textEditor->setBounds (240, 168, 224, 72);
     toggleButton->setBounds (232, 128, 150, 24);
     //[UserResized] Add your own custom resize handling here..
 
@@ -167,10 +156,6 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ff323e44"/>
-  <TEXTEDITOR name="new text editor" id="cf121c3fcedac02b" memberName="textEditor"
-              virtualName="" explicitFocusOrder="0" pos="240 168 224 72" initialText="toggle?&#10;"
-              multiline="1" retKeyStartsLine="1" readonly="0" scrollbars="1"
-              caret="1" popupmenu="1"/>
   <TOGGLEBUTTON name="new toggle button" id="82a4765ef10657c8" memberName="toggleButton"
                 virtualName="" explicitFocusOrder="0" pos="232 128 150 24" txtcol="ffcb1212"
                 buttonText="new toggle button" connectedEdges="0" needsCallback="1"

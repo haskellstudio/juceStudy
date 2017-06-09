@@ -26,11 +26,14 @@ struct ShaderData {
 attribute vec2 position; \n\
 attribute vec2 textureCoordIn; \n\
 varying vec2 textureCoordOut; \n\
+uniform mat4 projectionMatrix; \n\
+uniform mat4 viewMatrix;\n\
 void main()\n\
 { \n\
-	gl_Position.xy = position; \n\
-	gl_Position.z = -1.0; \n\
-	gl_Position.w = 1.0; \n\
+	gl_Position =projectionMatrix * viewMatrix * vec4(position, -1.0, 1.0);\n\
+	//gl_Position.xy = position; \n\
+	//gl_Position.z = -1.0; \n\
+	//gl_Position.w = 1.0; \n\
 	textureCoordOut = textureCoordIn;\n\
 }\n\
 ",
@@ -48,7 +51,7 @@ void main()\n\
 	//gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
 }\n\
 "
-		};
+};
 
 
 
@@ -63,11 +66,14 @@ void main()\n\
 attribute vec2 position; \n\
 attribute vec2 textureCoordIn; \n\
 varying vec2 textureCoordOut; \n\
+uniform mat4 projectionMatrix; \n\
+uniform mat4 viewMatrix;\n\
 void main()\n\
 { \n\
-	gl_Position.xy = position; \n\
-	gl_Position.z = -1.0; \n\
-	gl_Position.w = 1.0; \n\
+	gl_Position =projectionMatrix * viewMatrix * vec4(position, -1.0, 1.0);\n\
+	//gl_Position.xy = position; \n\
+	//gl_Position.z = -1.0; \n\
+	//gl_Position.w = 1.0; \n\
 	textureCoordOut = textureCoordIn;//the second vertex shader\n\
 }\n\
 ",

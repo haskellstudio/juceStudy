@@ -216,11 +216,11 @@ void ShaderEditor::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 			{
 				if (  comboBox->getSelectedItemIndex() == 0)
 				{
-					if (!vertexEditorComp->getDocument().getLine(0).contains("/1"))
+					//if (!vertexEditorComp->getDocument().getLine(0).contains("/1"))
 					{
 						vertexEditorComp->getDocument().replaceAllContent(g_shaderData._shaderPreset[comboBox->getSelectedItemIndex()]->vertexShader);
 					}
-					if (!fragmentEditorComp->getDocument().getLine(0).contains("/1"))
+					//if (!fragmentEditorComp->getDocument().getLine(0).contains("/1"))
 					{
 						fragmentEditorComp->getDocument().replaceAllContent(g_shaderData._shaderPreset[comboBox->getSelectedItemIndex()]->fragmentShader);
 					}
@@ -229,11 +229,11 @@ void ShaderEditor::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 				if (comboBox->getSelectedItemIndex() == 1)
 				{
 					String s = vertexEditorComp->getDocument().getLine(0);
-					if (!s.contains("/2"))
+					//if (!s.contains("/2"))
 					{
 						vertexEditorComp->getDocument().replaceAllContent(g_shaderData._shaderPreset[comboBox->getSelectedItemIndex()]->vertexShader);
 					}
-					if (!fragmentEditorComp->getDocument().getLine(0).contains("/2"))
+					//if (!fragmentEditorComp->getDocument().getLine(0).contains("/2"))
 					{
 						fragmentEditorComp->getDocument().replaceAllContent(g_shaderData._shaderPreset[comboBox->getSelectedItemIndex()]->fragmentShader);
 					}

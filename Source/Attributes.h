@@ -83,8 +83,8 @@ struct Uniforms
 {
 	Uniforms(OpenGLContext& openGLContext, OpenGLShaderProgram& shader)
 	{
-		//projectionMatrix = createUniform(openGLContext, shader, "projectionMatrix");
-		//viewMatrix = createUniform(openGLContext, shader, "viewMatrix");
+		projectionMatrix = createUniform(openGLContext, shader, "projectionMatrix");
+		viewMatrix = createUniform(openGLContext, shader, "viewMatrix");
 		texture = createUniform(openGLContext, shader, "demoTexture");
 		lightPosition = createUniform(openGLContext, shader, "lightPosition");
 	//	bouncingNumber = createUniform(openGLContext, shader, "bouncingNumber");
@@ -98,7 +98,7 @@ struct Uniforms
 			return true;
 	}
 	//ScopedPointer<OpenGLShaderProgram::Uniform> projectionMatrix, viewMatrix, texture, lightPosition, bouncingNumber;
-	ScopedPointer<OpenGLShaderProgram::Uniform> lightPosition, texture;
+	ScopedPointer<OpenGLShaderProgram::Uniform>projectionMatrix, viewMatrix, lightPosition, texture;
 
 private:
 	static OpenGLShaderProgram::Uniform* createUniform(OpenGLContext& openGLContext,

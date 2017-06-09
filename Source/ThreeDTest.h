@@ -83,6 +83,13 @@ public:
 				uf->lightPosition->set(1.0f, 1.0f, 0.0f, 1.0f);
 
 			}
+
+			if (uf->projectionMatrix != nullptr)
+				uf->projectionMatrix->setMatrix4(getProjectionMatrix().mat, 1, false);
+
+			if (uf->viewMatrix != nullptr)
+				uf->viewMatrix->setMatrix4(getViewMatrix().mat, 1, false);
+
             if(uf->texture)
                 {
                 uf->texture->set(0);
@@ -420,7 +427,22 @@ public:
 		startTimer(1000);
 	}
 
+	Matrix3D<float> getProjectionMatrix() const
+	{
+		float w = 1.0f / (scale + 0.1f);
+		float h = w * getLocalBounds().toFloat().getAspectRatio(false);
+		return Matrix3D<float>::fromFrustum(-w, w, -h, h, 4.0f, 30.0f);
+	}
 
+	Matrix3D<float> getViewMatrix() const
+	{
+		Matrix3D<float> viewMatrix = draggableOrientation.getRotationMatrix()
+			* Vector3D<float>(0.0f, 1.0f, -10.0f);
+
+		Matrix3D<float> rotationMatrix = viewMatrix.rotated(Vector3D<float>(rotation, rotation, -0.3f));
+
+		return rotationMatrix * viewMatrix;
+	}
 
     //[/UserMethods]
 
@@ -437,7 +459,8 @@ private:
 	juce::CodeDocument * f;
 	juce::ComboBox *combobox;
 	OpenGLContext openGLContext;
-
+	Draggable3DOrientation draggableOrientation;
+	float scale, rotation;;
 	bool find ;
 
 	bool isInit;

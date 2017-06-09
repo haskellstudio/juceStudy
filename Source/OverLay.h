@@ -56,7 +56,6 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<TextEditor> textEditor;
     ScopedPointer<ToggleButton> toggleButton;
 
 
