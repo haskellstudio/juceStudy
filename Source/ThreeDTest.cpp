@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.0.2
+  Created with Projucer version: 5.0.1
 
   ------------------------------------------------------------------------------
 
@@ -59,7 +59,7 @@ ThreeDTest::ThreeDTest ()
 	//}
 	addAndMakeVisible(o = new OverLay());
 	if (o)
-		o->addMouseListener(this,false);
+		o->addMouseListener((MouseListener*)this,false);
 	openGLContext.setComponentPaintingEnabled(true);  // if false , the overlay component can not see.
 
 
@@ -241,7 +241,7 @@ bool ThreeDTest::keyPressed (const KeyPress& key)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ThreeDTest" componentName=""
-                 parentClasses="public Component, private OpenGLRenderer, private Timer, private CodeDocument::Listener, private MouseListener"
+                 parentClasses="public Component, private OpenGLRenderer, private Timer, private CodeDocument::Listener"
                  constructorParams="" variableInitialisers="_sprite(openGLContext),_sprite2(openGLContext), isInit(false),find(false),combobox(nullptr)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">

@@ -30,7 +30,7 @@ uniform mat4 projectionMatrix; \n\
 uniform mat4 viewMatrix;\n\
 void main()\n\
 { \n\
-	gl_Position =projectionMatrix * viewMatrix * vec4(position, 0.0, 1.0);\n\
+	gl_Position = projectionMatrix *viewMatrix * vec4(position, 0.0, 1.0);\n\
 	//gl_Position.xy = position; \n\
 	//gl_Position.z = -1.0; \n\
 	//gl_Position.w = 1.0; \n\

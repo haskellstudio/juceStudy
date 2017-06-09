@@ -1,4 +1,4 @@
-﻿/*
+/*
   ==============================================================================
 
   This is an automatically generated GUI class created by the Projucer!
@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.0.2
+  Created with Projucer version: 5.0.1
 
   ------------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@
 #include "Sprite.h"
 #include "OverLay.h"
 #define GLM_ENABLE_EXPERIMENTAL
-#include <../Source/glm/gtc/matrix_transform.hpp> 
+#include <../Source/glm/gtc/matrix_transform.hpp>
 #include <../Source/glm/gtx/transform.hpp>
 
 extern ShaderData g_shaderData;
@@ -44,8 +44,7 @@ extern ShaderData g_shaderData;
 class ThreeDTest  : public Component,
                     private OpenGLRenderer,
                     private Timer,
-                    private CodeDocument::Listener,
-                    private MouseListener
+                    private CodeDocument::Listener
 {
 public:
     //==============================================================================
@@ -436,7 +435,23 @@ public:
 	{
 		float w = 1.0f / (scale + 0.1f);
 		float h = w * getLocalBounds().toFloat().getAspectRatio(false);
-		return Matrix3D<float>::fromFrustum(-w, w, -h, h, 4.0f, 30.0f);
+        //return Matrix3D<float>::fromFrustum(-w, w, -h, h, -114.0f, -130.0f);
+    
+        //   glm::mat4 projectionMatrix = glm::perspective(
+        //    glm::radians(60.0f),,         // The horizontal Field of View, in degrees : the amount of "zoom". Think "camera lens". Usually between 90&deg; (extra wide) and 30&deg; (quite zoomed in)
+        //   h,//4.0f / 3.0f, // Aspect Ratio. Depends on the size of your window. Notice that 4/3 == 800/600 == 1280/960, sounds familiar ?
+        //  0.1f,        // Near clipping plane. Keep as big as possible, or you'll get precision issues.
+        // 100.0f       // Far clipping plane. Keep as little as possible.
+        //);
+    
+        //  glm::mat4 proj = glm::perspective(60.0f, h, 0.3f, 1000.0f);
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), h, 0.3f, 1000.0f);
+    Matrix3D<float> r(
+                      projectionMatrix[0][0], projectionMatrix[0][1], projectionMatrix[0][2], projectionMatrix[0][3],
+                      projectionMatrix[1][0], projectionMatrix[1][1], projectionMatrix[1][2], projectionMatrix[1][3],
+                      projectionMatrix[2][0], projectionMatrix[2][1], projectionMatrix[2][2], projectionMatrix[2][3],
+                      projectionMatrix[3][0], projectionMatrix[3][1], projectionMatrix[3][2], projectionMatrix[3][3]);
+    return r;
 	}
 
 	Matrix3D<float> getViewMatrix() const
@@ -448,8 +463,8 @@ public:
 
 
 
-		glm::mat4 model; // 构造单位矩阵
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -19.0f));
+		glm::mat4 model  ; // 构造单位矩阵
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 
 
 		glm::mat4 CameraMatrix = glm::lookAt(
@@ -457,22 +472,21 @@ public:
 			glm::vec3(0, 0, -1),   // where you want to look at, in world space
 			glm::vec3(0, 1, 0)        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
 		);
-
-		glm::mat4 model_view = CameraMatrix * model ;
+    glm::mat4 model_view = CameraMatrix * model;
 
 		Matrix3D<float> r(
-			model_view[0][0], model_view[0][1], model_view[0][2], model_view[0][3], 
+			model_view[0][0], model_view[0][1], model_view[0][2], model_view[0][3],
 			model_view[1][0], model_view[1][1], model_view[1][2], model_view[1][3],
 			model_view[2][0], model_view[2][1], model_view[2][2], model_view[2][3],
 			model_view[3][0], model_view[3][1], model_view[3][2], model_view[3][3]);
 
-		return r;// 
+		return r;//
 		//return rotationMatrix * viewMatrix;
 			//	return model_view;
 	}
 	void mouseDown(const MouseEvent& event) override
 	{
-		
+
 	 }
     //[/UserMethods]
 
@@ -489,7 +503,7 @@ private:
 	juce::CodeDocument * f;
 	juce::ComboBox *combobox;
 	OpenGLContext openGLContext;
-	juce::Draggable3DOrientation draggableOrientation; 
+	juce::Draggable3DOrientation draggableOrientation;
 	float scale, rotation;;
 	bool find ;
 
