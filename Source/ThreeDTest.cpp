@@ -58,6 +58,8 @@ ThreeDTest::ThreeDTest ()
 	//	addAndMakeVisible(s->createComponent());
 	//}
 	addAndMakeVisible(o = new OverLay());
+	if (o)
+		o->addMouseListener(this,false);
 	openGLContext.setComponentPaintingEnabled(true);  // if false , the overlay component can not see.
 
 
@@ -73,7 +75,7 @@ ThreeDTest::ThreeDTest ()
 
 	startTimer(100);
 	scale = 1.0f;
-	rotation = 0.0f;
+	rotation = 1.0f;
 
 	_strVertex = g_shaderData._shaderPreset[0]->vertexShader;
 	_strFragment = g_shaderData._shaderPreset[0]->fragmentShader;
@@ -170,6 +172,7 @@ void ThreeDTest::resized()
 void ThreeDTest::mouseMove (const MouseEvent& e)
 {
     //[UserCode_mouseMove] -- Add your code here...
+	rotation += 0.1;
 	//if (owner == nullptr)
 	//{
 	//	owner = getParentComponent();
@@ -238,7 +241,7 @@ bool ThreeDTest::keyPressed (const KeyPress& key)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ThreeDTest" componentName=""
-                 parentClasses="public Component, private OpenGLRenderer, private Timer, private CodeDocument::Listener"
+                 parentClasses="public Component, private OpenGLRenderer, private Timer, private CodeDocument::Listener, private MouseListener"
                  constructorParams="" variableInitialisers="_sprite(openGLContext),_sprite2(openGLContext), isInit(false),find(false),combobox(nullptr)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">

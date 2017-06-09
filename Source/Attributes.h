@@ -141,7 +141,7 @@ struct DynamicTexture
 			//g.fillEllipse(0, 0, 16, 16);
 			g.setColour(Colours::red);
 			g.setFont(40);
-			g.drawFittedText(String("Release my soul"), image.getBounds(), Justification::centred, 1);
+			g.drawFittedText(String("hello world"), image.getBounds(), Justification::centred, 1);
 
 		}
 

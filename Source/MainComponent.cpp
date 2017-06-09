@@ -139,12 +139,6 @@ public:
 	}
     void resized() override
     {
-        // This is called when the MainContentComponent is resized.
-        // If you add any child components, this is where you should
-        // update their positions.
-		//auto r = getLocalBounds();
-		//if (currentDemo != nullptr)
-		//	currentDemo->setBounds(r);
 		auto r = getLocalBounds();
 		int listBoxWidth = roundToInt(proportionOfWidth(0.2000f));
 		_listBox.setBounds(r.removeFromLeft(listBoxWidth));

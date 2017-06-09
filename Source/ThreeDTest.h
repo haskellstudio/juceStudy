@@ -27,6 +27,10 @@
 #include "Attributes.h"
 #include "Sprite.h"
 #include "OverLay.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <../Source/glm/gtc/matrix_transform.hpp> 
+#include <../Source/glm/gtx/transform.hpp>
+
 extern ShaderData g_shaderData;
 //[/Headers]
 
@@ -40,7 +44,8 @@ extern ShaderData g_shaderData;
 class ThreeDTest  : public Component,
                     private OpenGLRenderer,
                     private Timer,
-                    private CodeDocument::Listener
+                    private CodeDocument::Listener,
+                    private MouseListener
 {
 public:
     //==============================================================================
@@ -410,7 +415,7 @@ public:
 
 		}
 
-		
+
 
 		_strVertex2 = String();
 		_strFragment2 = String();
@@ -437,13 +442,25 @@ public:
 	Matrix3D<float> getViewMatrix() const
 	{
 		Matrix3D<float> viewMatrix = draggableOrientation.getRotationMatrix()
-			* Vector3D<float>(0.0f, 1.0f, -10.0f);
+			* Vector3D<float>(0.0f, 0.0f,-19.0f);// -19.0f);
 
-		Matrix3D<float> rotationMatrix = viewMatrix.rotated(Vector3D<float>(rotation, rotation, -0.3f));
+		Matrix3D<float> rotationMatrix = viewMatrix.rotated(Vector3D<float>(0.0,0.0, 0.0 ));
 
+		Matrix3D<float> i;
+
+		//glm::mat4 ViewMatrix = glm::translate(-3.0f, 0.0f, 0.0f);
+		//glm::mat4 CameraMatrix = glm::lookAt(
+		//	cameraPosition, // the position of your camera, in world space
+		//	cameraTarget,   // where you want to look at, in world space
+		//	upVector        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
+		//);
 		return rotationMatrix * viewMatrix;
+		//		return i;
 	}
-
+	void mouseDown(const MouseEvent& event) override
+	{
+		
+	 }
     //[/UserMethods]
 
     void paint (Graphics& g) override;
@@ -459,7 +476,7 @@ private:
 	juce::CodeDocument * f;
 	juce::ComboBox *combobox;
 	OpenGLContext openGLContext;
-	Draggable3DOrientation draggableOrientation;
+	juce::Draggable3DOrientation draggableOrientation; 
 	float scale, rotation;;
 	bool find ;
 
