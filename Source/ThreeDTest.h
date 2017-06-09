@@ -1,4 +1,4 @@
-/*
+﻿/*
   ==============================================================================
 
   This is an automatically generated GUI class created by the Projucer!
@@ -442,20 +442,33 @@ public:
 	Matrix3D<float> getViewMatrix() const
 	{
 		Matrix3D<float> viewMatrix = draggableOrientation.getRotationMatrix()
-			* Vector3D<float>(0.0f, 0.0f,-19.0f);// -19.0f);
+			* Vector3D<float>(0.f, 0.0f,-19.0f);// -19.0f);
 
 		Matrix3D<float> rotationMatrix = viewMatrix.rotated(Vector3D<float>(0.0,0.0, 0.0 ));
 
-		Matrix3D<float> i;
 
-		//glm::mat4 ViewMatrix = glm::translate(-3.0f, 0.0f, 0.0f);
-		//glm::mat4 CameraMatrix = glm::lookAt(
-		//	cameraPosition, // the position of your camera, in world space
-		//	cameraTarget,   // where you want to look at, in world space
-		//	upVector        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
-		//);
-		return rotationMatrix * viewMatrix;
-		//		return i;
+
+		glm::mat4 model; // 构造单位矩阵
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -19.0f));
+
+
+		glm::mat4 CameraMatrix = glm::lookAt(
+			glm::vec3(0, 0, 0), // the position of your camera, in world space
+			glm::vec3(0, 0, -1),   // where you want to look at, in world space
+			glm::vec3(0, 1, 0)        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
+		);
+
+		glm::mat4 model_view = CameraMatrix * model ;
+
+		Matrix3D<float> r(
+			model_view[0][0], model_view[0][1], model_view[0][2], model_view[0][3], 
+			model_view[1][0], model_view[1][1], model_view[1][2], model_view[1][3],
+			model_view[2][0], model_view[2][1], model_view[2][2], model_view[2][3],
+			model_view[3][0], model_view[3][1], model_view[3][2], model_view[3][3]);
+
+		return r;// 
+		//return rotationMatrix * viewMatrix;
+			//	return model_view;
 	}
 	void mouseDown(const MouseEvent& event) override
 	{
