@@ -522,12 +522,14 @@ public:
 	}
 	void mouseDown(const MouseEvent& event) override
 	{
-
+    float mx =event.getPosition().getX();
+    float my =event.getPosition().getY();
+    
 		glm::vec3 ray_origin;
 		glm::vec3 ray_direction;
 		ScreenPosToWorldRay(
-			event.getPosition().getX(),
-			event.getPosition().getY(),
+			mx,
+			my,
 			this->getWidth(),
 			this->getHeight(),
 			this->getViewMatrix_(),
@@ -539,25 +541,31 @@ public:
 
 		float intersection_distance;
 		//_sprite.init(0, 0, 0.5, 0.5);
-		glm::vec3 aabb_min(-0.25f, -0.25f, -1.0f);
-		glm::vec3 aabb_max(0.25f, 0.25f, 1.0f);
+    
+    float halfWidth = _sprite._width/2.0f;
+    float halfHeight = _sprite._height/2.0f;
+    float minx = halfWidth*(-1.0f);
+    float miny = halfHeight*(-1.0f);
+    
+    float maxx = halfWidth;
+    float maxy = halfHeight;
+    
+		glm::vec3 aabb_min(minx, miny, -1.0f);
+		glm::vec3 aabb_max(maxx, maxy, 1.0f);
 
 		// The ModelMatrix transforms :
 		// - the mesh to its desired position and orientation
 		// - but also the AABB (defined with aabb_min and aabb_max) into an OBB
 
-		std::vector<glm::vec3> positions(1);
-		std::vector<glm::quat> orientations(1);
-		for (int i = 0; i<1; i++) {
-			positions[i] = glm::vec3(0.25 ,-0.25 , 0 );
-			orientations[i] =  glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-		}
+    float centerx = _sprite._x+halfWidth;
+    float centery = _sprite._y+halfHeight*-1.0f;
+    
+		glm::vec3 positions = glm::vec3(centerx ,centery , 0 );
+		glm::quat orientations =glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 
 
-
-		int i = 0;
-		glm::mat4 RotationMatrix = glm::toMat4(orientations[i]);
-		glm::mat4 TranslationMatrix = glm::translate(glm::mat4(), positions[i]);
+		glm::mat4 RotationMatrix = glm::toMat4(orientations);
+		glm::mat4 TranslationMatrix = glm::translate(glm::mat4(), positions);
 		glm::mat4 ModelMatrix = TranslationMatrix * RotationMatrix;
 
 

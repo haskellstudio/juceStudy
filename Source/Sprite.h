@@ -163,11 +163,11 @@ public:
         //	i = ::GetLastError();
 	}
 
-private:
-	int _x;
-	int _y;
-	int _width;
-	int _height;
+public:
+	float _x;
+	float _y;
+	float _width;
+	float _height;
 	GLuint _vboID;
 
 	OpenGLContext& _openGLContext;
