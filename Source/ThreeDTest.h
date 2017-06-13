@@ -1,4 +1,4 @@
-/*
+﻿/*
   ==============================================================================
 
   This is an automatically generated GUI class created by the Projucer!
@@ -28,9 +28,12 @@
 #include "Sprite.h"
 #include "OverLay.h"
 #define GLM_ENABLE_EXPERIMENTAL
+#include <../Source/glm/glm.hpp>
+#include <../Source/glm/gtc/quaternion.hpp>
+#include <../Source/glm/gtx/quaternion.hpp>
 #include <../Source/glm/gtc/matrix_transform.hpp>
 #include <../Source/glm/gtx/transform.hpp>
-
+#include "Ray.h"
 extern ShaderData g_shaderData;
 //[/Headers]
 
@@ -92,7 +95,7 @@ public:
 				uf->projectionMatrix->setMatrix4(getProjectionMatrix().mat, 1, false);
 
 			if (uf->viewMatrix != nullptr)
-				uf->viewMatrix->setMatrix4(getViewMatrix().mat, 1, false);
+				uf->viewMatrix->setMatrix4( (getViewMatrix() * getModelMatrix()).mat, 1, false);
 
             if(uf->texture)
                 {
@@ -430,7 +433,14 @@ public:
 	{
 		startTimer(1000);
 	}
-
+	glm::mat4 getProjectionMatrix_() const
+	{
+		float w = 1.0f / (scale + 0.1f);
+		float h = w * getLocalBounds().toFloat().getAspectRatio(false);
+		glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), h/*1.0f*/, 0.1f, 1000.0f);
+	
+		return projectionMatrix;
+	}
 	Matrix3D<float> getProjectionMatrix() const
 	{
 		float w = 1.0f / (scale + 0.1f);
@@ -445,34 +455,60 @@ public:
         //);
     
         //  glm::mat4 proj = glm::perspective(60.0f, h, 0.3f, 1000.0f);
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 1000.0f);
-    Matrix3D<float> r(
-                      projectionMatrix[0][0], projectionMatrix[0][1], projectionMatrix[0][2], projectionMatrix[0][3],
-                      projectionMatrix[1][0], projectionMatrix[1][1], projectionMatrix[1][2], projectionMatrix[1][3],
-                      projectionMatrix[2][0], projectionMatrix[2][1], projectionMatrix[2][2], projectionMatrix[2][3],
-                      projectionMatrix[3][0], projectionMatrix[3][1], projectionMatrix[3][2], projectionMatrix[3][3]);
-    return r;
+		glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), h/*1.0f*/, 0.1f, 1000.0f);
+		Matrix3D<float> r(
+						  projectionMatrix[0][0], projectionMatrix[0][1], projectionMatrix[0][2], projectionMatrix[0][3],
+						  projectionMatrix[1][0], projectionMatrix[1][1], projectionMatrix[1][2], projectionMatrix[1][3],
+						  projectionMatrix[2][0], projectionMatrix[2][1], projectionMatrix[2][2], projectionMatrix[2][3],
+						  projectionMatrix[3][0], projectionMatrix[3][1], projectionMatrix[3][2], projectionMatrix[3][3]);
+		return r;
+	}
+	glm::mat4 getModelMatrix_() const
+	{
+		glm::mat4 model; // 构造单位矩阵
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		
+		return model;
 	}
 
+	Matrix3D<float> getModelMatrix() const
+	{
+		glm::mat4 model; // 构造单位矩阵
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+
+		model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		Matrix3D<float> r(
+			model[0][0], model[0][1], model[0][2], model[0][3],
+			model[1][0], model[1][1], model[1][2], model[1][3],
+			model[2][0], model[2][1], model[2][2], model[2][3],
+			model[3][0], model[3][1], model[3][2], model[3][3]);
+
+		return r;
+	}
+	glm::mat4 getViewMatrix_() const
+	{
+		glm::mat4 CameraMatrix = glm::lookAt(
+			glm::vec3(0, 0, 3), // the position of your camera, in world space
+			glm::vec3(0, 0, -1),   // where you want to look at, in world space
+			glm::vec3(0, 1, 0)        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
+		);
+		return CameraMatrix;
+	}
 	Matrix3D<float> getViewMatrix() const
 	{
-		Matrix3D<float> viewMatrix = draggableOrientation.getRotationMatrix()
-			* Vector3D<float>(0.f, 0.0f,-19.0f);// -19.0f);
+		//Matrix3D<float> viewMatrix = draggableOrientation.getRotationMatrix()
+		//	* Vector3D<float>(0.f, 0.0f,-19.0f);// -19.0f);
 
-		Matrix3D<float> rotationMatrix = viewMatrix.rotated(Vector3D<float>(0.0,0.0, 0.0 ));
-
-    
-
-		glm::mat4 model  ; // 构造单位矩阵
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, -8.0f+rotation));
-
+		//Matrix3D<float> rotationMatrix = viewMatrix.rotated(Vector3D<float>(0.0,0.0, 0.0 ));
 
 		glm::mat4 CameraMatrix = glm::lookAt(
 			glm::vec3(0, 0, 3), // the position of your camera, in world space
 			glm::vec3(0, 0, -1),   // where you want to look at, in world space
 			glm::vec3(0, 1, 0)        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
 		);
-    glm::mat4 model_view = CameraMatrix * model;
+		glm::mat4 model_view = CameraMatrix;// *model;
 
 		Matrix3D<float> r(
 			model_view[0][0], model_view[0][1], model_view[0][2], model_view[0][3],
@@ -487,7 +523,60 @@ public:
 	void mouseDown(const MouseEvent& event) override
 	{
 
-	 }
+		glm::vec3 ray_origin;
+		glm::vec3 ray_direction;
+		ScreenPosToWorldRay(
+			event.getPosition().getX(),
+			event.getPosition().getY(),
+			this->getWidth(),
+			this->getHeight(),
+			this->getViewMatrix_(),
+			this->getProjectionMatrix_(),
+			ray_origin,
+			ray_direction
+		);
+
+
+		float intersection_distance;
+
+		glm::vec3 aabb_min(-1.0f, -1.0f, -1.0f);
+		glm::vec3 aabb_max(1.0f, 1.0f, 1.0f);
+
+		// The ModelMatrix transforms :
+		// - the mesh to its desired position and orientation
+		// - but also the AABB (defined with aabb_min and aabb_max) into an OBB
+
+		std::vector<glm::vec3> positions(1);
+		std::vector<glm::quat> orientations(1);
+		for (int i = 0; i<1; i++) {
+			positions[i] = glm::vec3(0 ,0 , 0 );
+			orientations[i] =  glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+		}
+
+
+
+		int i = 0;
+		glm::mat4 RotationMatrix = glm::toMat4(orientations[i]);
+		glm::mat4 TranslationMatrix = glm::translate(glm::mat4(), positions[i]);
+		glm::mat4 ModelMatrix = TranslationMatrix * RotationMatrix;
+
+
+		if (TestRayOBBIntersection(
+			ray_origin,
+			ray_direction,
+			aabb_min,
+			aabb_max,
+			ModelMatrix,
+			intersection_distance)
+			) {
+			DBG("click");
+			//std::ostringstream oss;
+			//oss << "mesh " << i;
+			//message = oss.str();
+			//break;
+		}
+
+	}
     //[/UserMethods]
 
     void paint (Graphics& g) override;

@@ -172,7 +172,7 @@ void ThreeDTest::resized()
 void ThreeDTest::mouseMove (const MouseEvent& e)
 {
     //[UserCode_mouseMove] -- Add your code here...
-	rotation += 0.1;
+	//rotation += 0.1;
 	//if (owner == nullptr)
 	//{
 	//	owner = getParentComponent();

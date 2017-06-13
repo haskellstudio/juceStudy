@@ -79,7 +79,7 @@ void OverLay::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    toggleButton->setBounds (232, 128, 150, 24);
+    toggleButton->setBounds (24, 808, 150, 24);
     //[UserResized] Add your own custom resize handling here..
 
 
@@ -115,7 +115,7 @@ void OverLay::resized()
 	//	r.reduce(10.0f, 10.0f);
 	masterbox.performLayout(r);
 
-
+	toggleButton->setBounds(0, 0, 0, 0);
     //[/UserResized]
 }
 
@@ -157,7 +157,7 @@ BEGIN_JUCER_METADATA
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ff323e44"/>
   <TOGGLEBUTTON name="new toggle button" id="82a4765ef10657c8" memberName="toggleButton"
-                virtualName="" explicitFocusOrder="0" pos="232 128 150 24" txtcol="ffcb1212"
+                virtualName="" explicitFocusOrder="0" pos="24 808 150 24" txtcol="ffcb1212"
                 buttonText="new toggle button" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
 </JUCER_COMPONENT>
