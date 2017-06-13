@@ -435,7 +435,7 @@ public:
 	}
 	glm::mat4 getProjectionMatrix_() const
 	{
-		float w = 1.0f / (scale + 0.1f);
+		float w = 1.0f / (scale);
 		float h = w * getLocalBounds().toFloat().getAspectRatio(false);
 		glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), h/*1.0f*/, 0.1f, 1000.0f);
 	
@@ -443,8 +443,8 @@ public:
 	}
 	Matrix3D<float> getProjectionMatrix() const
 	{
-		float w = 1.0f / (scale + 0.1f);
-		float h = w * getLocalBounds().toFloat().getAspectRatio(false);
+	//	float w = 1.0f / (scale + 0.1f);
+	//	float h = w * getLocalBounds().toFloat().getAspectRatio(false);
         //return Matrix3D<float>::fromFrustum(-w, w, -h, h, -114.0f, -130.0f);
     
         //   glm::mat4 projectionMatrix = glm::perspective(
@@ -455,7 +455,7 @@ public:
         //);
     
         //  glm::mat4 proj = glm::perspective(60.0f, h, 0.3f, 1000.0f);
-		glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), h/*1.0f*/, 0.1f, 1000.0f);
+		glm::mat4 projectionMatrix = getProjectionMatrix_();// glm::perspective(glm::radians(45.0f), h/* h 1.0f*/, 0.1f, 1000.0f);
 		Matrix3D<float> r(
 						  projectionMatrix[0][0], projectionMatrix[0][1], projectionMatrix[0][2], projectionMatrix[0][3],
 						  projectionMatrix[1][0], projectionMatrix[1][1], projectionMatrix[1][2], projectionMatrix[1][3],
@@ -468,17 +468,17 @@ public:
 		glm::mat4 model; // 构造单位矩阵
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 
-		model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.2f, 0.0f, -2.0f));
 		
 		return model;
 	}
 
 	Matrix3D<float> getModelMatrix() const
 	{
-		glm::mat4 model; // 构造单位矩阵
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		//glm::mat4 model; // 构造单位矩阵
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 
-		model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		glm::mat4 model = getModelMatrix_();// glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
 		Matrix3D<float> r(
 			model[0][0], model[0][1], model[0][2], model[0][3],
 			model[1][0], model[1][1], model[1][2], model[1][3],
@@ -503,12 +503,12 @@ public:
 
 		//Matrix3D<float> rotationMatrix = viewMatrix.rotated(Vector3D<float>(0.0,0.0, 0.0 ));
 
-		glm::mat4 CameraMatrix = glm::lookAt(
-			glm::vec3(0, 0, 3), // the position of your camera, in world space
-			glm::vec3(0, 0, -1),   // where you want to look at, in world space
-			glm::vec3(0, 1, 0)        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
-		);
-		glm::mat4 model_view = CameraMatrix;// *model;
+		//glm::mat4 CameraMatrix = glm::lookAt(
+		//	glm::vec3(0, 0, 3), // the position of your camera, in world space
+		//	glm::vec3(0, 0, -1),   // where you want to look at, in world space
+		//	glm::vec3(0, 1, 0)        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
+		//);
+		glm::mat4 model_view = getViewMatrix_();// CameraMatrix;// *model;
 
 		Matrix3D<float> r(
 			model_view[0][0], model_view[0][1], model_view[0][2], model_view[0][3],
@@ -538,9 +538,9 @@ public:
 
 
 		float intersection_distance;
-
-		glm::vec3 aabb_min(-1.0f, -1.0f, -1.0f);
-		glm::vec3 aabb_max(1.0f, 1.0f, 1.0f);
+		//_sprite.init(0, 0, 0.5, 0.5);
+		glm::vec3 aabb_min(-0.25f, -0.25f, -1.0f);
+		glm::vec3 aabb_max(0.25f, 0.25f, 1.0f);
 
 		// The ModelMatrix transforms :
 		// - the mesh to its desired position and orientation
@@ -549,7 +549,7 @@ public:
 		std::vector<glm::vec3> positions(1);
 		std::vector<glm::quat> orientations(1);
 		for (int i = 0; i<1; i++) {
-			positions[i] = glm::vec3(0 ,0 , 0 );
+			positions[i] = glm::vec3(0.25 ,-0.25 , 0 );
 			orientations[i] =  glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 		}
 
