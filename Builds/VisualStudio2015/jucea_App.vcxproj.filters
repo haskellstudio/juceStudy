@@ -1989,6 +1989,9 @@
     <ClCompile Include="..\..\Source\CommonFun.cpp">
       <Filter>jucea\Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Ray.cpp">
+      <Filter>jucea\gamelib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\ComponentList.h">
@@ -3802,6 +3805,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\CommonFun.h">
       <Filter>jucea\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Ray.h">
+      <Filter>jucea\gamelib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

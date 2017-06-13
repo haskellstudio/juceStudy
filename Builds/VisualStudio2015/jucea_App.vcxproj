@@ -137,6 +137,7 @@
     <ClCompile Include="..\..\Source\HashStr.cpp" />
     <ClCompile Include="..\..\Source\NewComponent.cpp" />
     <ClCompile Include="..\..\Source\OverLay.cpp" />
+    <ClCompile Include="..\..\Source\Ray.cpp" />
     <ClCompile Include="..\..\Source\ShaderEditor.cpp" />
     <ClCompile Include="..\..\Source\Sprite.cpp" />
     <ClCompile Include="..\..\Source\ThreeDTest.cpp" />
@@ -1712,6 +1713,7 @@
     <ClInclude Include="..\..\Source\HashStr.h" />
     <ClInclude Include="..\..\Source\NewComponent.h" />
     <ClInclude Include="..\..\Source\OverLay.h" />
+    <ClInclude Include="..\..\Source\Ray.h" />
     <ClInclude Include="..\..\Source\ShaderEditor.h" />
     <ClInclude Include="..\..\Source\Sprite.h" />
     <ClInclude Include="..\..\Source\ThreeDTest.h" />

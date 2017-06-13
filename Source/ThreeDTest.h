@@ -437,8 +437,8 @@ public:
 	{
 		float w = 1.0f / (scale);
 		float h = w * getLocalBounds().toFloat().getAspectRatio(false);
-		glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), h/*1.0f*/, 0.1f, 1000.0f);
-	
+		//glm::mat4 projectionMatrix = glm::perspective(glm::radians(30.0f), h/*1.0f*/, 0.1f, 1000.0f);
+		glm::mat4 projectionMatrix = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 100.0f);
 		return projectionMatrix;
 	}
 	Matrix3D<float> getProjectionMatrix() const
@@ -468,7 +468,7 @@ public:
 		glm::mat4 model; // 构造单位矩阵
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 
-		model = glm::translate(model, glm::vec3(0.2f, 0.0f, -2.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		
 		return model;
 	}
@@ -490,7 +490,7 @@ public:
 	glm::mat4 getViewMatrix_() const
 	{
 		glm::mat4 CameraMatrix = glm::lookAt(
-			glm::vec3(0, 0, 3), // the position of your camera, in world space
+			glm::vec3(0, 0, 0), // the position of your camera, in world space
 			glm::vec3(0, 0, -1),   // where you want to look at, in world space
 			glm::vec3(0, 1, 0)        // probably glm::vec3(0,1,0), but (0,-1,0) would make you looking upside-down, which can be great too
 		);
