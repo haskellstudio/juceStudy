@@ -86,7 +86,10 @@ public:
 		{
 			if (uf->lightPosition)
 			{
-				uf->lightPosition->set(1.0f, 1.0f, 0.0f, 1.0f);
+				if(sp.isClicked==0)
+					uf->lightPosition->set(1.0f, 1.0f, 1.0f, 1.0f);
+				else if(sp.isClicked == 1)
+					uf->lightPosition->set(0.0f, 1.0f, 0.0f, 1.0f);
 
 			}
 
@@ -528,12 +531,26 @@ public:
     float mx =event.getPosition().getX();
     float my =event.getPosition().getY();
     
-	 if(isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite, this->getViewMatrix_(), this->getProjectionMatrix_(), this->getModelMatrix_()))
-		 DBG("_sprite is clicked");
+	if (isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite, this->getViewMatrix_(), this->getProjectionMatrix_(), this->getModelMatrix_()))
+	{
+		DBG("_sprite is clicked");
+		_sprite.isClicked = 1;
+	 }
+	else
+	{
+		_sprite.isClicked = 0;
+	}
+		
 
-	 if (isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite2, this->getViewMatrix_(), this->getProjectionMatrix_(), this->getModelMatrix_()))
-		 DBG("_sprite2 is clicked");
-
+	if (isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite2, this->getViewMatrix_(), this->getProjectionMatrix_(), this->getModelMatrix_()))
+	{
+		_sprite2.isClicked = 1;
+		DBG("_sprite2 is clicked");
+	}
+	else
+	{
+		_sprite2.isClicked = 0;
+	}
 
 	//glm::vec3 ray_origin;
 	//glm::vec3 ray_direction;
