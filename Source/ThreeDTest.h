@@ -29,10 +29,9 @@
 #include "OverLay.h"
 #define GLM_ENABLE_EXPERIMENTAL
 #include <../Source/glm/glm.hpp>
-#include <../Source/glm/gtc/quaternion.hpp>
+//#include <../Source/glm/gtc/quaternion.hpp>
 #include <../Source/glm/gtx/quaternion.hpp>
-#include <../Source/glm/gtc/matrix_transform.hpp>
-#include <../Source/glm/gtx/transform.hpp>
+//#include <../Source/glm/gtx/transform.hpp>
 #include "Ray.h"
 extern ShaderData g_shaderData;
 //[/Headers]
@@ -466,9 +465,9 @@ public:
 	glm::mat4 getModelMatrix_() const
 	{
 		glm::mat4 model; // 构造单位矩阵
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
 
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		
 		return model;
 	}
@@ -520,69 +519,80 @@ public:
 		//return rotationMatrix * viewMatrix;
 			//	return model_view;
 	}
+
+	
+
+
 	void mouseDown(const MouseEvent& event) override
 	{
     float mx =event.getPosition().getX();
     float my =event.getPosition().getY();
     
-		glm::vec3 ray_origin;
-		glm::vec3 ray_direction;
-		ScreenPosToWorldRay(
-			mx,
-			my,
-			this->getWidth(),
-			this->getHeight(),
-			this->getViewMatrix_(),
-			this->getProjectionMatrix_(),
-			ray_origin,
-			ray_direction
-		);
+	 if(isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite, this->getViewMatrix_(), this->getProjectionMatrix_(), this->getModelMatrix_()))
+		 DBG("_sprite is clicked");
+
+	 if (isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite2, this->getViewMatrix_(), this->getProjectionMatrix_(), this->getModelMatrix_()))
+		 DBG("_sprite2 is clicked");
 
 
-		float intersection_distance;
-		//_sprite.init(0, 0, 0.5, 0.5);
-    
-    float halfWidth = _sprite._width/2.0f;
-    float halfHeight = _sprite._height/2.0f;
-    float minx = halfWidth*(-1.0f);
-    float miny = halfHeight*(-1.0f);
-    
-    float maxx = halfWidth;
-    float maxy = halfHeight;
-    
-		glm::vec3 aabb_min(minx, miny, -1.0f);
-		glm::vec3 aabb_max(maxx, maxy, 1.0f);
-
-		// The ModelMatrix transforms :
-		// - the mesh to its desired position and orientation
-		// - but also the AABB (defined with aabb_min and aabb_max) into an OBB
-
-    float centerx = _sprite._x+halfWidth;
-    float centery = _sprite._y+halfHeight*-1.0f;
-    
-		glm::vec3 positions = glm::vec3(centerx ,centery , 0 );
-		glm::quat orientations =glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+	//glm::vec3 ray_origin;
+	//glm::vec3 ray_direction;
+	//ScreenPosToWorldRay(
+	//	mx,
+	//	my,
+	//	this->getWidth(),
+	//	this->getHeight(),
+	//	this->getViewMatrix_(),
+	//	this->getProjectionMatrix_(),
+	//	ray_origin,
+	//	ray_direction
+	//);
 
 
-		glm::mat4 RotationMatrix = glm::toMat4(orientations);
-		glm::mat4 TranslationMatrix = glm::translate(glm::mat4(), positions);
-		glm::mat4 ModelMatrix = TranslationMatrix * RotationMatrix;
+	//float intersection_distance;
+	////_sprite.init(0, 0, 0.5, 0.5);
+
+	//float halfWidth = _sprite._width / 2.0f;
+	//float halfHeight = _sprite._height / 2.0f;
+	//float minx = halfWidth*(-1.0f);
+	//float miny = halfHeight*(-1.0f);
+
+	//float maxx = halfWidth;
+	//float maxy = halfHeight;
+
+	//glm::vec3 aabb_min(minx, miny, -1.0f);
+	//glm::vec3 aabb_max(maxx, maxy, 1.0f);
+
+	//// The ModelMatrix transforms :
+	//// - the mesh to its desired position and orientation
+	//// - but also the AABB (defined with aabb_min and aabb_max) into an OBB
+
+	//float centerx = _sprite._x + halfWidth;
+	//float centery = _sprite._y + halfHeight*-1.0f;
+
+	//glm::vec3 positions = glm::vec3(centerx, centery, 0);
+	//glm::quat orientations = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 
 
-		if (TestRayOBBIntersection(
-			ray_origin,
-			ray_direction,
-			aabb_min,
-			aabb_max,
-			ModelMatrix,
-			intersection_distance)
-			) {
-			DBG("click");
-			//std::ostringstream oss;
-			//oss << "mesh " << i;
-			//message = oss.str();
-			//break;
-		}
+	//glm::mat4 RotationMatrix = glm::toMat4(orientations);
+	//glm::mat4 TranslationMatrix = glm::translate(glm::mat4(), positions);
+	//glm::mat4 ModelMatrix = TranslationMatrix * RotationMatrix;
+
+
+	//if (TestRayOBBIntersection(
+	//	ray_origin,
+	//	ray_direction,
+	//	aabb_min,
+	//	aabb_max,
+	//	ModelMatrix,
+	//	intersection_distance)
+	//	) {
+	//	DBG("click");
+	//	//std::ostringstream oss;
+	//	//oss << "mesh " << i;
+	//	//message = oss.str();
+	//	//break;
+	//}
 
 	}
     //[/UserMethods]

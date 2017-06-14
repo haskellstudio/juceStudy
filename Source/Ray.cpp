@@ -1,5 +1,6 @@
 #include "Ray.h"
-
+//#include <../Source/glm/gtc/quaternion.hpp>
+#include <../Source/glm/gtx/quaternion.hpp>
 
 void ScreenPosToWorldRay(
 	int mouseX, int mouseY,             // Mouse position, in pixels, from bottom-left corner of the window
@@ -173,5 +174,65 @@ bool TestRayOBBIntersection(
 
 	intersection_distance = tMin;
 	return true;
+
+}
+bool isSpriteClicked(float mx, float my, float w, float h, Sprite& sp, glm::mat4& viewMatrix, glm::mat4& ProjMatrix, glm::mat4& modelMatrix)
+{
+	glm::vec3 ray_origin;
+	glm::vec3 ray_direction;
+	ScreenPosToWorldRay(
+		mx,
+		my,
+		w,
+		h,
+		viewMatrix,
+		ProjMatrix,
+		ray_origin,
+		ray_direction
+	);
+
+
+	float intersection_distance;
+	//_sprite.init(0, 0, 0.5, 0.5);
+
+	float halfWidth = sp._width / 2.0f;
+	float halfHeight = sp._height / 2.0f;
+	float minx = halfWidth*(-1.0f);
+	float miny = halfHeight*(-1.0f);
+
+	float maxx = halfWidth;
+	float maxy = halfHeight;
+
+	glm::vec3 aabb_min(minx, miny, -1.0f);
+	glm::vec3 aabb_max(maxx, maxy, 1.0f);
+
+
+	float centerx = sp._x + halfWidth;
+	float centery = sp._y*(-1) + halfHeight*-1.0f;
+
+	glm::vec3 positions = glm::vec3(centerx, centery, 0);
+	glm::quat orientations = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+
+
+	glm::mat4 RotationMatrix = glm::toMat4(orientations);
+	glm::mat4 TranslationMatrix = glm::translate(glm::mat4(), positions);
+	glm::mat4 ModelMatrix = TranslationMatrix * RotationMatrix *modelMatrix;
+
+
+	if (TestRayOBBIntersection(
+		ray_origin,
+		ray_direction,
+		aabb_min,
+		aabb_max,
+		ModelMatrix,
+		intersection_distance)
+		) {
+		return true;
+		//std::ostringstream oss;
+		//oss << "mesh " << i;
+		//message = oss.str();
+		//break;
+	}
+	return false;
 
 }

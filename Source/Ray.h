@@ -2,7 +2,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <../Source/glm/gtc/matrix_transform.hpp>
 #include <../Source/glm/gtx/transform.hpp>
-
+#include "Sprite.h"
 void ScreenPosToWorldRay(
 	int mouseX, int mouseY,             // Mouse position, in pixels, from bottom-left corner of the window
 	int screenWidth, int screenHeight,  // Window size, in pixels
@@ -21,3 +21,5 @@ bool TestRayOBBIntersection(
 	glm::mat4 ModelMatrix,       // Transformation applied to the mesh (which will thus be also applied to its bounding box)
 	float& intersection_distance // Output : distance between ray_origin and the intersection with the OBB
 );
+
+bool isSpriteClicked(float mx, float my, float w, float h, Sprite& sp, glm::mat4& viewMatrix, glm::mat4& ProjMatrix, glm::mat4& modelMatrix);
