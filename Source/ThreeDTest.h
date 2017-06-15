@@ -122,6 +122,15 @@ public:
 				_sprite2.init(-1, -1, 0.3, 0.3);
 				isInit = true;
 				dt.applyTo(texture);
+
+				const GLubyte* version = glGetString(GL_VERSION); //返回负责当前OpenGL实现厂商的名字  
+				DBG(juce::String((char*)version));
+				const GLubyte* vender = glGetString(GL_VENDOR); //返回负责当前OpenGL实现厂商的名字  
+				DBG(juce::String((char*)vender));
+				const GLubyte* render = glGetString(GL_RENDERER); //返回一个渲染器标识符，通常是个硬件平台  
+				DBG(juce::String((char*)render));
+				
+
 			}
 			else
 				return;
@@ -132,6 +141,15 @@ public:
 		{
 			return;
 		}
+
+		//openGLContext.setOpenGLVersionRequired(juce::OpenGLContext::OpenGLVersion::openGL3_2);
+
+		//juce::String s((char*)glGetString(GL_VERSION));
+		//DBG(s);
+
+		// OpenGLHelpers::getExtensionFunction
+
+
 
 		jassert(OpenGLHelpers::isContextActive());
 

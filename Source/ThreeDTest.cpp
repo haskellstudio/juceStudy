@@ -1,4 +1,4 @@
-/*
+﻿/*
   ==============================================================================
 
   This is an automatically generated GUI class created by the Projucer!
@@ -60,6 +60,10 @@ ThreeDTest::ThreeDTest ()
 	addAndMakeVisible(o = new OverLay());
 	if (o)
 		o->addMouseListener((MouseListener*)this,false);
+
+
+
+
 	openGLContext.setComponentPaintingEnabled(true);  // if false , the overlay component can not see.
 
 
@@ -67,7 +71,6 @@ ThreeDTest::ThreeDTest ()
 
 	openGLContext.setContinuousRepainting(true);
 	openGLContext.attachTo(*this);
-
 
 
 	openGLContext.setContinuousRepainting(true);  // true  fps may be high.
