@@ -27,20 +27,20 @@
                        defines="JUCE_OPENGL3=1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_opengl" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_events" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_cryptography" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_core" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_utils" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_formats" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_devices" path="..\..\projucer\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_basics" path="..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_video" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\..\..\projucer\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\..\projucer\JUCE\modules"/>
       </MODULEPATHS>
     </VS2015>
   </EXPORTFORMATS>
