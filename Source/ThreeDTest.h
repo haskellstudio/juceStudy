@@ -453,7 +453,7 @@ public:
 	{
 		startTimer(1000);
 	}
-	glm::mat4 getProjectionMatrix_() const
+	glm::mat4  getProjectionMatrix_() const
 	{
 		float w = 1.0f / (scale);
 		float h = w * getLocalBounds().toFloat().getAspectRatio(false);
@@ -549,7 +549,11 @@ public:
     float mx =event.getPosition().getX();
     float my =event.getPosition().getY();
     
-	if (isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite, this->getViewMatrix_(), this->getProjectionMatrix_(), this->getModelMatrix_()))
+    glm::mat4 v = this->getViewMatrix_();
+    glm::mat4 p = this->getProjectionMatrix_();
+    glm::mat4 m = this->getModelMatrix_();
+    
+	if (isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite, v, p, m))
 	{
 		DBG("_sprite is clicked");
 		_sprite.isClicked = 1;
@@ -560,7 +564,7 @@ public:
 	}
 		
 
-	if (isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite2, this->getViewMatrix_(), this->getProjectionMatrix_(), this->getModelMatrix_()))
+	if (isSpriteClicked(mx, my, this->getWidth(), this->getHeight(), _sprite2, v, p, m))
 	{
 		_sprite2.isClicked = 1;
 		DBG("_sprite2 is clicked");
