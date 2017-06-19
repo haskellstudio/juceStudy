@@ -372,7 +372,7 @@ private:
     // Audio File Reading Variables
     AudioFormatManager formatManager;
     ScopedPointer<AudioFormatReaderSource> audioReaderSource;
-    AudioTransportSource audioTransportSource;
+    juce::AudioTransportSource audioTransportSource;
     AudioTransportState audioTransportState;
     
     // Audio & GL Audio Buffer

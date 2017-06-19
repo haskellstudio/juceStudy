@@ -6,6 +6,12 @@
               jucerVersion="5.0.2">
   <MAINGROUP id="znxk6f" name="jucea">
     <GROUP id="{81AC715B-817C-8B96-6478-78D50C1EB5CD}" name="Source">
+      <FILE id="iD5Cfg" name="Ray.cpp" compile="1" resource="0" file="Source/Ray.cpp"/>
+      <FILE id="jYrB5U" name="Ray.h" compile="0" resource="0" file="Source/Ray.h"/>
+      <FILE id="YztGDA" name="CommonFun.cpp" compile="1" resource="0" file="Source/CommonFun.cpp"/>
+      <FILE id="NPLxlV" name="CommonFun.h" compile="0" resource="0" file="Source/CommonFun.h"/>
+      <FILE id="b3n3ur" name="TSound.cpp" compile="1" resource="0" file="Source/TSound.cpp"/>
+      <FILE id="hWEKoY" name="TSound.h" compile="0" resource="0" file="Source/TSound.h"/>
       <FILE id="G2dKrV" name="ShaderEditor.cpp" compile="1" resource="0"
             file="Source/ShaderEditor.cpp"/>
       <FILE id="sn3u9l" name="ShaderEditor.h" compile="0" resource="0" file="Source/ShaderEditor.h"/>
@@ -36,9 +42,9 @@
     <VS2015 targetFolder="Builds/VisualStudio2015">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="1" optimisation="1" targetName="jucea"/>
+                       isDebug="1" optimisation="1" targetName="jucea" defines="JUCE_USE_MP3AUDIOFORMAT=1"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
-                       isDebug="0" optimisation="3" targetName="jucea"/>
+                       isDebug="0" optimisation="3" targetName="jucea" defines="JUCE_USE_MP3AUDIOFORMAT=1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../projucer/JUCE/modules"/>
@@ -54,6 +60,7 @@
         <MODULEPATH id="juce_audio_devices" path="../../projucer/JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../../projucer/JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../projucer/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../projucer/JUCE/modules"/>
       </MODULEPATHS>
     </VS2015>
   </EXPORTFORMATS>
@@ -62,6 +69,7 @@
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
