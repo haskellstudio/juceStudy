@@ -40,6 +40,7 @@ void main()\n\
 uniform vec4 lightPosition; \n\
 varying vec2 textureCoordOut; \n\
 uniform sampler2D demoTexture; \n\
+uniform float iGlobalTime;\n\
 vec3 color; \n\
 void main()\n\
 { \n\
@@ -81,10 +82,11 @@ uniform vec4 lightPosition; \n\
 varying vec2 textureCoordOut; \n\
 uniform sampler2D demoTexture; \n\
 vec3 color; \n\
+uniform float iGlobalTime;\n\
 void main()\n\
 { \n\
 	//gl_FragColor = texture2D(demoTexture, textureCoordOut);\n\
-	gl_FragColor = lightPosition* texture2D (demoTexture, textureCoordOut);\n\
+	gl_FragColor = vec4(sin (iGlobalTime), cos(iGlobalTime), 1, 1)  * lightPosition* texture2D (demoTexture, textureCoordOut);\n\
 	//gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); //the second fragment shader\n\
 }\n\
 "

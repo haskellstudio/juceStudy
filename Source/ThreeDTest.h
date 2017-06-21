@@ -78,7 +78,7 @@ public:
 		return fallback;
 	}
 
-	void drawSprite(OpenGLShaderProgram* s,  Sprite&  sp , Attributes* atrr, Uniforms* uf) {
+	void drawSprite(OpenGLShaderProgram* s,  Sprite&  sp , Attributes* atrr, Uniforms* uf, float itime ) {
 
 		s->use();
 		sp.bind();
@@ -100,9 +100,15 @@ public:
 				uf->viewMatrix->setMatrix4( (getViewMatrix() * getModelMatrix()).mat, 1, false);
 
             if(uf->texture)
-                {
-                uf->texture->set(0);
-                }
+            {
+				uf->texture->set(0);
+            }
+			if (uf->iGlobalTime)
+			{
+			
+				uf->iGlobalTime->set(itime);
+			}
+
 
 		}
 
@@ -193,7 +199,8 @@ public:
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		//
-		drawSprite(_shader, _sprite, attributes, uniforms);
+		
+		drawSprite(_shader, _sprite, attributes, uniforms, (float)Time::getMillisecondCounter());
 		//_shader->use();
 		//_sprite.bind();
 		//attributes->enable(openGLContext);
@@ -201,7 +208,7 @@ public:
 		//attributes->disable(openGLContext);
 
 
-		drawSprite(_shader2, _sprite2, attributes2, uniforms2);
+		drawSprite(_shader2, _sprite2, attributes2, uniforms2, (float)Time::getMillisecondCounter());
 
 		//_shader2->use();
 		//_sprite2.bind();
