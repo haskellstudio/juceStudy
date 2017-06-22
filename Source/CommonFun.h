@@ -79,22 +79,38 @@ void main()
 	uv.x *= _w / _h;
 	uv.x *= winW / winH;
 
-	float c = Circle(
+	float mask = Circle(
 		uv, 
-		vec2(.2, -.1) ,
+		vec2(.0, .0) ,
 		.4, 
 		.03
 	);
 
-	c -= Circle(
+	mask -= Circle(
 		uv,
-		vec2(.1, .2),
-		.1,
+		vec2(-.13, .2),
+		.07,
 		.03
 	);
 
 
-	gl_FragColor = vec4(vec3(c), 1.0f);
+	mask -= Circle(
+		uv,
+		vec2(.13, .2),
+		.07,
+		.03
+	);
+
+	float mouth = Circle(uv, vec2(0.0, 0.0), .3, .02);
+	mouth -= Circle(uv, vec2(0., 0.1), .3, .02);
+
+	mask -= mouth;
+
+	
+
+	vec3 col = vec3(sin(iGlobalTime), cos(iGlobalTime), sin(iGlobalTime) ) * mask;
+	//vec3 col = vec3(1., 1., 0.) * mask;
+	gl_FragColor = vec4(col, 1.0f);
 }
 )
 /*
