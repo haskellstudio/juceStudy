@@ -20,7 +20,7 @@ struct ShaderData {
 
 		ShaderPreset * p1 = new ShaderPreset{
 			"shader1",
-			STRINGIFY(
+			STRINGIFY(\
 		#version 120 \n
 		attribute vec2 position;
 		attribute vec2 textureCoordIn;
@@ -55,7 +55,7 @@ struct ShaderData {
 )
 			,
 
-STRINGIFY(
+STRINGIFY(\
 #version 120 \n
 uniform vec4 lightPosition;
 varying vec2 textureCoordOut;
@@ -173,7 +173,7 @@ void main()\n\
 		{
 			"shader2",
 
-			STRINGIFY(
+			STRINGIFY(\
 				#version 120 \n
 				attribute vec2 position;
 		attribute vec2 textureCoordIn;
@@ -208,7 +208,7 @@ void main()\n\
 		)
 			,
 
-			STRINGIFY(
+			STRINGIFY(\
 		#version 120 \n
 		uniform vec4 lightPosition;
 		varying vec2 textureCoordOut;
