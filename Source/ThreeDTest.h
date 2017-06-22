@@ -151,7 +151,7 @@ public:
 		{
 			if (openGLContext.isActive())
 			{
-				_sprite.init(-0.5, -0.5, 1.5, 1.5);
+				_sprite.init(-0.5, -1.0, 1.5, 2.0);
 				_sprite2.init(-1, -1, 0.3, 0.3);
 				isInit = true;
 				dt.applyTo(texture);
