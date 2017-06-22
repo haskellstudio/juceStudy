@@ -78,8 +78,9 @@ public:
 		return fallback;
 	}
 
-	void drawSprite(OpenGLShaderProgram* s,  Sprite&  sp , Attributes* atrr, Uniforms* uf, float itime , float winw, float winh) {
+	void drawSprite(OpenGLShaderProgram* s,  Sprite&  sp , Attributes* atrr, Uniforms* uf, int itime_ , float winw, float winh) {
 
+        float itime = float(itime_%1000);
 		s->use();
 		sp.bind();
 		if (uf)
