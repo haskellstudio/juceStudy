@@ -177,7 +177,7 @@ void Editor::resized()
 			{
 				masterbox.items.add
 				(
-					juce::FlexItem(1, 1).withFlex(1)
+					juce::FlexItem(1, 1).withFlex(3)
 					//.withMargin(10)
 					//.withMaxHeight(200)
 					//.withMaxHeight(200)

@@ -88,12 +88,14 @@ void main()\n\
 	uv.x *= _w / _h;\n\
 	uv.x *= winW / winH;\n\
 	float d = length(uv);\n\
-		float c = 0.0;\n\
-		if (d < 0.3)\n\
-			c = 1.;\n\
-		else\n\
-			c = 0.;\n\
-		gl_FragColor = vec4(vec3(c), 1.0f); \n\
+		//float c = 0.0;\n\
+		//if (d < 0.3)\n\
+		//	c = 1.;\n\
+		//else\n\
+		//	c = 0.;\n\
+	float r = 0.3; \n\
+	float c = smoothstep(r, r-0.01, d);\n\
+	gl_FragColor = vec4(vec3(c), 1.0f); \n\
 	//gl_FragColor = lightPosition* texture2D (demoTexture, textureCoordOut);\n\
 	//gl_FragColor = vec4(uv.x, uv.y ,0.f ,1.0f);\n\
 	//gl_FragColor = lightPosition;//vec4(1.0, 0.0, 0.0, 1.0); \n\
