@@ -88,6 +88,15 @@ struct Uniforms
 		texture = createUniform(openGLContext, shader, "demoTexture");
 		lightPosition = createUniform(openGLContext, shader, "lightPosition");
 		iGlobalTime = createUniform(openGLContext, shader, "iGlobalTime");
+
+		x = createUniform(openGLContext, shader, "_x");
+		y = createUniform(openGLContext, shader, "_y");
+		w = createUniform(openGLContext, shader, "_w");
+		h = createUniform(openGLContext, shader, "_h");
+
+		winW = createUniform(openGLContext, shader, "winW");
+		winH = createUniform(openGLContext, shader, "winH");
+
 	}
 	bool getStatus()
 	{
@@ -99,6 +108,7 @@ struct Uniforms
 	}
 	//ScopedPointer<OpenGLShaderProgram::Uniform> projectionMatrix, viewMatrix, texture, lightPosition, bouncingNumber;
 	ScopedPointer<OpenGLShaderProgram::Uniform>projectionMatrix, viewMatrix, lightPosition, texture, iGlobalTime;
+	ScopedPointer<OpenGLShaderProgram::Uniform> x, y ,w ,h,winW, winH;
 
 private:
 	static OpenGLShaderProgram::Uniform* createUniform(OpenGLContext& openGLContext,

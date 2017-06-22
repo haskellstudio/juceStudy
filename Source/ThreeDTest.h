@@ -78,7 +78,7 @@ public:
 		return fallback;
 	}
 
-	void drawSprite(OpenGLShaderProgram* s,  Sprite&  sp , Attributes* atrr, Uniforms* uf, float itime ) {
+	void drawSprite(OpenGLShaderProgram* s,  Sprite&  sp , Attributes* atrr, Uniforms* uf, float itime , float winw, float winh) {
 
 		s->use();
 		sp.bind();
@@ -108,8 +108,35 @@ public:
 			
 				uf->iGlobalTime->set(itime);
 			}
+			if (uf->x)
+			{
+				uf->x->set(sp._x);
+			}
+			
+			if (uf->y)
+			{
+				uf->y->set(sp._y);
+			}
 
+			if (uf->w)
+			{
+				uf->w->set(sp._width);
+			}
 
+			if (uf->h)
+			{
+				uf->h->set(sp._height);
+			}
+
+			if (uf->winW)
+			{
+				uf->winW->set(winw);
+			}
+
+			if (uf->winH)
+			{
+				uf->winH->set(winh);
+			}
 		}
 
 		atrr->enable(openGLContext);
@@ -124,7 +151,7 @@ public:
 		{
 			if (openGLContext.isActive())
 			{
-				_sprite.init(0, 0, 0.5, 0.5);
+				_sprite.init(-0.5, -0.5, 1.5, 1.5);
 				_sprite2.init(-1, -1, 0.3, 0.3);
 				isInit = true;
 				dt.applyTo(texture);
@@ -200,7 +227,7 @@ public:
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		//
 		
-		drawSprite(_shader, _sprite, attributes, uniforms, (float)Time::getMillisecondCounter());
+		drawSprite(_shader, _sprite, attributes, uniforms, (float)Time::getMillisecondCounter(), getWidth(), getHeight());
 		//_shader->use();
 		//_sprite.bind();
 		//attributes->enable(openGLContext);
@@ -208,7 +235,7 @@ public:
 		//attributes->disable(openGLContext);
 
 
-		drawSprite(_shader2, _sprite2, attributes2, uniforms2, (float)Time::getMillisecondCounter());
+		drawSprite(_shader2, _sprite2, attributes2, uniforms2, (float)Time::getMillisecondCounter(), getWidth(), getHeight());
 
 		//_shader2->use();
 		//_sprite2.bind();
