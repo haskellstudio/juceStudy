@@ -66,9 +66,9 @@ uniform float _w;
 uniform float _h;
 uniform float winW;
 uniform float winH;
-float Circle(vec2 uv, float r, float blur)
+float Circle(vec2 uv, vec2 p,  float r, float blur)
 {
-	float d = length(uv);
+	float d = length(uv-p);
 	float c = smoothstep(r, r - blur, d);
 	return c;
 }
@@ -79,8 +79,21 @@ void main()
 	uv.x *= _w / _h;
 	uv.x *= winW / winH;
 
+	float c = Circle(
+		uv, 
+		vec2(.2, -.1) ,
+		.4, 
+		.03
+	);
 
-	float c = Circle(uv, .4, .05);
+	c -= Circle(
+		uv,
+		vec2(.1, .2),
+		.1,
+		.03
+	);
+
+
 	gl_FragColor = vec4(vec3(c), 1.0f);
 }
 )

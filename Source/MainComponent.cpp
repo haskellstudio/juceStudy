@@ -51,14 +51,14 @@ public:
 	  _listBox.setName("_listBox");
 
 
-	  //TStringLst * s = TStringLst::getDemoTypeList()["ShaderEditor"];
-	  //if (s)
-	  //{
-		 // currentDemo = nullptr;
-		 // currentDemo = s->createComponent();
-		 // addAndMakeVisible(currentDemo);
-		 // currentIndex = 0;
-	  //}
+	  TStringLst * s = TStringLst::getDemoTypeList()["ShaderEditor"];
+	  if (s)
+	  {
+		  currentDemo = nullptr;
+		  currentDemo = s->createComponent();
+		  addAndMakeVisible(currentDemo);
+		  currentIndex = 0;
+	  }
 	  resized();
     }
 
