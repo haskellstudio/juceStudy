@@ -66,23 +66,26 @@ uniform float _w;
 uniform float _h;
 uniform float winW;
 uniform float winH;
+
+float getR(float x, float min1 , float max1, float min2, float max2)
+{
+	return (x-min1)/(max1-min1)*(max2-min2)+min2;
+}
 float Circle(vec2 uv, vec2 p,  float r, float blur)
 {
 	float d = length(uv-p);
 	float c = smoothstep(r, r - blur, d);
 	return c;
 }
-void main()
-{
-	vec2 uv = _uv;
-	uv -= 0.5;
-	uv.x *= _w / _h;
-	uv.x *= winW / winH;
 
+float Smiley(vec2 uv, vec2 p, float size)
+{
+	uv = uv - p;
+	uv /= size;
 	float mask = Circle(
-		uv, 
-		vec2(.0, .0) ,
-		.4, 
+		uv,
+		vec2(.0, .0),
+		.4,
 		.03
 	);
 
@@ -105,11 +108,25 @@ void main()
 	mouth -= Circle(uv, vec2(0., 0.1), .3, .02);
 
 	mask -= mouth;
+	return mask;
+}
 
+
+void main()
+{
+	vec2 uv = _uv;
+	uv -= 0.5;
+	uv.x *= _w / _h;
+	uv.x *= winW / winH;
+
+	float mask = Smiley(uv, 
+						vec2(getR(sin(iGlobalTime), -1.0, 1.0, -0.5, 0.5),
+							 getR(sin(iGlobalTime), -1.0, 1.0, -0.5, 0.5)),
+						getR(sin(iGlobalTime), -1.0, 1.0, 0.5, 1.5));
 	
 
-	vec3 col = vec3(sin(iGlobalTime), cos(iGlobalTime), sin(iGlobalTime) ) * mask;
-	//vec3 col = vec3(1., 1., 0.) * mask;
+	vec3 col = vec3(sin(iGlobalTime), cos(iGlobalTime), sin(iGlobalTime) * cos(iGlobalTime)) * mask;
+	//vec3 col = vec3(.2, .2, 0.2) * mask;
 	gl_FragColor = vec4(col, 1.0f);
 }
 )

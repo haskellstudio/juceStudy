@@ -228,7 +228,7 @@ public:
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		//
 		
-		drawSprite(_shader, _sprite, attributes, uniforms, (float)Time::getMillisecondCounter(), getWidth(), getHeight());
+		drawSprite(_shader, _sprite, attributes, uniforms, (float)(Time::getMillisecondCounter()/140), getWidth(), getHeight());
 		//_shader->use();
 		//_sprite.bind();
 		//attributes->enable(openGLContext);
@@ -236,7 +236,7 @@ public:
 		//attributes->disable(openGLContext);
 
 
-		drawSprite(_shader2, _sprite2, attributes2, uniforms2, (float)Time::getMillisecondCounter(), getWidth(), getHeight());
+		drawSprite(_shader2, _sprite2, attributes2, uniforms2, (float)(Time::getMillisecondCounter()/ 140), getWidth(), getHeight());
 
 		//_shader2->use();
 		//_sprite2.bind();
