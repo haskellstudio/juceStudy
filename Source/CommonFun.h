@@ -118,15 +118,18 @@ void main()
 	uv -= 0.5;
 	uv.x *= _w / _h;
 	uv.x *= winW / winH;
-
-	float mask = Smiley(uv, 
+	float mask = 0;
+	mask = Smiley(uv, 
 						vec2(getR(sin(iGlobalTime), -1.0, 1.0, -0.5, 0.5),
 							 getR(sin(iGlobalTime), -1.0, 1.0, -0.5, 0.5)),
 						getR(sin(iGlobalTime), -1.0, 1.0, 0.5, 1.5));
-	
+	/**/
 
-	vec3 col = vec3(sin(iGlobalTime), cos(iGlobalTime), sin(iGlobalTime) * cos(iGlobalTime)) * mask;
-	//vec3 col = vec3(.2, .2, 0.2) * mask;
+	//vec3 col = vec3(sin(iGlobalTime), cos(iGlobalTime), sin(iGlobalTime) * cos(iGlobalTime)) * mask;
+	//mask = smoothstep(-.1, .1, uv.x);
+
+
+	vec3 col = vec3(.5, .5, 0.5) * mask;
 	gl_FragColor = vec4(col, 1.0f);
 }
 )

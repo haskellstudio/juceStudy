@@ -92,7 +92,7 @@ void NewComponent::resized()
 
     //[/UserPreResize]
 
-    textEditor->setBounds (proportionOfWidth (0.1932f) - (150 / 2), proportionOfHeight (0.1851f), 150, 24);
+    textEditor->setBounds (proportionOfWidth (0.1931f) - (150 / 2), proportionOfHeight (0.1850f), 150, 24);
     slider->setBounds (400 - (608 / 2), 264, 608, 24);
     //[UserResized] Add your own custom resize handling here..
 
@@ -138,7 +138,7 @@ BEGIN_JUCER_METADATA
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ff323e44"/>
   <TEXTEDITOR name="new text editor" id="d6c1c362f1b41a29" memberName="textEditor"
-              virtualName="" explicitFocusOrder="0" pos="19.303%c 18.509% 150 24"
+              virtualName="" explicitFocusOrder="0" pos="19.309%c 18.495% 150 24"
               initialText="" multiline="0" retKeyStartsLine="0" readonly="0"
               scrollbars="1" caret="1" popupmenu="1"/>
   <SLIDER name="new slider" id="8a44ab210d3917f8" memberName="slider" virtualName=""
