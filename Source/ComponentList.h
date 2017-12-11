@@ -20,6 +20,7 @@ public:
 		return list;
 	}
 	String name;
+	int index;
 };
 
 

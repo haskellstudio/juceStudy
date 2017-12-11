@@ -137,8 +137,8 @@ void OverLay::buttonClicked (Button* buttonThatWasClicked)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-//const String & s = String("OverLay");
-//static ComponentList<OverLay> td(s);
+const String & s = String("OverLay");
+static ComponentList<OverLay> td(s);
 //[/MiscUserCode]
 
 
