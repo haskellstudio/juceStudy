@@ -270,20 +270,37 @@ void main()\n\
 			return max(min(r, g), min(max(r, g), b));
 		}
 
-		void main()
+		float lineWidth = 10.0;
+		float lineHeight = 10.0;
+		vec2 lines = vec2(lineWidth, lineHeight);
+
+		float showc(vec2 offset)
 		{
 			vec2 msdfUnit = pxRange / vec2(32.0, 32.0);
 
-			vec3 sample = texture2D(demoTexture, textureCoordOut).rgb;
+			offset.y = lineHeight - 1 - offset.y;
+			vec2 textureCoord = textureCoordOut * lines - offset;
+
+			vec3 sample = texture2D(demoTexture, textureCoord).rgb;
 
 			float sigDist = median(sample.r, sample.g, sample.b) - 0.5;
 
-			sigDist *= dot(msdfUnit, 0.5 / fwidth(textureCoordOut));
+			sigDist *= dot(msdfUnit, 0.5 / fwidth(textureCoord));
 
 			float opacity = clamp(sigDist + 0.5, 0.0, 1.0);
+
+			return opacity;
+		}
+
+
+		void main()
+		{
 			// gl_FragColor = texture2D(demoTexture, textureCoordOut );
 
-			gl_FragColor = mix(bgColor, fgColor, opacity);
+			gl_FragColor = mix(bgColor, fgColor, showc(vec2(0.0, 0.0)));
+
+			gl_FragColor = mix(gl_FragColor, fgColor, showc(vec2(0.0, 2.0)));
+
 		}
 
 

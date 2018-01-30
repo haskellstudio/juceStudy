@@ -173,20 +173,20 @@ struct DynamicTexture
 
 	
 
-		{
-			Graphics g(image);
-			g.fillAll(Colours::white);
+		//{
+		//	Graphics g(image);
+		//	g.fillAll(Colours::white);
 
-			//g.setColour(Colours::black);
-			//g.drawRect(10, 10, size/2, size/2, 2);
+		//	//g.setColour(Colours::black);
+		//	//g.drawRect(10, 10, size/2, size/2, 2);
 
 
-			//g.fillEllipse(0, 0, 16, 16);
-			g.setColour(Colours::red);
-			g.setFont(40);
-			g.drawFittedText(String("hello world"), image.getBounds(), Justification::centred, 1);
+		//	//g.fillEllipse(0, 0, 16, 16);
+		//	g.setColour(Colours::red);
+		//	g.setFont(40);
+		//	g.drawFittedText(String("hello world"), image.getBounds(), Justification::centred, 1);
 
-		}
+		//}
 
 		texture.loadImage(image);
 		return true;
