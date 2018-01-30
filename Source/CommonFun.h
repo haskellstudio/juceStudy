@@ -270,12 +270,20 @@ void main()\n\
 			return max(min(r, g), min(max(r, g), b));
 		}
 
-		float lineWidth = 10.0;
-		float lineHeight = 10.0;
+		float lineWidth = 12.0;
+		float lineHeight = 8.0;
 		vec2 lines = vec2(lineWidth, lineHeight);
 
 		float showc(vec2 offset)
 		{
+			if (textureCoordOut.x > 1.0/ lineWidth + offset.x)
+			{
+				return 0;
+			}
+			else if (textureCoordOut.y < 1.0 / lineHeight + offset.y)
+			{
+				return 0;
+			}
 			vec2 msdfUnit = pxRange / vec2(32.0, 32.0);
 
 			offset.y = lineHeight - 1 - offset.y;
@@ -299,7 +307,7 @@ void main()\n\
 
 			gl_FragColor = mix(bgColor, fgColor, showc(vec2(0.0, 0.0)));
 
-			gl_FragColor = mix(gl_FragColor, fgColor, showc(vec2(0.0, 2.0)));
+			gl_FragColor = mix(gl_FragColor, fgColor, showc(vec2(1.0, 1.0)));
 
 		}
 
