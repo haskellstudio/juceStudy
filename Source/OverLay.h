@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.0.2
+  Created with Projucer version: 5.0.1
 
   ------------------------------------------------------------------------------
 
@@ -43,6 +43,10 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+	void setText(String s)
+	{
+		label->setText(s, juce::NotificationType::dontSendNotification);
+	}
     //[/UserMethods]
 
     void paint (Graphics& g) override;
@@ -57,6 +61,7 @@ private:
 
     //==============================================================================
     ScopedPointer<ToggleButton> toggleButton;
+    ScopedPointer<Label> label;
 
 
     //==============================================================================

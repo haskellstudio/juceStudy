@@ -73,7 +73,7 @@ private:
 		if (openGLContext.extensions.glGetAttribLocation(shader.getProgramID(), attributeName) < 0)
 			return nullptr;
 
-		return new OpenGLShaderProgram::Attribute(shader, attributeName);
+		return new juce::OpenGLShaderProgram::Attribute(shader, attributeName);
 	}
 };
 
@@ -133,12 +133,45 @@ struct DynamicTexture
 	Image image;
 
 
-	bool applyTo(OpenGLTexture& texture) 
+	//bool applyTo(OpenGLTexture& texture) 
+	//{
+	//	const int size = 16*16;
+
+	//	if (!image.isValid())
+	//		image = Image(Image::ARGB, size, size, true);
+
+	//	{
+	//		Graphics g(image);
+	//		g.fillAll(Colours::white);
+
+	//		//g.setColour(Colours::black);
+	//		//g.drawRect(10, 10, size/2, size/2, 2);
+
+
+	//		//g.fillEllipse(0, 0, 16, 16);
+	//		g.setColour(Colours::red);
+	//		g.setFont(40);
+	//		g.drawFittedText(String("hello world"), image.getBounds(), Justification::centred, 1);
+
+	//	}
+
+	//	texture.loadImage(image);
+	//	return true;
+	//}
+
+
+	bool applyTo(OpenGLTexture& texture)
 	{
-		const int size = 16*16;
+		const int size = 16 * 16;
 
 		if (!image.isValid())
-			image = Image(Image::ARGB, size, size, true);
+		{
+			File f = "E:/juceStudy/ft/vs2015console2/output.png";
+			image = juce::ImageFileFormat::loadFrom(f);
+		}
+			
+
+	
 
 		{
 			Graphics g(image);

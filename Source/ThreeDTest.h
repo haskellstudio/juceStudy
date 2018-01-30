@@ -46,7 +46,7 @@ extern ShaderData g_shaderData;
 class ThreeDTest  : public Component,
                     private OpenGLRenderer,
                     private Timer,
-                    private CodeDocument::Listener
+					private CodeDocument::Listener
 {
 public:
     //==============================================================================
@@ -148,12 +148,16 @@ public:
 	}
 	void renderOpenGL() override
 	{
+		if (o)
+		{
+			o->setText(juce::String(juce::Time::getApproximateMillisecondCounter()));
+		}
 		if (false == isInit)
 		{
 			if (openGLContext.isActive())
 			{
-				_sprite.init(-0.5, -1.0, 1.5, 2.0);
-				_sprite2.init(-1, -1, 0.3, 0.3);
+				_sprite.init(0., .0, .2, .2);
+				_sprite2.init(-1, -1, 1.0, 1.0);
 				isInit = true;
 				dt.applyTo(texture);
 
@@ -724,4 +728,64 @@ private:
 };
 
 //[EndFile] You can add extra defines here...
+
+/*
+
+如何向GLSL中传入多个纹理
+原创 2014年11月18日 13:49:17 标签：opengl /glsl /多纹理 6607
+如何向GLSL中传入多个纹理
+这几天在研究如何实现用GLSL对多个纹理进行融合处理，发现除了第一个纹理之外其它的纹理参数都无法传递到GLSL中去，在网上找了很久终于是发现了问题所在，记录一下供大家参考。
+如下程序，我们在GLSL的fragment着色程序中定义了3个sample2D作为纹理参数。
+
+
+[cpp] view plain copy
+uniform sampler2D BaseMap;
+uniform sampler2D ReflectMap;
+uniform sampler2D RefractMap;
+
+
+在主程序中，我们生成3个纹理ID
+[cpp] view plain copy
+glBindTexture(GL_TEXTURE_2D, BaseID);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, BaseData);
+
+glBindTexture(GL_TEXTURE_2D, ReflectionID);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, ReflectionData);
+
+glBindTexture(GL_TEXTURE_2D, RefractionID);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, RefractionData);
+
+glUseProgram(ShaderID);
+
+
+//　设定纹理参数的数值，这里是关键，很多时候我们会以为要把纹理ID作为sampler2D参数的值传给GLSL，
+// 我们可能会这样写glUniform1i(texLoc, BaseID,但这做法是错的，GLSL的sample2D 只接受纹理单元的索引号，GL_TEXTURE0+i
+// 还有一个要注意的地方就是要用glUniform1i函数，而不要用glUniform1ui();
+
+GLint texLoc;
+texLoc = glGetUniformLocation(ShaderID, "BaseMap");
+glUniform1i(texLoc, 0); //GL_TEXTURE0,
+//这里我觉得是opengl做得最不人性化的地方，你只能输入0，1，2来代表纹理单元的索引，不直观，让人摸不着头脑。
+
+texLoc = glGetUniformLocation(ShaderID, "ReflectMap");
+glUniform1i(texLoc, 1); //GL_TEXTURE1
+
+texLoc = glGetUniformLocation(ShaderID, "RefractMap");
+glUniform1i(texLoc, 2); //GL_TEXTURE2
+
+Then in further down in my draw() function:
+
+//　把纹理ID和纹理单元绑定在一起。
+glActiveTexture(GL_TEXTURE0);
+glBindTexture(GL_TEXTURE_2D, BaseID);
+
+glActiveTexture(GL_TEXTURE1);
+glBindTexture(GL_TEXTURE_2D, ReflectionID);
+
+glActiveTexture(GL_TEXTURE2);
+glBindTexture(GL_TEXTURE_2D, RefractionID);
+
+// 用了GLSL，glEnable(GL_TEXTURE_2D);glDisable(GL_TEXTURE_2D);就不起作用了，一切由着色代码来控制。  
+
+*/
 //[/EndFile]

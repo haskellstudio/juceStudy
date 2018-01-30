@@ -129,7 +129,7 @@ void main()
 	//mask = smoothstep(-.1, .1, uv.x);
 
 
-	vec3 col = vec3(.5, .5, 0.5) * mask;
+	vec3 col = vec3(1., 0., 0.);//*mask;
 	gl_FragColor = vec4(col, 1.0f);
 }
 )
@@ -230,7 +230,29 @@ void main()\n\
 
 			STRINGIFY(\
 		#version 120 \n
-		uniform vec4 lightPosition;
+		//uniform vec4 lightPosition;
+		//varying vec2 textureCoordOut;
+		//varying vec2 _uv;
+		//uniform sampler2D demoTexture;
+		//vec3 color;
+		//uniform float iGlobalTime;
+		//uniform float _x;
+		//uniform float _y;
+		//uniform float _w;
+		//uniform float _h;
+		//void main()
+		//{
+		//	//textureCoordOut.x += .5;
+		//	gl_FragColor = texture2D(demoTexture, textureCoordOut /*+ vec2(.5, .0)*/ );
+		//	//gl_FragColor = vec4(sin (iGlobalTime), cos(iGlobalTime), 1, 1)  * lightPosition* texture2D (demoTexture, textureCoordOut);
+		//	//gl_FragColor = vec4(uv.x,uv.y,0.,1.);
+		//	//gl_FragColor = vec4(_uv.x,1.0,1.0,1.);
+		//	//gl_FragColor = lightPosition;
+		//	//vec4(1.0, 0.0, 0.0, 1.0);
+		//	//the second fragment shader
+		//}
+
+	    uniform vec4 lightPosition;
 		varying vec2 textureCoordOut;
 		varying vec2 _uv;
 		uniform sampler2D demoTexture;
@@ -240,16 +262,31 @@ void main()\n\
 		uniform float _y;
 		uniform float _w;
 		uniform float _h;
+		float pxRange = 2.0;
+		vec4 bgColor = vec4(0.0, 0.0, 0.0, 1.0f);
+		vec4 fgColor = vec4(1.0, 1.0, 0.0, 1.0f);
+
+		float median(float r, float g, float b) {
+			return max(min(r, g), min(max(r, g), b));
+		}
+
 		void main()
 		{
-			//gl_FragColor = texture2D(demoTexture, textureCoordOut);
-			//gl_FragColor = vec4(sin (iGlobalTime), cos(iGlobalTime), 1, 1)  * lightPosition* texture2D (demoTexture, textureCoordOut);
-			//gl_FragColor = vec4(uv.x,uv.y,0.,1.);
-			gl_FragColor = vec4(_uv.x,1.0,1.0,1.);
-			//gl_FragColor = lightPosition;
-			//vec4(1.0, 0.0, 0.0, 1.0);
-			//the second fragment shader
+			vec2 msdfUnit = pxRange / vec2(32.0, 32.0);
+
+			vec3 sample = texture2D(demoTexture, textureCoordOut).rgb;
+
+			float sigDist = median(sample.r, sample.g, sample.b) - 0.5;
+
+			sigDist *= dot(msdfUnit, 0.5 / fwidth(textureCoordOut));
+
+			float opacity = clamp(sigDist + 0.5, 0.0, 1.0);
+			// gl_FragColor = texture2D(demoTexture, textureCoordOut );
+
+			gl_FragColor = mix(bgColor, fgColor, opacity);
 		}
+
+
 		)
 		};
 

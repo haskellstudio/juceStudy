@@ -59,7 +59,7 @@ ThreeDTest::ThreeDTest ()
 	//}
 	addAndMakeVisible(o = new OverLay());
 	if (o)
-		o->addMouseListener((MouseListener*)this,false);
+		o->addMouseListener(this,false);
 
 
 
@@ -70,10 +70,11 @@ ThreeDTest::ThreeDTest ()
 	openGLContext.setRenderer(this);
 
 	openGLContext.setContinuousRepainting(true);
+
 	openGLContext.attachTo(*this);
 
 
-	openGLContext.setContinuousRepainting(true);  // true  fps may be high.
+	//openGLContext.setContinuousRepainting(true);  // true  fps may be high.
 
 
 	startTimer(100);

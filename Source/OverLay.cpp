@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.0.2
+  Created with Projucer version: 5.0.1
 
   ------------------------------------------------------------------------------
 
@@ -38,11 +38,19 @@ OverLay::OverLay ()
     toggleButton->addListener (this);
     toggleButton->setColour (ToggleButton::textColourId, Colour (0xffcb1212));
 
+    addAndMakeVisible (label = new Label ("new label",
+                                          TRANS("label text")));
+    label->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label->setJustificationType (Justification::centredLeft);
+    label->setEditable (false, false, false);
+    label->setColour (TextEditor::textColourId, Colours::black);
+    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (600, 400);
+    setSize (100, 400);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -55,6 +63,7 @@ OverLay::~OverLay()
     //[/Destructor_pre]
 
     toggleButton = nullptr;
+    label = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -67,8 +76,8 @@ void OverLay::paint (Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
 	return;
     //[/UserPrePaint]
-
-    g.fillAll (Colour (0xff323e44));
+	g.fillAll(Colours::red);
+   
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -80,6 +89,7 @@ void OverLay::resized()
     //[/UserPreResize]
 
     toggleButton->setBounds (24, 808, 150, 24);
+    label->setBounds (168, 88, 150, 24);
     //[UserResized] Add your own custom resize handling here..
 
 
@@ -160,6 +170,11 @@ BEGIN_JUCER_METADATA
                 virtualName="" explicitFocusOrder="0" pos="24 808 150 24" txtcol="ffcb1212"
                 buttonText="new toggle button" connectedEdges="0" needsCallback="1"
                 radioGroupId="0" state="0"/>
+  <LABEL name="new label" id="cfd274a5532053f2" memberName="label" virtualName=""
+         explicitFocusOrder="0" pos="168 88 150 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
+         kerning="0" bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
